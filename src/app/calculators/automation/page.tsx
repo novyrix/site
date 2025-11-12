@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2, Zap, Clock, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import { trackEvent, trackFunnelStep } from "@/lib/analytics";
 
 type BusinessArea = "sales" | "operations" | "marketing" | "hr" | "finance" | "customer_service";
 type ToolCategory = "paper" | "spreadsheets" | "digital_tools" | "advanced";
@@ -25,6 +26,30 @@ export default function AutomationCalculatorPage() {
     hoursPerWeek: null,
     specificTools: [],
   });
+
+  // Track calculator usage
+  useEffect(() => {
+    if (step === 4) {
+      // Track calculator completion
+      const roi = calculateROI();
+      trackEvent.calculatorCompleted({
+        calculatorType: 'automation',
+        estimatedPrice: roi.potentialSavings || 0
+      });
+      
+      trackFunnelStep('convert', {
+        funnel: 'automation_calculator',
+        value: roi.potentialSavings || 0
+      });
+    } else if (step > 1) {
+      // Track calculator usage for each step
+      trackEvent.calculatorUsed({
+        calculatorType: 'automation',
+        step: step,
+        totalSteps: 4
+      });
+    }
+  }, [step]);
 
   // Calculate ROI and qualification
   const calculateROI = () => {

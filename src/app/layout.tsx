@@ -6,6 +6,8 @@ import { Footer } from "@/components/footer";
 import { Preloader } from "@/components/preloader";
 import { SessionProvider } from "@/components/session-provider";
 import { auth } from "@/lib/auth";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -65,6 +67,8 @@ export default async function RootLayout({
           {children}
           <Footer />
         </SessionProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

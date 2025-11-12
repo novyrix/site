@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Send } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,6 +34,11 @@ export function ContactForm() {
         const error = await response.json();
         throw new Error(error.error || 'Failed to send message');
       }
+
+      // Track successful contact form submission
+      trackEvent.contactFormSubmitted({
+        source: 'contact_page'
+      });
 
       setSubmitted(true);
       (e.target as HTMLFormElement).reset();

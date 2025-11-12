@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { SOFTWARE_PRICING } from "@/lib/constants/pricing";
+import { trackEvent, trackFunnelStep } from "@/lib/analytics";
 
 type ProjectType = "business_software" | "saas" | "mobile_app" | "audit";
 type ProjectStage = "idea" | "designs" | "specs";
@@ -37,6 +38,30 @@ export default function SoftwareCalculatorPage() {
     mobileApp: false,
   });
   const [complexity, setComplexity] = useState<Complexity | null>(null);
+
+  // Track calculator usage
+  useEffect(() => {
+    if (step === 4) {
+      // Track calculator completion
+      const priceEstimate = getPriceEstimate();
+      trackEvent.calculatorCompleted({
+        calculatorType: 'software',
+        estimatedPrice: priceEstimate.max
+      });
+      
+      trackFunnelStep('convert', {
+        funnel: 'software_calculator',
+        value: priceEstimate.max
+      });
+    } else if (step > 1) {
+      // Track calculator usage for each step
+      trackEvent.calculatorUsed({
+        calculatorType: 'software',
+        step: step,
+        totalSteps: 4
+      });
+    }
+  }, [step]);
 
   // Calculate complexity score based on features
   const calculateComplexity = (): Complexity => {

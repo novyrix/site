@@ -21,7 +21,7 @@ import {
 
 export default async function AdminAnalyticsPage() {
   const session = await auth();
-  
+
   if (!session?.user || session.user.role !== 'ADMIN') {
     redirect('/dashboard');
   }
@@ -107,7 +107,7 @@ export default async function AdminAnalyticsPage() {
   // Monthly trend (simplified - last 30 days)
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-  
+
   const recentQuotesLast30 = recentQuotes.filter(q => new Date(q.createdAt) >= thirtyDaysAgo);
   const recentProjectsLast30 = recentProjects.filter(p => new Date(p.createdAt) >= thirtyDaysAgo);
 
@@ -117,7 +117,7 @@ export default async function AdminAnalyticsPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <Link 
+            <Link
               href="/admin"
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-4 transition-colors"
             >
@@ -204,7 +204,7 @@ export default async function AdminAnalyticsPage() {
               <PieChart className="w-5 h-5 text-purple-400" />
               <h2 className="text-xl font-bold">Service Distribution</h2>
             </div>
-            
+
             <div className="space-y-4">
               {serviceBreakdown.map((service) => {
                 const ServiceIcon = service.icon;
@@ -223,7 +223,7 @@ export default async function AdminAnalyticsPage() {
                       </div>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
-                      <div 
+                      <div
                         className={`h-2 rounded-full transition-all duration-500 ${service.color.replace('text-', 'bg-')}`}
                         style={{ width: `${service.percentage}%` }}
                       />
@@ -244,7 +244,7 @@ export default async function AdminAnalyticsPage() {
               <DollarSign className="w-5 h-5 text-green-400" />
               <h2 className="text-xl font-bold">Financial Overview</h2>
             </div>
-            
+
             <div className="space-y-6">
               {/* Revenue Progress */}
               <div>
@@ -253,7 +253,7 @@ export default async function AdminAnalyticsPage() {
                   <span className="text-sm font-bold">{collectionRate.toFixed(1)}%</span>
                 </div>
                 <div className="w-full bg-white/10 rounded-full h-3 mb-2">
-                  <div 
+                  <div
                     className="bg-gradient-to-r from-green-500 to-blue-500 h-3 rounded-full transition-all duration-500"
                     style={{ width: `${collectionRate}%` }}
                   />
@@ -295,7 +295,7 @@ export default async function AdminAnalyticsPage() {
               <FileText className="w-5 h-5 text-blue-400" />
               <h2 className="text-xl font-bold">Quote Performance</h2>
             </div>
-            
+
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                 <span className="text-sm text-gray-400">Total Quotes</span>
@@ -318,7 +318,7 @@ export default async function AdminAnalyticsPage() {
               <Briefcase className="w-5 h-5 text-purple-400" />
               <h2 className="text-xl font-bold">Project Performance</h2>
             </div>
-            
+
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                 <span className="text-sm text-gray-400">Total Projects</span>
@@ -341,7 +341,7 @@ export default async function AdminAnalyticsPage() {
               <Users className="w-5 h-5 text-orange-400" />
               <h2 className="text-xl font-bold">Client Metrics</h2>
             </div>
-            
+
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                 <span className="text-sm text-gray-400">Total Clients</span>
