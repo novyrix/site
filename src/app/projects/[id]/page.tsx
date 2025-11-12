@@ -24,7 +24,7 @@ import {
   Shield
 } from 'lucide-react';
 import { prisma } from '@/lib/prisma';
-import { getCurrentUser } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 
 interface ProjectDetailPageProps {
   params: {
@@ -41,9 +41,9 @@ const statusConfig = {
 };
 
 const serviceTypeConfig = {
-  WEBSITE: { icon: Globe, label: 'Website Development' },
-  SOFTWARE: { icon: Code, label: 'Custom Software' },
-  AUTOMATION: { icon: Zap, label: 'Workflow Automation' },
+  WEBSITE_DEVELOPMENT: { icon: Globe, label: 'Website Development' },
+  SOFTWARE_DEVELOPMENT: { icon: Code, label: 'Custom Software' },
+  WORKFLOW_AUTOMATION: { icon: Zap, label: 'Workflow Automation' },
 };
 
 const formatKES = (amount: number) => {
@@ -64,8 +64,8 @@ const formatDate = (date: Date) => {
 };
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
-  const user = await getCurrentUser();
-  if (!user) {
+  const session = await auth();
+  if (!session?.user) {
     notFound();
   }
 
@@ -84,27 +84,27 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
     },
   });
 
-  if (!project || (project.userId !== user.id && user.role !== 'ADMIN')) {
+  if (!project || (project.userId !== session.user.id && session.user.role !== 'ADMIN')) {
     notFound();
   }
 
   // Calculate progress
-  const totalPaid = project.invoices.reduce((sum, inv) => sum + (inv.status === 'PAID' ? inv.amount : 0), 0);
-  const totalAmount = project.totalAmount;
+  const totalPaid = project.invoices.reduce((sum, inv) => sum + (inv.isPaid ? Number(inv.amount) : 0), 0);
+  const totalAmount = Number(project.quote?.oneTimeTotal || 0);
   const progressPercentage = totalAmount > 0 ? (totalPaid / totalAmount) * 100 : 0;
 
   // Invoice stats
-  const paidInvoices = project.invoices.filter(inv => inv.status === 'PAID').length;
-  const pendingInvoices = project.invoices.filter(inv => inv.status === 'PENDING' || inv.status === 'SENT').length;
+  const paidInvoices = project.invoices.filter(inv => inv.isPaid).length;
+  const pendingInvoices = project.invoices.filter(inv => !inv.isPaid).length;
   const overdueInvoices = project.invoices.filter(inv =>
-    inv.status !== 'PAID' && inv.status !== 'CANCELLED' && new Date(inv.dueDate) < new Date()
+    !inv.isPaid && new Date(inv.dueDate) < new Date()
   ).length;
 
   // Support ticket stats
   const openTickets = project.supportTickets.filter(t => t.status === 'OPEN' || t.status === 'IN_PROGRESS').length;
 
   const StatusIcon = statusConfig[project.status].icon;
-  const ServiceIcon = serviceTypeConfig[project.serviceType].icon;
+  const ServiceIcon = serviceTypeConfig[project.quote?.serviceType || 'WEBSITE_DEVELOPMENT'].icon;
 
   return (
     <div className="min-h-screen p-8">
@@ -205,45 +205,49 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                   <p className="text-gray-400 text-sm mb-1">Service Type</p>
                   <div className="flex items-center gap-2">
                     <ServiceIcon className="w-4 h-4 text-purple-400" />
-                    <span className="font-medium">{serviceTypeConfig[project.serviceType].label}</span>
+                    <span className="font-medium">{serviceTypeConfig[project.quote?.serviceType || 'WEBSITE_DEVELOPMENT'].label}</span>
                   </div>
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm mb-1">Start Date</p>
-                  <p className="font-medium">{formatDate(project.startDate)}</p>
+                  <p className="font-medium">{project.startDate ? formatDate(project.startDate) : 'Not started'}</p>
                 </div>
-                {project.endDate && (
+                {project.actualEndDate && (
                   <div>
                     <p className="text-gray-400 text-sm mb-1">End Date</p>
-                    <p className="font-medium">{formatDate(project.endDate)}</p>
+                    <p className="font-medium">{formatDate(project.actualEndDate)}</p>
                   </div>
                 )}
-                {project.progress !== null && (
+                {project.estimatedEndDate && !project.actualEndDate && (
                   <div>
-                    <p className="text-gray-400 text-sm mb-1">Project Progress</p>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">{project.progress}%</span>
-                      <div className="flex-1 bg-white/10 rounded-full h-2">
-                        <div
-                          className="bg-purple-500 h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${project.progress}%` }}
-                        />
-                      </div>
+                    <p className="text-gray-400 text-sm mb-1">Estimated End Date</p>
+                    <p className="font-medium">{formatDate(project.estimatedEndDate)}</p>
+                  </div>
+                )}
+                <div>
+                  <p className="text-gray-400 text-sm mb-1">Payment Progress</p>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">{Math.round(progressPercentage)}%</span>
+                    <div className="flex-1 bg-white/10 rounded-full h-2">
+                      <div
+                        className="bg-purple-500 h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${progressPercentage}%` }}
+                      />
                     </div>
                   </div>
-                )}
+                </div>
               </div>
 
               {/* Care Plan Badge */}
-              {project.carePlanActive && (
+              {project.hasCarePlan && (
                 <div className="mt-4 pt-4 border-t border-white/10">
                   <div className="flex items-center gap-2 text-green-400">
                     <Shield className="w-5 h-5" />
                     <span className="font-medium">Active Care Plan</span>
                   </div>
-                  {project.carePlanExpiryDate && (
+                  {project.carePlanExpiry && (
                     <p className="text-sm text-gray-400 mt-1">
-                      Expires: {formatDate(project.carePlanExpiryDate)}
+                      Expires: {formatDate(project.carePlanExpiry)}
                     </p>
                   )}
                 </div>
@@ -254,7 +258,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Invoices</h2>
-                {user.role === 'ADMIN' && (
+                {session.user.role === 'ADMIN' && (
                   <button className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/50 rounded-lg text-sm transition-colors">
                     <Plus className="w-4 h-4" />
                     Create Invoice
@@ -267,7 +271,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               ) : (
                 <div className="space-y-3">
                   {project.invoices.map((invoice) => {
-                    const isOverdue = invoice.status !== 'PAID' && invoice.status !== 'CANCELLED' && new Date(invoice.dueDate) < new Date();
+                    const isOverdue = !invoice.isPaid && new Date(invoice.dueDate) < new Date();
+                    const invoiceStatus = invoice.isPaid ? 'PAID' : (isOverdue ? 'OVERDUE' : 'SENT');
                     const statusColors = {
                       DRAFT: 'text-gray-400 bg-gray-500/10',
                       SENT: 'text-blue-400 bg-blue-500/10',
@@ -285,20 +290,20 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                           <div className="flex items-center gap-3 mb-1">
                             <FileText className="w-4 h-4 text-purple-400" />
                             <span className="font-medium">{invoice.invoiceNumber}</span>
-                            <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[isOverdue ? 'OVERDUE' : invoice.status]}`}>
-                              {isOverdue ? 'Overdue' : invoice.status}
+                            <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[invoiceStatus]}`}>
+                              {invoiceStatus}
                             </span>
                           </div>
                           <div className="flex items-center gap-4 text-sm text-gray-400">
                             <span>Due: {formatDate(invoice.dueDate)}</span>
-                            <span>Amount: {formatKES(invoice.amount)}</span>
+                            <span>Amount: {formatKES(Number(invoice.amount))}</span>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
                           <button className="p-2 hover:bg-white/10 rounded-lg transition-colors">
                             <Download className="w-4 h-4" />
                           </button>
-                          {invoice.status === 'SENT' && (
+                          {!invoice.isPaid && (
                             <button className="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/50 rounded-lg text-sm transition-colors">
                               Pay Now
                             </button>
@@ -329,14 +334,14 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               ) : (
                 <div className="space-y-3">
                   {project.supportTickets.map((ticket) => {
-                    const statusColors = {
+                    const statusColors: Record<string, string> = {
                       OPEN: 'text-yellow-400 bg-yellow-500/10',
                       IN_PROGRESS: 'text-blue-400 bg-blue-500/10',
                       RESOLVED: 'text-green-400 bg-green-500/10',
                       CLOSED: 'text-gray-400 bg-gray-500/10',
                     };
 
-                    const priorityColors = {
+                    const priorityColors: Record<string, string> = {
                       LOW: 'text-gray-400',
                       MEDIUM: 'text-yellow-400',
                       HIGH: 'text-orange-400',
@@ -438,7 +443,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm text-gray-400 mb-1">Quote Amount</p>
-                    <p className="text-xl font-bold text-purple-400">{formatKES(project.quote.totalPrice)}</p>
+                    <p className="text-xl font-bold text-purple-400">{formatKES(Number(project.quote.oneTimeTotal || 0))}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-400 mb-1">Created</p>
@@ -486,7 +491,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             </div>
 
             {/* Admin Actions */}
-            {user.role === 'ADMIN' && (
+            {session.user.role === 'ADMIN' && (
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
                 <h2 className="text-lg font-bold mb-4">Admin Actions</h2>
                 <div className="space-y-2">

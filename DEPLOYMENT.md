@@ -17,7 +17,7 @@ DATABASE_URL="mysql://mdawidah_novyrix:ZsF40IaVYzIX@mdawidahomestay.com:3306/mda
 NEXTAUTH_URL="https://your-domain.vercel.app"
 NEXTAUTH_SECRET="TnmLmkw1ZGPvoBIs8mlC2UiJ+QYvBe63HaruAYKwsec="
 ```
-**Purpose:** 
+**Purpose:**
 - `NEXTAUTH_URL`: Your production domain (update after deployment)
 - `NEXTAUTH_SECRET`: Encryption key for sessions (keep this secure!)
 
@@ -34,7 +34,7 @@ ADMIN_EMAIL="admin@novyrix.com"
 ```
 **Purpose:** Email service for transactional emails (quotes, contact form, etc.)
 
-**Note:** You'll need to verify your domain in Resend to send from `@novyrix.com`. 
+**Note:** You'll need to verify your domain in Resend to send from `@novyrix.com`.
 Until then, use Resend's sandbox email: `onboarding@resend.dev`
 
 ---
