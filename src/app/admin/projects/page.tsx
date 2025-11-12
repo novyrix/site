@@ -32,18 +32,18 @@ interface AdminProjectsPageProps {
 
 export default async function AdminProjectsPage({ searchParams }: AdminProjectsPageProps) {
   const session = await auth();
-  
+
   if (!session?.user || session.user.role !== 'ADMIN') {
     redirect('/dashboard');
   }
 
   // Build filters
   const where: any = {};
-  
+
   if (searchParams.status) {
     where.status = searchParams.status;
   }
-  
+
   if (searchParams.search) {
     where.OR = [
       { name: { contains: searchParams.search } },
@@ -68,9 +68,9 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
       },
       orderBy: { createdAt: 'desc' },
     }),
-    
+
     prisma.project.count({ where }),
-    
+
     prisma.project.groupBy({
       by: ['status'],
       _count: true,
@@ -127,7 +127,7 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <Link 
+            <Link
               href="/admin"
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-4 transition-colors"
             >
@@ -231,7 +231,7 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
               </div>
             </div>
             <div className="mt-2 w-full bg-white/10 rounded-full h-2">
-              <div 
+              <div
                 className="bg-blue-500 h-2 rounded-full transition-all"
                 style={{ width: `${totalRevenue > 0 ? (totalPaid / totalRevenue) * 100 : 0}%` }}
               />
@@ -283,7 +283,7 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
               const serviceInfo = serviceTypeConfig[project.quote.serviceType];
               const StatusIcon = statusInfo.icon;
               const ServiceIcon = serviceInfo.icon;
-              
+
               const paymentProgress = Number(project.contractValue) > 0
                 ? (Number(project.paidAmount) / Number(project.contractValue)) * 100
                 : 0;
@@ -314,7 +314,7 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${statusInfo.bg} flex-shrink-0`}>
                       <StatusIcon className={`w-4 h-4 ${statusInfo.color}`} />
                       <span className={`text-sm font-medium ${statusInfo.color}`}>
@@ -337,17 +337,17 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
                         <span className="text-sm font-medium">{serviceInfo.label}</span>
                       </div>
                     </div>
-                    
+
                     <div>
                       <p className="text-xs text-gray-400 mb-1">Contract Value</p>
                       <p className="text-sm font-bold">{formatKES(Number(project.contractValue))}</p>
                     </div>
-                    
+
                     <div>
                       <p className="text-xs text-gray-400 mb-1">Paid</p>
                       <p className="text-sm font-bold text-green-400">{formatKES(Number(project.paidAmount))}</p>
                     </div>
-                    
+
                     <div>
                       <p className="text-xs text-gray-400 mb-1">Start Date</p>
                       <div className="flex items-center gap-1 text-sm">
@@ -355,7 +355,7 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
                         <span>{formatDate(project.startDate)}</span>
                       </div>
                     </div>
-                    
+
                     <div>
                       <p className="text-xs text-gray-400 mb-1">Activity</p>
                       <div className="flex items-center gap-3 text-sm">
@@ -378,7 +378,7 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
                       <span className="font-medium">{paymentProgress.toFixed(1)}%</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2.5">
-                      <div 
+                      <div
                         className="bg-gradient-to-r from-purple-500 to-blue-500 h-2.5 rounded-full transition-all duration-500"
                         style={{ width: `${paymentProgress}%` }}
                       />
