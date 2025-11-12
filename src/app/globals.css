@@ -1,0 +1,241 @@
+@import "tailwindcss";
+
+/* Custom Properties */
+@theme {
+  --color-primary-50: #ffe8e0;
+  --color-primary-100: #ffd4c2;
+  --color-primary-200: #ffa885;
+  --color-primary-300: #ff8b5c;
+  --color-primary-400: #ff6b35;
+  --color-primary-500: #ff5722;
+  --color-primary-600: #e64a19;
+  --color-primary-700: #d84315;
+  --color-primary-800: #bf360c;
+  --color-primary-900: #a62a00;
+
+  --font-display: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body), system-ui, sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(255, 107, 53, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 53, 0.1) 0%,
+    rgba(255, 107, 53, 0.05) 100%
+  );
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 107, 53, 0.3);
+  box-shadow: 0 12px 48px 0 rgba(255, 107, 53, 0.2);
+}
+
+/* Glass Button */
+.glass-button {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 53, 0.2) 0%,
+    rgba(255, 107, 53, 0.1) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 107, 53, 0.3);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.glass-button:hover {
+  border-color: rgba(255, 107, 53, 0.5);
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+  transform: translateY(-2px);
+}
+
+.glass-button:active {
+  transform: translateY(0);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(to right, #ffa885, #ff6b35, #ff5722);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Navbar Blur */
+.navbar-blur {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #141414;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ff6b35;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ff5722;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(255, 107, 53, 0.6);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.5s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Utility Classes */
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animation-delay-600 {
+  animation-delay: 0.6s;
+}
