@@ -53,5 +53,5 @@ See **COMPREHENSIVE_ANALYSIS.md** for full details.
 
 ---
 
-**Repository**: https://github.com/novyrix/site  
+**Repository**: https://github.com/novyrix/site
 **Last Updated**: November 12, 2025
