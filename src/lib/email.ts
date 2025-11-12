@@ -208,7 +208,7 @@ export async function sendQuoteConfirmationEmail({
           </div>
 
           <p style="color: #6b7280; font-size: 14px; margin-bottom: 0;">
-            Have questions? Reply to this email or call us at <strong>+254 XXX XXX XXX</strong>
+            Have questions? Reply to this email or call us at <strong>+254 790 778 103</strong>
           </p>
         </div>
 
@@ -239,7 +239,7 @@ What Happens Next?
 
 View your quote: ${process.env.NEXT_PUBLIC_APP_URL}/quotes/${quoteId}
 
-Have questions? Reply to this email or call us at +254 XXX XXX XXX
+Have questions? Reply to this email or call us at +254 790 778 103
 
 © ${new Date().getFullYear()} Novyrix. All rights reserved.
   `;
