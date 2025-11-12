@@ -29,18 +29,18 @@ interface AdminClientsPageProps {
 
 export default async function AdminClientsPage({ searchParams }: AdminClientsPageProps) {
   const session = await auth();
-  
+
   if (!session?.user || session.user.role !== 'ADMIN') {
     redirect('/dashboard');
   }
 
   // Build filters
   const where: any = {};
-  
+
   if (searchParams.role) {
     where.role = searchParams.role;
   }
-  
+
   if (searchParams.search) {
     where.OR = [
       { name: { contains: searchParams.search } },
@@ -73,9 +73,9 @@ export default async function AdminClientsPage({ searchParams }: AdminClientsPag
       },
       orderBy: { createdAt: 'desc' },
     }),
-    
+
     prisma.user.count({ where }),
-    
+
     prisma.user.groupBy({
       by: ['role'],
       _count: true,
@@ -102,7 +102,7 @@ export default async function AdminClientsPage({ searchParams }: AdminClientsPag
   // Calculate stats
   const clientCount = roleCounts.find(r => r.role === 'CLIENT')?._count || 0;
   const adminCount = roleCounts.find(r => r.role === 'ADMIN')?._count || 0;
-  
+
   // Calculate total client value
   const totalClientValue = clients.reduce((sum, client) => {
     const projectValue = client.projects.reduce((pSum, p) => pSum + Number(p.contractValue), 0);
@@ -118,7 +118,7 @@ export default async function AdminClientsPage({ searchParams }: AdminClientsPag
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <Link 
+            <Link
               href="/admin"
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-4 transition-colors"
             >
@@ -128,7 +128,7 @@ export default async function AdminClientsPage({ searchParams }: AdminClientsPag
             <h1 className="text-4xl font-bold">Client Management</h1>
             <p className="text-gray-400 mt-2">Manage all users and their accounts</p>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <button className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/50 rounded-lg transition-colors flex items-center gap-2">
               <Users className="w-4 h-4" />
@@ -274,7 +274,7 @@ export default async function AdminClientsPage({ searchParams }: AdminClientsPag
                         )}
                       </div>
                     </div>
-                    
+
                     <button className="p-2 hover:bg-white/10 rounded-lg transition-colors">
                       <MoreVertical className="w-5 h-5 text-gray-400" />
                     </button>
@@ -292,7 +292,7 @@ export default async function AdminClientsPage({ searchParams }: AdminClientsPag
                         <p className="text-xs text-gray-500 mt-0.5">{formatKES(totalQuoteValue)}</p>
                       )}
                     </div>
-                    
+
                     <div>
                       <p className="text-xs text-gray-400 mb-1">Projects</p>
                       <div className="flex items-center gap-1">
@@ -303,7 +303,7 @@ export default async function AdminClientsPage({ searchParams }: AdminClientsPag
                         <p className="text-xs text-gray-500 mt-0.5">{formatKES(totalProjectValue)}</p>
                       )}
                     </div>
-                    
+
                     <div>
                       <p className="text-xs text-gray-400 mb-1">Joined</p>
                       <div className="flex items-center gap-1">
@@ -332,7 +332,7 @@ export default async function AdminClientsPage({ searchParams }: AdminClientsPag
                       <Eye className="w-4 h-4" />
                       View Details
                     </Link>
-                    
+
                     {client.role !== 'ADMIN' && (
                       <>
                         <button

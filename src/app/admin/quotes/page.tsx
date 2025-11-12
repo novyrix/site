@@ -31,22 +31,22 @@ interface AdminQuotesPageProps {
 
 export default async function AdminQuotesPage({ searchParams }: AdminQuotesPageProps) {
   const session = await auth();
-  
+
   if (!session?.user || session.user.role !== 'ADMIN') {
     redirect('/dashboard');
   }
 
   // Build filters
   const where: any = {};
-  
+
   if (searchParams.status) {
     where.status = searchParams.status;
   }
-  
+
   if (searchParams.serviceType) {
     where.serviceType = searchParams.serviceType;
   }
-  
+
   if (searchParams.search) {
     where.OR = [
       { user: { name: { contains: searchParams.search } } },
@@ -65,9 +65,9 @@ export default async function AdminQuotesPage({ searchParams }: AdminQuotesPageP
       },
       orderBy: { createdAt: 'desc' },
     }),
-    
+
     prisma.quote.count({ where }),
-    
+
     prisma.quote.groupBy({
       by: ['status'],
       _count: true,
@@ -122,7 +122,7 @@ export default async function AdminQuotesPage({ searchParams }: AdminQuotesPageP
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <Link 
+            <Link
               href="/admin"
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-4 transition-colors"
             >
@@ -132,7 +132,7 @@ export default async function AdminQuotesPage({ searchParams }: AdminQuotesPageP
             <h1 className="text-4xl font-bold">Quote Management</h1>
             <p className="text-gray-400 mt-2">Review and manage all client quotes</p>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <button className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/50 rounded-lg transition-colors flex items-center gap-2">
               <Download className="w-4 h-4" />
@@ -363,7 +363,7 @@ export default async function AdminQuotesPage({ searchParams }: AdminQuotesPageP
                             >
                               <Eye className="w-4 h-4" />
                             </Link>
-                            
+
                             {quote.status === 'SUBMITTED' && (
                               <>
                                 <button
