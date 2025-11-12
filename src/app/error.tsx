@@ -14,7 +14,7 @@ export default function Error({
   useEffect(() => {
     // Log the error to error reporting service
     console.error('Application error:', error)
-    
+
     // In production, send to error tracking service (e.g., Sentry)
     if (process.env.NODE_ENV === 'production') {
       // Example: sendToErrorTracking(error)
@@ -37,7 +37,7 @@ export default function Error({
             Something Went Wrong
           </h1>
           <p className="text-slate-400 text-lg mb-8 max-w-xl mx-auto">
-            We apologize for the inconvenience. An unexpected error occurred while processing your request. 
+            We apologize for the inconvenience. An unexpected error occurred while processing your request.
             Our team has been notified and is working to fix the issue.
           </p>
 

@@ -42,7 +42,7 @@ export default function NotFound() {
               Page Not Found
             </h2>
             <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              The page you&apos;re looking for doesn&apos;t exist or has been moved. 
+              The page you&apos;re looking for doesn&apos;t exist or has been moved.
               Don&apos;t worry, we&apos;ll help you find your way.
             </p>
           </div>

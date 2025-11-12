@@ -36,7 +36,7 @@ export default function AutomationCalculatorPage() {
         calculatorType: 'automation',
         estimatedPrice: roi.potentialSavings || 0
       });
-      
+
       trackFunnelStep('convert', {
         funnel: 'automation_calculator',
         value: roi.potentialSavings || 0

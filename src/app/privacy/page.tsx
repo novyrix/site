@@ -12,8 +12,8 @@ export default function PrivacyPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-8">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="text-blue-400 hover:text-blue-300 transition-colors mb-4 inline-block"
           >
             ← Back to Home
@@ -24,16 +24,16 @@ export default function PrivacyPage() {
 
         {/* Content */}
         <div className="bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 p-8 space-y-8 text-slate-200">
-          
+
           {/* Introduction */}
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">Introduction</h2>
             <p className="mb-4">
-              Novyrix (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy 
+              Novyrix (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy
               explains how we collect, use, disclose, and safeguard your information when you use our platform and services.
             </p>
             <p>
-              By using our Service, you consent to the data practices described in this policy. If you do not agree with 
+              By using our Service, you consent to the data practices described in this policy. If you do not agree with
               our policies and practices, please do not use our Service.
             </p>
           </section>
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
           {/* 1. Information We Collect */}
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">1. Information We Collect</h2>
-            
+
             <h3 className="text-xl font-semibold text-white mb-3 mt-4">1.1 Personal Information</h3>
             <p className="mb-4">We collect personal information that you voluntarily provide when you:</p>
             <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
@@ -74,7 +74,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">2. How We Use Your Information</h2>
             <p className="mb-4">We use the information we collect to:</p>
-            
+
             <h3 className="text-xl font-semibold text-white mb-3 mt-4">2.1 Provide Services</h3>
             <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
               <li>Create and manage your account</li>
@@ -111,10 +111,10 @@ export default function PrivacyPage() {
           {/* 3. Data Storage and Security */}
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">3. Data Storage and Security</h2>
-            
+
             <h3 className="text-xl font-semibold text-white mb-3 mt-4">3.1 Data Storage</h3>
             <p className="mb-4">
-              Your data is stored securely in our MySQL database hosted by trusted cloud infrastructure providers. 
+              Your data is stored securely in our MySQL database hosted by trusted cloud infrastructure providers.
               We implement industry-standard security measures including:
             </p>
             <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
@@ -134,7 +134,7 @@ export default function PrivacyPage() {
               <li>Necessary to resolve disputes or enforce agreements</li>
             </ul>
             <p>
-              Upon account deletion or termination, we will delete or anonymize your personal data within 30 days, 
+              Upon account deletion or termination, we will delete or anonymize your personal data within 30 days,
               unless retention is required by law.
             </p>
           </section>
@@ -149,11 +149,11 @@ export default function PrivacyPage() {
               <li><strong>Preference Cookies:</strong> Remember your settings and preferences</li>
             </ul>
             <p className="mb-4">
-              You can control cookie preferences through your browser settings. However, disabling essential cookies 
+              You can control cookie preferences through your browser settings. However, disabling essential cookies
               may limit your ability to use certain features of the Service.
             </p>
             <p>
-              We use NextAuth.js for authentication which stores session tokens in secure HTTP-only cookies. 
+              We use NextAuth.js for authentication which stores session tokens in secure HTTP-only cookies.
               These cookies are essential for maintaining your logged-in state.
             </p>
           </section>
@@ -162,12 +162,12 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">5. Third-Party Services</h2>
             <p className="mb-4">Our Service integrates with the following third-party services:</p>
-            
+
             <div className="space-y-4">
               <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">Resend (Email Service)</h4>
                 <p className="text-sm">
-                  We use Resend to send transactional and service-related emails. Your email address and message 
+                  We use Resend to send transactional and service-related emails. Your email address and message
                   content are processed by Resend to deliver emails. See Resend&apos;s privacy policy at resend.com/legal.
                 </p>
               </div>
@@ -175,7 +175,7 @@ export default function PrivacyPage() {
               <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">Cloud Hosting Provider</h4>
                 <p className="text-sm">
-                  Our database and application are hosted on secure cloud infrastructure. Your data is stored in 
+                  Our database and application are hosted on secure cloud infrastructure. Your data is stored in
                   compliance with industry security standards.
                 </p>
               </div>
@@ -183,7 +183,7 @@ export default function PrivacyPage() {
               <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">Payment Processors</h4>
                 <p className="text-sm">
-                  Payment information is processed through secure third-party payment processors. We do not store 
+                  Payment information is processed through secure third-party payment processors. We do not store
                   full credit card information on our servers.
                 </p>
               </div>
@@ -191,14 +191,14 @@ export default function PrivacyPage() {
               <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">Analytics Services</h4>
                 <p className="text-sm">
-                  We may use analytics services to understand usage patterns and improve our Service. These services 
+                  We may use analytics services to understand usage patterns and improve our Service. These services
                   may collect anonymized usage data.
                 </p>
               </div>
             </div>
 
             <p className="mt-4">
-              These third-party services have their own privacy policies and data practices. We encourage you to 
+              These third-party services have their own privacy policies and data practices. We encourage you to
               review their policies before using our Service.
             </p>
           </section>
@@ -207,13 +207,13 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">6. Data Sharing and Disclosure</h2>
             <p className="mb-4">We do not sell, rent, or trade your personal information. We may share your information:</p>
-            
+
             <h3 className="text-xl font-semibold text-white mb-3 mt-4">6.1 With Your Consent</h3>
             <p className="mb-4">We may share information with third parties when you explicitly consent.</p>
 
             <h3 className="text-xl font-semibold text-white mb-3 mt-4">6.2 Service Providers</h3>
             <p className="mb-4">
-              We share information with trusted service providers who help us operate our business (hosting, email, 
+              We share information with trusted service providers who help us operate our business (hosting, email,
               payment processing). These providers are contractually obligated to protect your data.
             </p>
 
@@ -228,7 +228,7 @@ export default function PrivacyPage() {
 
             <h3 className="text-xl font-semibold text-white mb-3 mt-4">6.4 Business Transfers</h3>
             <p>
-              In the event of a merger, acquisition, or sale of assets, your information may be transferred to the 
+              In the event of a merger, acquisition, or sale of assets, your information may be transferred to the
               acquiring entity. We will notify you of any such change in ownership.
             </p>
           </section>
@@ -250,13 +250,13 @@ export default function PrivacyPage() {
 
             <h3 className="text-xl font-semibold text-white mb-3 mt-4">7.3 Deletion</h3>
             <p className="mb-4">
-              You can request deletion of your account and personal data. Some information may be retained as required 
+              You can request deletion of your account and personal data. Some information may be retained as required
               by law or for legitimate business purposes (e.g., transaction records).
             </p>
 
             <h3 className="text-xl font-semibold text-white mb-3 mt-4">7.4 Marketing Communications</h3>
             <p className="mb-4">
-              You can opt out of marketing emails by clicking the unsubscribe link in any marketing email or by 
+              You can opt out of marketing emails by clicking the unsubscribe link in any marketing email or by
               updating your email preferences in account settings.
             </p>
 
@@ -274,8 +274,8 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">8. International Data Transfers</h2>
             <p className="mb-4">
-              Our primary operations are based in Kenya. However, some of our service providers may be located in 
-              other countries. When we transfer data internationally, we ensure appropriate safeguards are in place 
+              Our primary operations are based in Kenya. However, some of our service providers may be located in
+              other countries. When we transfer data internationally, we ensure appropriate safeguards are in place
               to protect your information in accordance with this Privacy Policy and applicable data protection laws.
             </p>
           </section>
@@ -284,8 +284,8 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">9. Children&apos;s Privacy</h2>
             <p>
-              Our Service is not intended for children under 18 years of age. We do not knowingly collect personal 
-              information from children. If you become aware that a child has provided us with personal information, 
+              Our Service is not intended for children under 18 years of age. We do not knowingly collect personal
+              information from children. If you become aware that a child has provided us with personal information,
               please contact us immediately, and we will take steps to delete such information.
             </p>
           </section>
@@ -294,7 +294,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">10. Changes to This Privacy Policy</h2>
             <p className="mb-4">
-              We may update this Privacy Policy periodically to reflect changes in our practices, technology, legal 
+              We may update this Privacy Policy periodically to reflect changes in our practices, technology, legal
               requirements, or other factors. We will notify you of material changes by:
             </p>
             <ul className="list-disc list-inside space-y-2 ml-4 mb-4">
@@ -303,7 +303,7 @@ export default function PrivacyPage() {
               <li>Displaying a prominent notice on the Service</li>
             </ul>
             <p>
-              The &quot;Last Updated&quot; date at the top indicates when the policy was last revised. Your continued use 
+              The &quot;Last Updated&quot; date at the top indicates when the policy was last revised. Your continued use
               of the Service after changes constitutes acceptance of the updated policy.
             </p>
           </section>
@@ -312,7 +312,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-4">11. Contact Information</h2>
             <p className="mb-4">
-              If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, 
+              If you have questions, concerns, or requests regarding this Privacy Policy or our data practices,
               please contact us:
             </p>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-2">
@@ -359,7 +359,7 @@ export default function PrivacyPage() {
               <li>Employee training on data protection</li>
             </ul>
             <p className="mt-4">
-              While we implement robust security measures, no system is completely secure. We cannot guarantee absolute 
+              While we implement robust security measures, no system is completely secure. We cannot guarantee absolute
               security, but we are committed to protecting your information using industry best practices.
             </p>
           </section>

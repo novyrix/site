@@ -48,7 +48,7 @@ export default function SoftwareCalculatorPage() {
         calculatorType: 'software',
         estimatedPrice: priceEstimate.max
       });
-      
+
       trackFunnelStep('convert', {
         funnel: 'software_calculator',
         value: priceEstimate.max
