@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { 
+      {
         success: true,
         message: 'Thank you for your message! We will get back to you soon.'
       },

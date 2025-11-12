@@ -17,7 +17,7 @@ import {
 
 export default async function AdminDashboardPage() {
   const session = await auth();
-  
+
   if (!session?.user || session.user.role !== 'ADMIN') {
     redirect('/dashboard');
   }
@@ -37,41 +37,41 @@ export default async function AdminDashboardPage() {
   ] = await Promise.all([
     // Total users
     prisma.user.count(),
-    
+
     // Total quotes
     prisma.quote.count(),
-    
+
     // Total projects
     prisma.project.count(),
-    
+
     // Total revenue (sum of all project contract values)
     prisma.project.aggregate({
       _sum: { contractValue: true },
     }),
-    
+
     // Recent quotes (last 5)
     prisma.quote.findMany({
       take: 5,
       orderBy: { createdAt: 'desc' },
       include: { user: true },
     }),
-    
+
     // Recent projects (last 5)
     prisma.project.findMany({
       take: 5,
       orderBy: { createdAt: 'desc' },
-      include: { 
+      include: {
         user: true,
         quote: true,
       },
     }),
-    
+
     // Quotes by status
     prisma.quote.groupBy({
       by: ['status'],
       _count: true,
     }),
-    
+
     // Projects by status
     prisma.project.groupBy({
       by: ['status'],
@@ -145,8 +145,8 @@ export default async function AdminDashboardPage() {
             </div>
             <p className="text-sm text-gray-400 mb-1">Total Clients</p>
             <p className="text-3xl font-bold">{totalUsers}</p>
-            <Link 
-              href="/admin/clients" 
+            <Link
+              href="/admin/clients"
               className="text-sm text-blue-400 hover:text-blue-300 transition-colors mt-2 inline-block"
             >
               View all →
@@ -163,8 +163,8 @@ export default async function AdminDashboardPage() {
             </div>
             <p className="text-sm text-gray-400 mb-1">Total Projects</p>
             <p className="text-3xl font-bold">{totalProjects}</p>
-            <Link 
-              href="/admin/projects" 
+            <Link
+              href="/admin/projects"
               className="text-sm text-purple-400 hover:text-purple-300 transition-colors mt-2 inline-block"
             >
               Manage →
@@ -181,8 +181,8 @@ export default async function AdminDashboardPage() {
             </div>
             <p className="text-sm text-gray-400 mb-1">Total Quotes</p>
             <p className="text-3xl font-bold">{totalQuotes}</p>
-            <Link 
-              href="/admin/quotes" 
+            <Link
+              href="/admin/quotes"
               className="text-sm text-orange-400 hover:text-orange-300 transition-colors mt-2 inline-block"
             >
               Review →
@@ -271,14 +271,14 @@ export default async function AdminDashboardPage() {
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold">Recent Quotes</h3>
-              <Link 
+              <Link
                 href="/admin/quotes"
                 className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
               >
                 View all →
               </Link>
             </div>
-            
+
             {recentQuotes.length === 0 ? (
               <p className="text-gray-400 text-center py-8">No quotes yet</p>
             ) : (
@@ -326,14 +326,14 @@ export default async function AdminDashboardPage() {
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold">Recent Projects</h3>
-              <Link 
+              <Link
                 href="/admin/projects"
                 className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
               >
                 View all →
               </Link>
             </div>
-            
+
             {recentProjects.length === 0 ? (
               <p className="text-gray-400 text-center py-8">No projects yet</p>
             ) : (

@@ -50,7 +50,7 @@ export async function sendEmail({
  */
 export async function sendWelcomeEmail(to: string, userName: string) {
   const subject = 'Welcome to Novyrix - Let\'s Build Something Amazing';
-  
+
   const html = `
     <!DOCTYPE html>
     <html>
@@ -62,12 +62,12 @@ export async function sendWelcomeEmail(to: string, userName: string) {
         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center; border-radius: 10px 10px 0 0;">
           <h1 style="color: white; margin: 0; font-size: 32px;">Welcome to Novyrix!</h1>
         </div>
-        
+
         <div style="background: #ffffff; padding: 40px 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 10px 10px;">
           <p style="font-size: 18px; margin-top: 0;">Hi ${userName},</p>
-          
+
           <p>Thank you for joining Novyrix! We're excited to help you bring your digital vision to life.</p>
-          
+
           <div style="background: #f9fafb; border-left: 4px solid #667eea; padding: 20px; margin: 30px 0;">
             <h3 style="margin-top: 0; color: #667eea;">What's Next?</h3>
             <ul style="margin: 0; padding-left: 20px;">
@@ -76,24 +76,24 @@ export async function sendWelcomeEmail(to: string, userName: string) {
               <li style="margin-bottom: 10px;"><strong>Contact Us:</strong> Have questions? Our team is here to help</li>
             </ul>
           </div>
-          
+
           <div style="text-align: center; margin: 40px 0;">
             <a href="${process.env.NEXT_PUBLIC_APP_URL}/calculators" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; padding: 15px 40px; border-radius: 8px; font-weight: 600; font-size: 16px;">
               Get Your Free Quote
             </a>
           </div>
-          
+
           <p style="color: #6b7280; font-size: 14px; margin-bottom: 0;">
-            Need help getting started? Reply to this email or visit our 
+            Need help getting started? Reply to this email or visit our
             <a href="${process.env.NEXT_PUBLIC_APP_URL}/contact" style="color: #667eea; text-decoration: none;">contact page</a>.
           </p>
         </div>
-        
+
         <div style="text-align: center; padding: 20px; color: #9ca3af; font-size: 12px;">
           <p>© ${new Date().getFullYear()} Novyrix. All rights reserved.</p>
           <p>
-            <a href="${process.env.NEXT_PUBLIC_APP_URL}" style="color: #667eea; text-decoration: none;">Visit Website</a> • 
-            <a href="${process.env.NEXT_PUBLIC_APP_URL}/privacy" style="color: #667eea; text-decoration: none;">Privacy Policy</a> • 
+            <a href="${process.env.NEXT_PUBLIC_APP_URL}" style="color: #667eea; text-decoration: none;">Visit Website</a> •
+            <a href="${process.env.NEXT_PUBLIC_APP_URL}/privacy" style="color: #667eea; text-decoration: none;">Privacy Policy</a> •
             <a href="${process.env.NEXT_PUBLIC_APP_URL}/terms" style="color: #667eea; text-decoration: none;">Terms of Service</a>
           </p>
         </div>
@@ -140,7 +140,7 @@ export async function sendQuoteConfirmationEmail({
   totalPrice: number;
 }) {
   const subject = 'Quote Received - We\'ll Review and Get Back to You';
-  
+
   const formatKES = (amount: number) => {
     return new Intl.NumberFormat('en-KE', {
       style: 'currency',
@@ -167,12 +167,12 @@ export async function sendQuoteConfirmationEmail({
         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center; border-radius: 10px 10px 0 0;">
           <h1 style="color: white; margin: 0; font-size: 28px;">Quote Received!</h1>
         </div>
-        
+
         <div style="background: #ffffff; padding: 40px 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 10px 10px;">
           <p style="font-size: 18px; margin-top: 0;">Hi ${userName},</p>
-          
+
           <p>Thank you for requesting a quote! We've received your request and our team is reviewing it.</p>
-          
+
           <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 25px; margin: 30px 0;">
             <h3 style="margin-top: 0; color: #667eea;">Quote Summary</h3>
             <table style="width: 100%; border-collapse: collapse;">
@@ -190,7 +190,7 @@ export async function sendQuoteConfirmationEmail({
               </tr>
             </table>
           </div>
-          
+
           <div style="background: #ecfdf5; border-left: 4px solid #10b981; padding: 20px; margin: 30px 0;">
             <h3 style="margin-top: 0; color: #059669;">What Happens Next?</h3>
             <ol style="margin: 0; padding-left: 20px; color: #065f46;">
@@ -200,18 +200,18 @@ export async function sendQuoteConfirmationEmail({
               <li>Once approved, we'll kick off your project!</li>
             </ol>
           </div>
-          
+
           <div style="text-align: center; margin: 40px 0;">
             <a href="${process.env.NEXT_PUBLIC_APP_URL}/quotes/${quoteId}" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; padding: 15px 40px; border-radius: 8px; font-weight: 600; font-size: 16px;">
               View Your Quote
             </a>
           </div>
-          
+
           <p style="color: #6b7280; font-size: 14px; margin-bottom: 0;">
             Have questions? Reply to this email or call us at <strong>+254 XXX XXX XXX</strong>
           </p>
         </div>
-        
+
         <div style="text-align: center; padding: 20px; color: #9ca3af; font-size: 12px;">
           <p>© ${new Date().getFullYear()} Novyrix. All rights reserved.</p>
         </div>
@@ -262,7 +262,7 @@ export async function sendContactNotificationEmail({
   message: string;
 }) {
   const subject = `New Contact Form Submission from ${name}`;
-  
+
   const html = `
     <!DOCTYPE html>
     <html>
@@ -274,7 +274,7 @@ export async function sendContactNotificationEmail({
         <div style="background: #1f2937; padding: 30px 20px; text-align: center; border-radius: 10px 10px 0 0;">
           <h1 style="color: white; margin: 0; font-size: 24px;">New Contact Form Submission</h1>
         </div>
-        
+
         <div style="background: #ffffff; padding: 40px 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 10px 10px;">
           <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 25px; margin-bottom: 30px;">
             <h3 style="margin-top: 0; color: #1f2937;">Contact Information</h3>
@@ -295,12 +295,12 @@ export async function sendContactNotificationEmail({
               ` : ''}
             </table>
           </div>
-          
+
           <div>
             <h3 style="color: #1f2937; margin-bottom: 10px;">Message:</h3>
             <div style="background: #f9fafb; border-left: 4px solid #667eea; padding: 20px; white-space: pre-wrap;">${message}</div>
           </div>
-          
+
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
             <p style="margin: 0;">Received: ${new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })}</p>
           </div>
@@ -342,7 +342,7 @@ export async function sendPasswordResetEmail({
 }) {
   const subject = 'Reset Your Novyrix Password';
   const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset-password?token=${resetToken}`;
-  
+
   const html = `
     <!DOCTYPE html>
     <html>
@@ -354,32 +354,32 @@ export async function sendPasswordResetEmail({
         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center; border-radius: 10px 10px 0 0;">
           <h1 style="color: white; margin: 0; font-size: 28px;">Password Reset Request</h1>
         </div>
-        
+
         <div style="background: #ffffff; padding: 40px 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 10px 10px;">
           <p style="font-size: 18px; margin-top: 0;">Hi ${userName},</p>
-          
+
           <p>We received a request to reset your password for your Novyrix account.</p>
-          
+
           <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin: 30px 0;">
             <p style="margin: 0; color: #92400e;"><strong>⚠️ Security Notice:</strong> If you didn't request this password reset, please ignore this email. Your password will remain unchanged.</p>
           </div>
-          
+
           <div style="text-align: center; margin: 40px 0;">
             <a href="${resetUrl}" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; padding: 15px 40px; border-radius: 8px; font-weight: 600; font-size: 16px;">
               Reset My Password
             </a>
           </div>
-          
+
           <p style="color: #6b7280; font-size: 14px;">
             This link will expire in <strong>1 hour</strong> for security reasons.
           </p>
-          
+
           <p style="color: #6b7280; font-size: 14px; margin-bottom: 0;">
             If the button doesn't work, copy and paste this link into your browser:<br>
             <a href="${resetUrl}" style="color: #667eea; word-break: break-all;">${resetUrl}</a>
           </p>
         </div>
-        
+
         <div style="text-align: center; padding: 20px; color: #9ca3af; font-size: 12px;">
           <p>© ${new Date().getFullYear()} Novyrix. All rights reserved.</p>
         </div>

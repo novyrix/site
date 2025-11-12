@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { 
-  ArrowLeft, 
-  Calendar, 
-  DollarSign, 
-  FileText, 
-  Globe, 
-  Code, 
+import {
+  ArrowLeft,
+  Calendar,
+  DollarSign,
+  FileText,
+  Globe,
+  Code,
   Zap,
   Clock,
   AlertCircle,
@@ -96,7 +96,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   // Invoice stats
   const paidInvoices = project.invoices.filter(inv => inv.status === 'PAID').length;
   const pendingInvoices = project.invoices.filter(inv => inv.status === 'PENDING' || inv.status === 'SENT').length;
-  const overdueInvoices = project.invoices.filter(inv => 
+  const overdueInvoices = project.invoices.filter(inv =>
     inv.status !== 'PAID' && inv.status !== 'CANCELLED' && new Date(inv.dueDate) < new Date()
   ).length;
 
@@ -111,7 +111,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div>
-          <Link 
+          <Link
             href="/projects"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors"
           >
@@ -156,7 +156,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             </div>
             <p className="text-2xl font-bold">{formatKES(totalPaid)}</p>
             <div className="mt-2 w-full bg-white/10 rounded-full h-2">
-              <div 
+              <div
                 className="bg-blue-500 h-2 rounded-full transition-all duration-500"
                 style={{ width: `${progressPercentage}%` }}
               />
@@ -224,7 +224,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                     <div className="flex items-center gap-2">
                       <span className="font-medium">{project.progress}%</span>
                       <div className="flex-1 bg-white/10 rounded-full h-2">
-                        <div 
+                        <div
                           className="bg-purple-500 h-2 rounded-full transition-all duration-500"
                           style={{ width: `${project.progress}%` }}
                         />
@@ -277,7 +277,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                     };
 
                     return (
-                      <div 
+                      <div
                         key={invoice.id}
                         className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors"
                       >
@@ -315,7 +315,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Recent Support Tickets</h2>
-                <Link 
+                <Link
                   href={`/support?project=${project.id}`}
                   className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/50 rounded-lg text-sm transition-colors"
                 >
@@ -344,7 +344,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                     };
 
                     return (
-                      <div 
+                      <div
                         key={ticket.id}
                         className="p-4 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors"
                       >
@@ -352,7 +352,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
                               <MessageSquare className="w-4 h-4 text-purple-400" />
-                              <Link 
+                              <Link
                                 href={`/support/${ticket.id}`}
                                 className="font-medium hover:text-purple-400 transition-colors"
                               >
@@ -376,9 +376,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                       </div>
                     );
                   })}
-                  
+
                   {project.supportTickets.length === 5 && (
-                    <Link 
+                    <Link
                       href={`/support?project=${project.id}`}
                       className="block text-center text-sm text-purple-400 hover:text-purple-300 transition-colors"
                     >
@@ -476,7 +476,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                     <span className="font-medium">{progressPercentage.toFixed(1)}%</span>
                   </div>
                   <div className="w-full bg-white/10 rounded-full h-3">
-                    <div 
+                    <div
                       className="bg-gradient-to-r from-purple-500 to-blue-500 h-3 rounded-full transition-all duration-500"
                       style={{ width: `${progressPercentage}%` }}
                     />
