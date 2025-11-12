@@ -51,7 +51,7 @@ export function ProfileEditForm({ user }: ProfileEditFormProps) {
 
       setSuccess("Profile updated successfully!");
       router.refresh();
-      
+
       // Clear success message after 3 seconds
       setTimeout(() => setSuccess(""), 3000);
     } catch (err: any) {
