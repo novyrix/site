@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth-helpers";
+import { auth } from "@/lib/auth";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -7,16 +7,16 @@ import { QuotesList } from "@/components/quotes-list";
 import { prisma } from "@/lib/prisma";
 
 export default async function QuotesPage() {
-  const user = await getCurrentUser();
+  const session = await auth();
 
-  if (!user) {
+  if (!session?.user?.id) {
     redirect("/login");
   }
 
   // Fetch user's quotes
   const quotes = await prisma.quote.findMany({
     where: {
-      userId: user.id,
+      userId: session.user.id,
     },
     orderBy: {
       createdAt: "desc",

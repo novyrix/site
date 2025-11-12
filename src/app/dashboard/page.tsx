@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth-helpers";
+import { auth } from "@/lib/auth";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -7,11 +7,13 @@ import { LogOut, User, FileText, Settings } from "lucide-react";
 import { SignOutButton } from "@/components/sign-out-button";
 
 export default async function DashboardPage() {
-  const user = await getCurrentUser();
+  const session = await auth();
 
-  if (!user) {
+  if (!session?.user) {
     redirect("/login");
   }
+
+  const user = session.user;
 
   return (
     <main className="min-h-screen bg-black text-white pt-32 pb-20">

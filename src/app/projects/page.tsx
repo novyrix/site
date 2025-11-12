@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth-helpers";
+import { auth } from "@/lib/auth";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Plus } from "lucide-react";
@@ -8,16 +8,16 @@ import { ProjectsList } from "@/components/projects-list";
 import { prisma } from "@/lib/prisma";
 
 export default async function ProjectsPage() {
-  const user = await getCurrentUser();
+  const session = await auth();
 
-  if (!user) {
+  if (!session?.user?.id) {
     redirect("/login");
   }
 
   // Fetch user's projects
   const projects = await prisma.project.findMany({
     where: {
-      userId: user.id,
+      userId: session.user.id,
     },
     include: {
       quote: {
