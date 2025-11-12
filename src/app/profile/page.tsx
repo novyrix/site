@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth-helpers";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User, Mail, Building2, Phone, Key, ArrowLeft } from "lucide-react";
@@ -7,7 +8,31 @@ import Link from "next/link";
 import { ProfileEditForm } from "@/components/profile-edit-form";
 
 export default async function ProfilePage() {
-  const user = await getCurrentUser();
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    redirect("/login");
+  }
+
+  // Fetch full user data from database
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      company: true,
+      phone: true,
+      role: true,
+      createdAt: true,
+      _count: {
+        select: {
+          quotes: true,
+          projects: true,
+        },
+      },
+    },
+  });
 
   if (!user) {
     redirect("/login");

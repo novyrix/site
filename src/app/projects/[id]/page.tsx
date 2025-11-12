@@ -27,9 +27,9 @@ import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth';
 
 interface ProjectDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 const statusConfig = {
@@ -69,8 +69,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
     notFound();
   }
 
+  const { id } = await params;
+
   const project = await prisma.project.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       user: true,
       quote: true,

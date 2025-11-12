@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -13,9 +13,11 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { id } = await params;
+
     const quote = await prisma.quote.findUnique({
       where: {
-        id: params.id,
+        id,
       },
       include: {
         user: {
@@ -50,7 +52,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -60,10 +62,11 @@ export async function PUT(
     }
 
     const body = await request.json();
+    const { id } = await params;
 
     // Check if quote exists and user owns it
     const existingQuote = await prisma.quote.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!existingQuote) {
@@ -79,7 +82,7 @@ export async function PUT(
 
     // Update the quote
     const quote = await prisma.quote.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         ...body,
         // Parse numeric fields
@@ -117,7 +120,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -126,9 +129,11 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { id } = await params;
+
     // Check if quote exists and user owns it
     const existingQuote = await prisma.quote.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!existingQuote) {
@@ -144,7 +149,7 @@ export async function DELETE(
 
     // Delete the quote
     await prisma.quote.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json(

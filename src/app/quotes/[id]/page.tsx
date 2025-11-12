@@ -1,5 +1,5 @@
 import { redirect, notFound } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth-helpers";
+import { auth } from "@/lib/auth";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download, Send, CheckCircle2 } from "lucide-react";
@@ -9,18 +9,20 @@ import { prisma } from "@/lib/prisma";
 export default async function QuoteDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const user = await getCurrentUser();
+  const session = await auth();
 
-  if (!user) {
+  if (!session?.user) {
     redirect("/login");
   }
+
+  const { id } = await params;
 
   // Fetch the quote
   const quote = await prisma.quote.findUnique({
     where: {
-      id: params.id,
+      id,
     },
     include: {
       user: {
@@ -40,7 +42,7 @@ export default async function QuoteDetailPage({
   }
 
   // Check if user owns this quote
-  if (quote.userId !== user.id && user.role !== "ADMIN") {
+  if (quote.userId !== session.user.id && session.user.role !== "ADMIN") {
     redirect("/quotes");
   }
 
