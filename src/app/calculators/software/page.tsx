@@ -41,7 +41,7 @@ export default function SoftwareCalculatorPage() {
   // Calculate complexity score based on features
   const calculateComplexity = (): Complexity => {
     const featureCount = Object.values(features).filter(Boolean).length;
-    
+
     if (featureCount <= 2) return "simple";
     if (featureCount <= 5) return "medium";
     return "complex";
@@ -50,7 +50,7 @@ export default function SoftwareCalculatorPage() {
   // Get price estimate based on complexity
   const getPriceEstimate = (): { min: number; max: number } => {
     const calc = calculateComplexity();
-    
+
     if (calc === "simple") {
       return { min: SOFTWARE_PRICING.TIER_1_MIN, max: SOFTWARE_PRICING.TIER_1_MAX };
     }

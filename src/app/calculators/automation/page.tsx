@@ -39,11 +39,11 @@ export default function AutomationCalculatorPage() {
 
     const hoursPerWeek = hourRanges[data.hoursPerWeek];
     const hoursPerMonth = hoursPerWeek * 4;
-    
+
     // Assume KES 2,000 per hour value (conservative estimate)
     const hourlyValue = 2000;
     const kshValue = hoursPerMonth * hourlyValue;
-    
+
     // Automation typically saves 60-80% of manual time
     const savingsPercentage = 70;
 
