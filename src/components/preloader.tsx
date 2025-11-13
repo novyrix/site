@@ -30,7 +30,8 @@ export function Preloader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+          className="fixed inset-0 z-[100] bg-black flex items-center justify-center pointer-events-auto"
+          style={{ pointerEvents: isLoading ? 'auto' : 'none' }}
         >
           <div className="relative">
             {/* Glowing background effect */}
