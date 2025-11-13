@@ -5,6 +5,7 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Preloader } from "@/components/preloader";
 import { SessionProvider } from "@/components/session-provider";
+import { ToastProvider } from "@/components/ui/toast";
 import { auth } from "@/lib/auth";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -62,10 +63,12 @@ export default async function RootLayout({
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased">
         <SessionProvider session={session}>
-          <Preloader />
-          <Navigation />
-          {children}
-          <Footer />
+          <ToastProvider>
+            <Preloader />
+            <Navigation />
+            {children}
+            <Footer />
+          </ToastProvider>
         </SessionProvider>
         <Analytics />
         <SpeedInsights />
