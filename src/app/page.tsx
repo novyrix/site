@@ -26,8 +26,11 @@ export default function Home() {
             custom software solutions, and intelligent workflow automation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slideUp">
-            <Button size="lg" asChild rightIcon={<ArrowRight className="w-5 h-5" />}>
-              <Link href="/calculators">Get Your Quote</Link>
+            <Button size="lg" asChild>
+              <Link href="/calculators" className="inline-flex items-center gap-2">
+                Get Your Quote
+                <ArrowRight className="w-5 h-5" />
+              </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
               <Link href="/services">Explore Services</Link>
@@ -328,8 +331,11 @@ export default function Home() {
             Use our transparent pricing calculators to get an instant quote
             for your project. No hidden fees, no surprises.
           </p>
-          <Button size="xl" asChild rightIcon={<ArrowRight className="w-5 h-5" />}>
-            <Link href="/calculators">Calculate Your Quote</Link>
+          <Button size="xl" asChild>
+            <Link href="/calculators" className="inline-flex items-center gap-2">
+              Calculate Your Quote
+              <ArrowRight className="w-5 h-5" />
+            </Link>
           </Button>
         </Card>
       </section>
