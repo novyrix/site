@@ -63,7 +63,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const Comp = asChild ? Slot : "button";
-    
+
     // When asChild is true, only render children (Slot requires single child)
     if (asChild) {
       return (
@@ -76,7 +76,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         </Comp>
       );
     }
-    
+
     // When asChild is false, render as button with all features
     return (
       <Comp

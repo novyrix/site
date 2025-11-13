@@ -45,7 +45,6 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         className={cn(
           cardVariants({ variant, padding }),
-          hover && "hover:-translate-y-1",
           className
         )}
         {...props}
