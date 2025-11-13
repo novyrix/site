@@ -2,18 +2,18 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useToastActions } from '@/components/ui/toast';
 import { Send } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState('');
+  const toast = useToastActions();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsSubmitting(true);
-    setError('');
 
     const formData = new FormData(e.currentTarget);
     const data = {
@@ -40,10 +40,18 @@ export function ContactForm() {
         source: 'contact_page'
       });
 
+      toast.success(
+        'Message Sent Successfully!',
+        "We'll get back to you within 24 hours."
+      );
+
       setSubmitted(true);
       (e.target as HTMLFormElement).reset();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to send message');
+      toast.error(
+        'Failed to Send Message',
+        err instanceof Error ? err.message : 'Please try again later.'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -71,12 +79,6 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {error && (
-        <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-4 text-red-400 text-sm">
-          {error}
-        </div>
-      )}
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-2">

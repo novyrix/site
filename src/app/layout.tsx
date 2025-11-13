@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer";
 import { Preloader } from "@/components/preloader";
 import { SessionProvider } from "@/components/session-provider";
 import { ToastProvider } from "@/components/ui/toast";
+import { CookieConsent } from "@/components/cookie-consent";
 import { auth } from "@/lib/auth";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -68,6 +69,7 @@ export default async function RootLayout({
             <Navigation />
             {children}
             <Footer />
+            <CookieConsent />
           </ToastProvider>
         </SessionProvider>
         <Analytics />
