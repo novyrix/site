@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -12,8 +12,37 @@ export default function CalculatorsPage() {
             Get Your Quote
           </h1>
           <p className="text-xl text-gray-400 leading-relaxed">
-            Choose a service to calculate your instant, transparent quote
+            Choose your preferred path to get an accurate quote
           </p>
+        </div>
+
+        {/* AI Consultant CTA */}
+        <div className="max-w-5xl mx-auto mb-12">
+          <Card variant="highlighted" className="p-8">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-primary-500 to-purple-500 flex items-center justify-center flex-shrink-0">
+                <Sparkles className="w-8 h-8 text-white" />
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-2xl font-display font-bold mb-2">
+                  Not Sure What You Need?
+                </h3>
+                <p className="text-gray-400">
+                  Chat with our AI Consultant to get a custom quote based on your business goals
+                </p>
+              </div>
+              <Button size="xl" asChild>
+                <Link href="/ai-consultant" className="flex items-center gap-2">
+                  <Sparkles className="w-5 h-5" />
+                  Try AI Consultant
+                </Link>
+              </Button>
+            </div>
+          </Card>
+        </div>
+
+        <div className="max-w-4xl mx-auto text-center mb-8">
+          <p className="text-gray-500">Or use our detailed calculators:</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">

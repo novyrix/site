@@ -20,7 +20,7 @@ export function Pagination({
 }: PaginationProps) {
   const getPageNumbers = () => {
     const pages: (number | string)[] = [];
-    
+
     if (totalPages <= maxVisible) {
       // Show all pages if total is less than maxVisible
       for (let i = 1; i <= totalPages; i++) {

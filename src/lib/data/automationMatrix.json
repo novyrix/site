@@ -1,0 +1,209 @@
+{
+  "WF-CORE": {
+    "id": "WF-CORE",
+    "name": "Workflow Core Development",
+    "category": "foundation",
+    "price": 200000,
+    "mandatory": true,
+    "description": "Automation Discovery & Process Mapping Workshop, Node.js Scripting Environment Setup, Secure Credential Management, Basic Logging & Error Notification, Deployment & Go-Live, Included Connectors: 1 Standard + 1 Custom, Included Logic: Basic complexity",
+    "keywords": [
+      "automation",
+      "workflow",
+      "integration",
+      "foundation",
+      "setup",
+      "base"
+    ]
+  },
+  "API-STD-01": {
+    "id": "API-STD-01",
+    "name": "Google Sheets Connector",
+    "category": "connector",
+    "price": 15000,
+    "description": "Standard integration with Google Sheets API for reading and writing data",
+    "keywords": [
+      "google sheets",
+      "spreadsheet",
+      "excel online",
+      "sheets"
+    ]
+  },
+  "API-STD-02": {
+    "id": "API-STD-02",
+    "name": "Mailchimp Connector",
+    "category": "connector",
+    "price": 20000,
+    "description": "Integration with Mailchimp for email marketing automation",
+    "keywords": [
+      "mailchimp",
+      "email marketing",
+      "newsletter",
+      "email automation"
+    ]
+  },
+  "API-STD-03": {
+    "id": "API-STD-03",
+    "name": "QuickBooks Connector",
+    "category": "connector",
+    "price": 35000,
+    "description": "Integration with QuickBooks Online for accounting automation",
+    "keywords": [
+      "quickbooks",
+      "accounting",
+      "bookkeeping",
+      "financial"
+    ]
+  },
+  "API-STD-04": {
+    "id": "API-STD-04",
+    "name": "WooCommerce Connector",
+    "category": "connector",
+    "price": 40000,
+    "description": "Standard integration with WooCommerce for e-commerce automation",
+    "keywords": [
+      "woocommerce",
+      "wordpress",
+      "ecommerce",
+      "online store"
+    ]
+  },
+  "API-STD-05": {
+    "id": "API-STD-05",
+    "name": "M-Pesa API Access",
+    "category": "connector",
+    "price": 25000,
+    "description": "Real-time M-Pesa transaction feed and reconciliation access",
+    "keywords": [
+      "mpesa",
+      "m-pesa",
+      "safaricom",
+      "mobile money",
+      "payments"
+    ]
+  },
+  "API-CUS-01": {
+    "id": "API-CUS-01",
+    "name": "Custom Database Integration",
+    "category": "connector",
+    "price": 60000,
+    "description": "Direct integration with custom or legacy database systems",
+    "keywords": [
+      "database",
+      "legacy system",
+      "custom integration",
+      "sql"
+    ]
+  },
+  "API-CUS-02": {
+    "id": "API-CUS-02",
+    "name": "KRA e-TIMS Integration",
+    "category": "connector",
+    "price": 100000,
+    "description": "Custom integration with KRA e-TIMS VSCU/OSCU API for automated tax invoice generation and compliance",
+    "keywords": [
+      "kra",
+      "etims",
+      "e-tims",
+      "tax",
+      "invoice",
+      "compliance",
+      "vscu",
+      "oscu",
+      "tax invoice"
+    ]
+  },
+  "API-CUS-03": {
+    "id": "API-CUS-03",
+    "name": "Custom ERP Integration",
+    "category": "connector",
+    "price": 80000,
+    "description": "Integration with custom or proprietary ERP systems",
+    "keywords": [
+      "erp",
+      "enterprise",
+      "business system",
+      "custom software"
+    ]
+  },
+  "LOGIC-001": {
+    "id": "LOGIC-001",
+    "name": "Basic Logic Rules",
+    "category": "logic",
+    "price": 0,
+    "included": true,
+    "description": "Simple conditional logic and data transformations",
+    "keywords": [
+      "logic",
+      "rules",
+      "conditions",
+      "basic"
+    ]
+  },
+  "LOGIC-002": {
+    "id": "LOGIC-002",
+    "name": "Complex Business Logic",
+    "category": "logic",
+    "price": 50000,
+    "description": "Advanced conditional logic, multi-step workflows, complex data transformations",
+    "keywords": [
+      "complex logic",
+      "advanced",
+      "workflow",
+      "business rules",
+      "multi-step"
+    ]
+  },
+  "LOGIC-003": {
+    "id": "LOGIC-003",
+    "name": "AI-Powered Decision Engine",
+    "category": "logic",
+    "price": 120000,
+    "description": "Machine learning-based decision making and intelligent automation",
+    "keywords": [
+      "ai",
+      "machine learning",
+      "intelligent",
+      "smart automation",
+      "ml"
+    ]
+  },
+  "FLOW-001": {
+    "id": "FLOW-001",
+    "name": "One-Way Sync",
+    "category": "flow",
+    "price": 0,
+    "included": true,
+    "description": "Data flows from System A to System B only",
+    "keywords": [
+      "one way",
+      "sync",
+      "push"
+    ]
+  },
+  "FLOW-002": {
+    "id": "FLOW-002",
+    "name": "Two-Way Sync",
+    "category": "flow",
+    "price": 40000,
+    "description": "Bidirectional data synchronization between systems",
+    "keywords": [
+      "two way",
+      "bidirectional",
+      "sync both ways"
+    ]
+  },
+  "FLOW-003": {
+    "id": "FLOW-003",
+    "name": "Real-Time Event Triggers",
+    "category": "flow",
+    "price": 30000,
+    "description": "Instant automation triggers based on specific events",
+    "keywords": [
+      "real time",
+      "instant",
+      "trigger",
+      "webhook",
+      "event"
+    ]
+  }
+}

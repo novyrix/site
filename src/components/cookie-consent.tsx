@@ -19,7 +19,7 @@ export function CookieConsent() {
   const handleAccept = () => {
     localStorage.setItem("cookie-consent", "accepted");
     setIsVisible(false);
-    
+
     // Initialize analytics or other tracking here
     if (typeof window !== "undefined") {
       // Example: Enable Google Analytics

@@ -1,0 +1,353 @@
+{
+  "CORE-FOUNDATION": {
+    "id": "CORE-FOUNDATION",
+    "name": "Core Foundation Package",
+    "category": "foundation",
+    "price": 150000,
+    "mandatory": true,
+    "description": "Project Discovery & Kick-off Workshop, Node.js/Express.js Backend Scaffolding, PostgreSQL/MongoDB Database Setup & Configuration, Core Security Package, Basic Developer Admin Panel, Deployment & CI/CD Setup, Standard SEO Tags, Up to 5 Static Pages, 1 Standard Contact Form",
+    "keywords": [
+      "website",
+      "foundation",
+      "basic",
+      "minimum",
+      "start",
+      "setup",
+      "project",
+      "base",
+      "core"
+    ]
+  },
+  "DSN-001": {
+    "id": "DSN-001",
+    "name": "UI/UX Wireframes",
+    "category": "design",
+    "price": 25000,
+    "description": "5-7 Unique Screens, low-fidelity, black-and-white layout focusing on user flow and information hierarchy",
+    "keywords": [
+      "wireframe",
+      "design",
+      "ux",
+      "ui",
+      "layout",
+      "mockup",
+      "prototype",
+      "user flow"
+    ]
+  },
+  "DSN-002": {
+    "id": "DSN-002",
+    "name": "High-Fidelity Mockups",
+    "category": "design",
+    "price": 50000,
+    "description": "5-7 Unique Screens, full-color, pixel-perfect Figma design, complete with design system and typography",
+    "keywords": [
+      "mockup",
+      "design",
+      "figma",
+      "high fidelity",
+      "visual",
+      "pixel perfect",
+      "branding",
+      "beautiful"
+    ]
+  },
+  "DSN-003": {
+    "id": "DSN-003",
+    "name": "Advanced Animations",
+    "category": "design",
+    "price": 35000,
+    "description": "Implementation of complex, performance-optimized animations (e.g., GSAP, Lottie, intricate scroll interactions)",
+    "keywords": [
+      "animation",
+      "interactive",
+      "motion",
+      "scroll",
+      "gsap",
+      "lottie",
+      "smooth",
+      "transitions"
+    ]
+  },
+  "CMS-001": {
+    "id": "CMS-001",
+    "name": "Blog / Content System",
+    "category": "content",
+    "price": 45000,
+    "description": "A complete dynamic blogging platform including post creation, categorization, tagging, and management via the admin panel",
+    "keywords": [
+      "blog",
+      "articles",
+      "content",
+      "cms",
+      "publishing",
+      "posts",
+      "news",
+      "writing",
+      "seo"
+    ]
+  },
+  "CMS-002": {
+    "id": "CMS-002",
+    "name": "Advanced CMS",
+    "category": "content",
+    "price": 75000,
+    "description": "Custom post types (e.g., Events, Team Profiles, Project Portfolios) with tailored input fields and management interfaces",
+    "keywords": [
+      "custom content",
+      "portfolio",
+      "events",
+      "team",
+      "advanced cms",
+      "custom fields",
+      "content types"
+    ]
+  },
+  "AUTH-001": {
+    "id": "AUTH-001",
+    "name": "Standard User Authentication",
+    "category": "authentication",
+    "price": 60000,
+    "description": "Full suite of user management: Login, Register, Forgot Password workflow, Email Verification, and a dedicated User Profile Page",
+    "keywords": [
+      "login",
+      "register",
+      "signup",
+      "authentication",
+      "user",
+      "account",
+      "profile",
+      "password",
+      "members"
+    ]
+  },
+  "AUTH-002": {
+    "id": "AUTH-002",
+    "name": "Social Login",
+    "category": "authentication",
+    "price": 25000,
+    "priceNote": "per platform",
+    "description": "Integration for third-party authentication services (e.g., Google, Facebook, LinkedIn)",
+    "keywords": [
+      "google login",
+      "facebook login",
+      "social login",
+      "oauth",
+      "third party login"
+    ]
+  },
+  "AUTH-003": {
+    "id": "AUTH-003",
+    "name": "Advanced Roles & Permissions",
+    "category": "authentication",
+    "price": 30000,
+    "description": "Custom authorization levels and permissions matrix (e.g., Admin, Editor, Moderator, Premium Customer)",
+    "keywords": [
+      "roles",
+      "permissions",
+      "access control",
+      "admin",
+      "moderator",
+      "user levels"
+    ]
+  },
+  "AUTH-004": {
+    "id": "AUTH-004",
+    "name": "Two-Factor Authentication (2FA)",
+    "category": "authentication",
+    "price": 45000,
+    "description": "Implementation of SMS or Email-based multi-factor authentication for enhanced account security",
+    "keywords": [
+      "2fa",
+      "two factor",
+      "security",
+      "sms",
+      "otp",
+      "verification code"
+    ]
+  },
+  "ECO-001": {
+    "id": "ECO-001",
+    "name": "Basic E-Commerce",
+    "category": "ecommerce",
+    "price": 120000,
+    "description": "Product Management, Shopping Cart functionality, and an Order Management system for the administrator",
+    "keywords": [
+      "sell",
+      "shop",
+      "store",
+      "products",
+      "e-commerce",
+      "ecommerce",
+      "merchandise",
+      "buy",
+      "online sales",
+      "shopping cart",
+      "checkout"
+    ]
+  },
+  "ECO-002": {
+    "id": "ECO-002",
+    "name": "Advanced E-Commerce",
+    "category": "ecommerce",
+    "price": 80000,
+    "prerequisite": "ECO-001",
+    "description": "Extended capabilities including Inventory Management, sophisticated Discount Coupon logic, and User Review systems",
+    "keywords": [
+      "inventory",
+      "stock",
+      "coupon",
+      "discount",
+      "reviews",
+      "ratings",
+      "advanced shop"
+    ]
+  },
+  "PAY-001": {
+    "id": "PAY-001",
+    "name": "M-Pesa Integration",
+    "category": "payments",
+    "price": 30000,
+    "description": "Custom Daraja API (STK Push) integration, including validation and callback logic for automated transaction confirmation",
+    "keywords": [
+      "mpesa",
+      "m-pesa",
+      "safaricom",
+      "daraja",
+      "lipa na mpesa",
+      "mobile money",
+      "paybill",
+      "till number",
+      "stk push",
+      "payment"
+    ]
+  },
+  "PAY-002": {
+    "id": "PAY-002",
+    "name": "Card Payment Gateway",
+    "category": "payments",
+    "price": 30000,
+    "description": "Integration with a major international gateway such as Stripe, Paystack, or similar processors",
+    "keywords": [
+      "credit card",
+      "debit card",
+      "stripe",
+      "paystack",
+      "visa",
+      "mastercard",
+      "card payment",
+      "international payment"
+    ]
+  },
+  "PAY-003": {
+    "id": "PAY-003",
+    "name": "Subscription/SaaS Billing",
+    "category": "payments",
+    "price": 90000,
+    "description": "Logic for recurring billing, automated payment failures, and a management platform for user subscription states",
+    "keywords": [
+      "subscription",
+      "recurring",
+      "monthly",
+      "saas",
+      "membership",
+      "recurring payment",
+      "auto renew"
+    ]
+  },
+  "FEAT-001": {
+    "id": "FEAT-001",
+    "name": "Advanced Booking System",
+    "category": "features",
+    "price": 85000,
+    "description": "Complex scheduling logic, calendar integration, time slot management, and administrator-side availability control",
+    "keywords": [
+      "booking",
+      "appointment",
+      "schedule",
+      "calendar",
+      "reservation",
+      "availability",
+      "time slots"
+    ]
+  },
+  "FEAT-002": {
+    "id": "FEAT-002",
+    "name": "Basic Search Functionality",
+    "category": "features",
+    "price": 20000,
+    "description": "Basic, high-speed site search implementation over static content and core database tables",
+    "keywords": [
+      "search",
+      "find",
+      "lookup",
+      "query"
+    ]
+  },
+  "FEAT-003": {
+    "id": "FEAT-003",
+    "name": "Advanced Search",
+    "category": "features",
+    "price": 100000,
+    "description": "Integration with specialized search technologies (e.g., Algolia, Elasticsearch) for complex querying, filtering, and facets",
+    "keywords": [
+      "advanced search",
+      "filter",
+      "faceted search",
+      "algolia",
+      "elasticsearch",
+      "search engine"
+    ]
+  },
+  "FEAT-004": {
+    "id": "FEAT-004",
+    "name": "Multi-language Support",
+    "category": "features",
+    "price": 30000,
+    "priceNote": "per additional language",
+    "description": "Implementation of internationalization (i18n) and localization (l10n) framework",
+    "keywords": [
+      "multilingual",
+      "translation",
+      "language",
+      "i18n",
+      "localization",
+      "international"
+    ]
+  },
+  "API-001": {
+    "id": "API-001",
+    "name": "Custom API Development",
+    "category": "api",
+    "price": 70000,
+    "priceNote": "per 5 complex endpoints",
+    "description": "Development of a dedicated, optimized REST or GraphQL API for mobile application consumption or third-party data exchange",
+    "keywords": [
+      "api",
+      "rest",
+      "graphql",
+      "mobile app",
+      "integration",
+      "endpoints",
+      "web services"
+    ]
+  },
+  "API-002": {
+    "id": "API-002",
+    "name": "3rd-Party Integration",
+    "category": "api",
+    "price": 25000,
+    "priceNote": "per external API",
+    "description": "Secure integration with specific external APIs (e.g., Mailchimp for email, a specific CRM, Google Maps API for geolocation)",
+    "keywords": [
+      "integration",
+      "third party",
+      "external",
+      "mailchimp",
+      "crm",
+      "google maps",
+      "zapier",
+      "webhook"
+    ]
+  }
+}
