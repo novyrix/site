@@ -148,7 +148,7 @@ export function searchFeatures(query: string, serviceType: ServiceType): QuoteIt
 
   Object.entries(matrix).forEach(([id, feature]) => {
     const keywords = feature.keywords || [];
-    const matchScore = keywords.filter(keyword => 
+    const matchScore = keywords.filter(keyword =>
       searchTerms.some(term => keyword.toLowerCase().includes(term) || term.includes(keyword.toLowerCase()))
     ).length;
 
@@ -167,15 +167,15 @@ export function searchFeatures(query: string, serviceType: ServiceType): QuoteIt
   return results.sort((a, b) => {
     const aKeywords = (matrix as any)[a.featureId].keywords || [];
     const bKeywords = (matrix as any)[b.featureId].keywords || [];
-    
-    const aScore = aKeywords.filter((k: string) => 
+
+    const aScore = aKeywords.filter((k: string) =>
       searchTerms.some(term => k.toLowerCase().includes(term))
     ).length;
-    
-    const bScore = bKeywords.filter((k: string) => 
+
+    const bScore = bKeywords.filter((k: string) =>
       searchTerms.some(term => k.toLowerCase().includes(term))
     ).length;
-    
+
     return bScore - aScore;
   });
 }
@@ -184,9 +184,9 @@ export function searchFeatures(query: string, serviceType: ServiceType): QuoteIt
 export function getFeatureById(featureId: string, serviceType: ServiceType): QuoteItem | null {
   const matrix = getMatrix(serviceType);
   const feature = (matrix as any)[featureId];
-  
+
   if (!feature) return null;
-  
+
   return {
     featureId,
     name: feature.name,

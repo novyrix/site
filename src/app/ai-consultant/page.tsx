@@ -36,7 +36,7 @@ export default function AIConsultantPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentQuote, setCurrentQuote] = useState<CurrentQuote | null>(null);
   const [sessionId] = useState(() => `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
-  
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -237,8 +237,8 @@ export default function AIConsultantPage() {
                   <div className="p-3 bg-primary-500/10 border border-primary-500/20 rounded-lg">
                     <p className="text-xs text-gray-400 mb-1">Service</p>
                     <p className="font-medium capitalize">
-                      {currentQuote.serviceType === 'website' 
-                        ? 'Website Development' 
+                      {currentQuote.serviceType === 'website'
+                        ? 'Website Development'
                         : 'Workflow Automation'}
                     </p>
                   </div>

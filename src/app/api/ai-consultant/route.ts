@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { openai, AI_MODEL, CONSULTANT_SYSTEM_PROMPT } from '@/lib/ai/openai';
-import { 
-  tools, 
-  searchFeatures, 
-  getFeatureById, 
-  calculateQuoteTotal, 
+import {
+  tools,
+  searchFeatures,
+  getFeatureById,
+  calculateQuoteTotal,
   formatKES,
   type Quote,
   type QuoteItem,
-  type ServiceType 
+  type ServiceType
 } from '@/lib/ai/quote-tools';
 
 // In-memory session storage (in production, use Redis or database)
@@ -49,9 +49,9 @@ export async function POST(req: NextRequest) {
       model: AI_MODEL,
       messages: [
         { role: 'system', content: CONSULTANT_SYSTEM_PROMPT },
-        ...session.messages.map(m => ({ 
+        ...session.messages.map(m => ({
           role: m.role as 'user' | 'assistant' | 'system',
-          content: m.content 
+          content: m.content
         }))
       ],
       tools,
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
       for (const toolCall of assistantMessage.tool_calls) {
         // Type guard to check if it's a function tool call
         if (toolCall.type !== 'function') continue;
-        
+
         const functionName = toolCall.function.name;
         const args = JSON.parse(toolCall.function.arguments);
 
@@ -112,9 +112,9 @@ export async function POST(req: NextRequest) {
         model: AI_MODEL,
         messages: [
           { role: 'system', content: CONSULTANT_SYSTEM_PROMPT },
-          ...session.messages.map(m => ({ 
+          ...session.messages.map(m => ({
             role: m.role as 'user' | 'assistant' | 'system',
-            content: m.content 
+            content: m.content
           })),
           assistantMessage,
           ...toolResults
@@ -124,7 +124,7 @@ export async function POST(req: NextRequest) {
       });
 
       const finalMessage = followUp.choices[0].message.content || 'I apologize, I encountered an error. Could you please rephrase that?';
-      
+
       session.messages.push({
         role: 'assistant',
         content: finalMessage
@@ -139,7 +139,7 @@ export async function POST(req: NextRequest) {
 
     // No function calls - just return the message
     const aiResponse = assistantMessage.content || 'I apologize, I encountered an error. Could you please rephrase that?';
-    
+
     session.messages.push({
       role: 'assistant',
       content: aiResponse
@@ -185,7 +185,7 @@ function handleStartQuote(session: any, serviceType: ServiceType) {
 
 function handleFindFeatures(userGoal: string, serviceType: ServiceType) {
   const features = searchFeatures(userGoal, serviceType);
-  
+
   return {
     success: true,
     features: features.slice(0, 5).map(f => ({
@@ -205,7 +205,7 @@ function handleAddFeature(session: any, featureId: string) {
   }
 
   const feature = getFeatureById(featureId, session.quote.serviceType);
-  
+
   if (!feature) {
     return { error: `Feature ${featureId} not found` };
   }
