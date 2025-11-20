@@ -168,10 +168,12 @@ export function searchFeatures(query: string, serviceType: ServiceType): QuoteIt
   const results: Map<string, { item: QuoteItem, score: number }> = new Map();
 
   Object.entries(matrix).forEach(([id, feature]) => {
-    const keywords = feature.keywords || [];
+    // Type assertion for the feature object
+    const typedFeature = feature as QuoteItem & { keywords?: string[] };
+    const keywords = typedFeature.keywords || [];
     const searchableText = [
-      feature.name.toLowerCase(),
-      feature.description.toLowerCase(),
+      typedFeature.name.toLowerCase(),
+      typedFeature.description.toLowerCase(),
       ...keywords.map(k => k.toLowerCase())
     ].join(' ');
 
@@ -195,8 +197,8 @@ export function searchFeatures(query: string, serviceType: ServiceType): QuoteIt
       if (partialMatch && !exactMatch) score += 30;
 
       // Name/description match
-      if (feature.name.toLowerCase().includes(term)) score += 20;
-      if (feature.description.toLowerCase().includes(term)) score += 10;
+      if (typedFeature.name.toLowerCase().includes(term)) score += 20;
+      if (typedFeature.description.toLowerCase().includes(term)) score += 10;
 
       // Fuzzy match (edit distance for typos)
       keywords.forEach(keyword => {
@@ -210,10 +212,10 @@ export function searchFeatures(query: string, serviceType: ServiceType): QuoteIt
       results.set(id, {
         item: {
           featureId: id,
-          name: feature.name,
-          price: feature.price,
-          description: feature.description,
-          category: feature.category
+          name: typedFeature.name,
+          price: typedFeature.price,
+          description: typedFeature.description,
+          category: typedFeature.category
         },
         score
       });
