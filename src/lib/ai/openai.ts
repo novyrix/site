@@ -4,13 +4,13 @@ import OpenAI from 'openai';
 // Get your token from: https://github.com/settings/tokens
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.OPENAI_API_KEY;
 
-if (!GITHUB_TOKEN) {
-  throw new Error('GITHUB_TOKEN or OPENAI_API_KEY is not defined in environment variables');
+if (!GITHUB_TOKEN && typeof window === 'undefined') {
+  console.warn('Warning: GITHUB_TOKEN or OPENAI_API_KEY is not defined in environment variables');
 }
 
 export const openai = new OpenAI({
   baseURL: 'https://models.inference.ai.azure.com',
-  apiKey: GITHUB_TOKEN,
+  apiKey: GITHUB_TOKEN || 'dummy-key-for-build',
 });
 
 // Use GPT-4o via GitHub Models (included with Copilot Pro!)

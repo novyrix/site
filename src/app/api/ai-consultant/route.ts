@@ -25,6 +25,15 @@ const sessions = new Map<string, {
 
 export async function POST(req: NextRequest) {
   try {
+    // Check if API key is available at runtime
+    const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.OPENAI_API_KEY;
+    if (!GITHUB_TOKEN) {
+      return NextResponse.json(
+        { error: 'AI service is not configured. Please contact support.' },
+        { status: 503 }
+      );
+    }
+
     const { message, sessionId } = await req.json();
 
     if (!message || !sessionId) {
