@@ -1,8 +1,10 @@
 import websiteMatrix from '@/lib/data/websiteMatrix.json';
 import automationMatrix from '@/lib/data/automationMatrix.json';
+import starterMatrix from '@/lib/data/starterMatrix.json';
 
-export type ServiceType = 'website' | 'automation';
-export type FeatureMatrix = typeof websiteMatrix | typeof automationMatrix;
+export type ServiceType = 'website' | 'automation' | 'starter';
+export type PricingTier = 'starter' | 'enterprise';
+export type FeatureMatrix = typeof websiteMatrix | typeof automationMatrix | typeof starterMatrix.pricing_matrix;
 
 export interface QuoteItem {
   featureId: string;
@@ -14,6 +16,7 @@ export interface QuoteItem {
 
 export interface Quote {
   serviceType: ServiceType;
+  pricingTier: PricingTier;
   items: QuoteItem[];
   total: number;
   mandatory: QuoteItem[];
@@ -26,7 +29,7 @@ export const tools = [
     type: 'function' as const,
     function: {
       name: 'start_quote',
-      description: 'Starts a new quote for a client project. Must be called first in any new session. Automatically adds the mandatory foundation package.',
+      description: 'Starts a new quote for a client project. Must be called first in any new session. Automatically adds the mandatory foundation package based on project complexity.',
       parameters: {
         type: 'object',
         properties: {
@@ -34,9 +37,14 @@ export const tools = [
             type: 'string',
             enum: ['website', 'automation'],
             description: 'The type of service: "website" for custom web development, "automation" for workflow automation'
+          },
+          pricingTier: {
+            type: 'string',
+            enum: ['starter', 'enterprise'],
+            description: 'Pricing tier: "starter" for simple sites (30k-50k base, ideal for portfolios/small businesses), "enterprise" for custom platforms (150k+ base, ideal for applications/complex systems)'
           }
         },
-        required: ['serviceType']
+        required: ['serviceType', 'pricingTier']
       }
     }
   },
@@ -54,8 +62,8 @@ export const tools = [
           },
           serviceType: {
             type: 'string',
-            enum: ['website', 'automation'],
-            description: 'Which service matrix to search'
+            enum: ['website', 'automation', 'starter'],
+            description: 'Which service matrix to search: "website" for enterprise web features, "automation" for workflow features, "starter" for simple website packages'
           }
         },
         required: ['userGoal', 'serviceType']
@@ -136,48 +144,104 @@ export const tools = [
 ];
 
 // Helper function to get the appropriate matrix
-export function getMatrix(serviceType: ServiceType): FeatureMatrix {
+export function getMatrix(serviceType: ServiceType): any {
+  if (serviceType === 'starter') {
+    // Flatten starter matrix structure for compatibility
+    const flattened: any = {};
+    Object.entries(starterMatrix.pricing_matrix).forEach(([category, features]) => {
+      (features as any[]).forEach((feature: any) => {
+        flattened[feature.id] = {
+          ...feature,
+          why_we_charge: feature.why_we_charge || feature.description
+        };
+      });
+    });
+    return flattened;
+  }
   return serviceType === 'website' ? websiteMatrix : automationMatrix;
 }
 
-// Helper function to search features by keywords
+// Helper function to search features by keywords with fuzzy matching
 export function searchFeatures(query: string, serviceType: ServiceType): QuoteItem[] {
   const matrix = getMatrix(serviceType);
-  const searchTerms = query.toLowerCase().split(' ');
-  const results: QuoteItem[] = [];
+  const searchTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 2); // Filter out short words
+  const results: Map<string, { item: QuoteItem, score: number }> = new Map();
 
   Object.entries(matrix).forEach(([id, feature]) => {
     const keywords = feature.keywords || [];
-    const matchScore = keywords.filter(keyword =>
-      searchTerms.some(term => keyword.toLowerCase().includes(term) || term.includes(keyword.toLowerCase()))
-    ).length;
+    const searchableText = [
+      feature.name.toLowerCase(),
+      feature.description.toLowerCase(),
+      ...keywords.map(k => k.toLowerCase())
+    ].join(' ');
 
-    if (matchScore > 0) {
-      results.push({
-        featureId: id,
-        name: feature.name,
-        price: feature.price,
-        description: feature.description,
-        category: feature.category
+    let score = 0;
+
+    // Exact phrase match (highest score)
+    if (searchableText.includes(query.toLowerCase())) {
+      score += 100;
+    }
+
+    // Individual term matching with fuzzy logic
+    searchTerms.forEach(term => {
+      // Exact keyword match
+      const exactMatch = keywords.some(k => k.toLowerCase() === term);
+      if (exactMatch) score += 50;
+
+      // Partial keyword match
+      const partialMatch = keywords.some(k =>
+        k.toLowerCase().includes(term) || term.includes(k.toLowerCase())
+      );
+      if (partialMatch && !exactMatch) score += 30;
+
+      // Name/description match
+      if (feature.name.toLowerCase().includes(term)) score += 20;
+      if (feature.description.toLowerCase().includes(term)) score += 10;
+
+      // Fuzzy match (edit distance for typos)
+      keywords.forEach(keyword => {
+        if (isSimilar(term, keyword.toLowerCase())) {
+          score += 15;
+        }
+      });
+    });
+
+    if (score > 0) {
+      results.set(id, {
+        item: {
+          featureId: id,
+          name: feature.name,
+          price: feature.price,
+          description: feature.description,
+          category: feature.category
+        },
+        score
       });
     }
   });
 
-  // Sort by match relevance
-  return results.sort((a, b) => {
-    const aKeywords = (matrix as any)[a.featureId].keywords || [];
-    const bKeywords = (matrix as any)[b.featureId].keywords || [];
+  // Sort by score (highest first) and return top results
+  return Array.from(results.values())
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 8) // Return top 8 matches
+    .map(r => r.item);
+}
 
-    const aScore = aKeywords.filter((k: string) =>
-      searchTerms.some(term => k.toLowerCase().includes(term))
-    ).length;
+// Simple similarity check for fuzzy matching (Levenshtein-inspired)
+function isSimilar(a: string, b: string): boolean {
+  if (a === b) return true;
+  if (a.length < 4 || b.length < 4) return false; // Too short for fuzzy matching
 
-    const bScore = bKeywords.filter((k: string) =>
-      searchTerms.some(term => k.toLowerCase().includes(term))
-    ).length;
+  // Check if strings are 80% similar (simple character overlap)
+  const longer = a.length > b.length ? a : b;
+  const shorter = a.length > b.length ? b : a;
 
-    return bScore - aScore;
-  });
+  let matches = 0;
+  for (let i = 0; i < shorter.length; i++) {
+    if (longer.includes(shorter[i])) matches++;
+  }
+
+  return (matches / longer.length) >= 0.8;
 }
 
 // Get feature by ID

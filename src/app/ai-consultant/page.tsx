@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Send, Sparkles, CheckCircle2, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -10,6 +11,7 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
+  timeString?: string; // Client-side formatted time
 }
 
 interface QuoteItem {
@@ -25,13 +27,18 @@ interface CurrentQuote {
 }
 
 export default function AIConsultantPage() {
+  const searchParams = useSearchParams();
+  const prefilledQuery = searchParams.get('q');
+
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hello! I'm your Novyrix AI Consultant. I help Kenyan businesses build custom web applications and workflow automations with complete transparency. \n\nTo get started, could you tell me: What's the main business challenge you're looking to solve?",
-      timestamp: new Date()
+      content: "Hello! I'm **Novy**, your AI consultant at Novyrix. I help Kenyan businesses build custom web applications and workflow automations with complete transparency. \n\nTo get started, could you tell me: What's the main business challenge you're looking to solve?",
+      timestamp: new Date(),
+      timeString: '' // Will be set on client
     }
   ]);
+  const [isClient, setIsClient] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [currentQuote, setCurrentQuote] = useState<CurrentQuote | null>(null);
@@ -44,17 +51,45 @@ export default function AIConsultantPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Handle prefilled query from homepage
+  useEffect(() => {
+    if (prefilledQuery && !isLoading) {
+      setInput(prefilledQuery);
+      // Auto-submit after a brief delay
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 500);
+    }
+  }, [prefilledQuery]);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    setIsClient(true);
+    // Format all timestamps on client mount
+    setMessages(msgs => msgs.map(msg => ({
+      ...msg,
+      timeString: msg.timestamp.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    })));
+  }, []);
+
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
+    const timestamp = new Date();
     const userMessage: Message = {
       role: 'user',
       content: input,
-      timestamp: new Date()
+      timestamp,
+      timeString: timestamp.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      })
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -74,10 +109,15 @@ export default function AIConsultantPage() {
       const data = await response.json();
 
       if (data.message) {
+        const timestamp = new Date();
         const assistantMessage: Message = {
           role: 'assistant',
           content: data.message,
-          timestamp: new Date()
+          timestamp,
+          timeString: timestamp.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+          })
         };
         setMessages(prev => [...prev, assistantMessage]);
       }
@@ -88,10 +128,15 @@ export default function AIConsultantPage() {
 
     } catch (error) {
       console.error('Error sending message:', error);
+      const timestamp = new Date();
       const errorMessage: Message = {
         role: 'assistant',
         content: "I apologize, but I encountered an error. Please try again or contact our team directly.",
-        timestamp: new Date()
+        timestamp,
+        timeString: timestamp.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit'
+        })
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -170,12 +215,11 @@ export default function AIConsultantPage() {
                           {message.content}
                         </p>
                       </div>
-                      <p className="text-xs text-gray-500 mt-2">
-                        {message.timestamp.toLocaleTimeString([], {
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
-                      </p>
+                      {isClient && message.timeString && (
+                        <p className="text-xs text-gray-500 mt-2">
+                          {message.timeString}
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}

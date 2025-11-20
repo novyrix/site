@@ -1,344 +1,321 @@
+"use client";
+
+import { useState } from 'react';
 import Link from "next/link";
-import { ArrowRight, Code, Zap, Sparkles, CheckCircle2, Users, Award, Clock, Shield, Lightbulb } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, Sparkles, Search, Zap, Shield, Code2, TrendingUp, CheckCircle2, Star, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import { Spotlight } from "@/components/ui/spotlight";
+import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
+import { AIChatModal } from "@/components/ui/ai-chat-modal";
 
 export default function Home() {
-  return (
-    <main className="min-h-screen bg-black text-white">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-32 pb-20">
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-block mb-6 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-500 text-sm font-medium animate-fadeIn">
-            🚀 Transparent Pricing • No Hidden Fees
-          </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 gradient-text animate-fadeIn">
-            Transform Your Digital Presence
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed animate-slideUp">
-            Empowering Kenyan businesses with cutting-edge web development,
-            custom software solutions, and intelligent workflow automation.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slideUp">
-            <Button size="lg" asChild>
-              <Link href="/calculators" className="inline-flex items-center gap-2">
-                Get Your Quote
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/services">Explore Services</Link>
-            </Button>
-          </div>
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto">
-            {[
-              { label: "Projects Delivered", value: "50+" },
-              { label: "Happy Clients", value: "30+" },
-              { label: "Years Experience", value: "5+" },
-              { label: "Response Time", value: "<24h" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-display font-bold text-primary-500 mb-2">
-                  {stat.value}
+  const handleQuoteSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setIsChatOpen(true);
+    }
+  };
+
+  const handlePlaceholderSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsChatOpen(true);
+  };
+
+  const placeholders = [
+    "I need a custom e-commerce platform with M-Pesa...",
+    "Build a staff management system with payroll...",
+    "Create a booking website for my salon business...",
+    "Help me automate my KRA eTIMS compliance...",
+    "I want a portfolio website with a blog section...",
+  ];
+
+  const quickPrompts = [
+    "I need an e-commerce website",
+    "Help me automate payroll",
+  ];
+
+  return (
+    <main className="min-h-screen bg-black/[0.96] text-white antialiased bg-grid-white/[0.02]">
+      {/* Hero Section - With Spotlight Effect */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Spotlight Effect */}
+        <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-950/10 via-transparent to-purple-950/10" />
+
+        <div className="container relative z-10 mx-auto px-4 py-20">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            {/* Badge with Aceternity-style button */}
+            <div className="inline-block">
+              <button className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block">
+                <span className="absolute inset-0 overflow-hidden rounded-full">
+                  <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(251,146,60,0.6)_0%,rgba(251,146,60,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                </span>
+                <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-1.5 px-4 ring-1 ring-white/10">
+                  <div className="w-4 h-4 flex items-center justify-center relative">
+                    <Image
+                      src="/novyrix-logo.png"
+                      alt="Novy AI"
+                      width={16}
+                      height={16}
+                      className="object-contain"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                      }}
+                    />
+                    <Sparkles className="w-2.5 h-2.5 text-orange-400 hidden" />
+                  </div>
+                  <span>Powered by Novy AI</span>
+                  <span className="px-2 py-0.5 text-[10px] bg-orange-500/20 text-orange-400 rounded-full">Beta</span>
                 </div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
+                <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-orange-400/0 via-orange-400/90 to-orange-400/0 transition-opacity duration-500 group-hover:opacity-40" />
+              </button>
+            </div>
+
+            {/* Main Headline - More compact */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
+              <span className="block text-white">Transform Your</span>
+              <span className="block bg-gradient-to-r from-primary-400 via-primary-300 to-purple-400 bg-clip-text text-transparent">
+                Business Digitally
+              </span>
+            </h1>
+
+            {/* Subheadline - More concise */}
+            <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+              Custom web applications, workflow automation, and enterprise solutions.{" "}
+              <span className="text-white font-semibold">Transparent pricing. No hidden fees.</span>{" "}
+              Built for Kenyan businesses.
+            </p>
+
+            {/* AI Search Bar with Vanishing Placeholder */}
+            <div className="max-w-2xl mx-auto">
+              <PlaceholdersAndVanishInput
+                placeholders={placeholders}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onSubmit={handlePlaceholderSubmit}
+              />
+
+              {/* Quick Prompts - More subtle */}
+              <div className="flex flex-wrap gap-2 justify-center mt-4 text-sm">
+                <span className="text-gray-600">Try:</span>
+                {quickPrompts.map((prompt, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery(prompt);
+                      setIsChatOpen(true);
+                    }}
+                    className="px-3 py-1 rounded-full bg-slate-800/50 hover:bg-slate-800 border border-slate-700/50 hover:border-slate-600 text-gray-400 hover:text-gray-300 transition-all duration-200"
+                  >
+                    {prompt}
+                  </button>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Trust Indicators - More minimal */}
+            <div className="flex flex-wrap items-center justify-center gap-6 pt-4 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                <span>Instant AI Quotes</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                <span>Fixed Pricing</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                <span>30+ Projects</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="container mx-auto px-4 py-20 border-t border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Why Choose Novyrix?
-            </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              We combine technical excellence with transparent pricing and exceptional service
-            </p>
-          </div>
+      {/* Why Novyrix Section - Aceternity Card Style */}
+      <section className="relative py-24 md:py-32 bg-black bg-grid-white/[0.02]">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Shield,
-                title: "Transparent Pricing",
-                description: "Use our calculators to get instant quotes. No surprises, no hidden fees.",
-              },
-              {
-                icon: Clock,
-                title: "Fast Delivery",
-                description: "Efficient processes ensure your project is delivered on time, every time.",
-              },
-              {
-                icon: Award,
-                title: "Premium Quality",
-                description: "Modern tech stack and best practices for world-class solutions.",
-              },
-              {
-                icon: Users,
-                title: "Dedicated Support",
-                description: "Care Plans available with 24/7 support and maintenance included.",
-              },
-              {
-                icon: Lightbulb,
-                title: "Innovation First",
-                description: "Cutting-edge solutions using the latest technologies and frameworks.",
-              },
-              {
-                icon: CheckCircle2,
-                title: "Proven Track Record",
-                description: "50+ successful projects delivered for satisfied clients across Kenya.",
-              },
-            ].map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <Card key={index} variant="default" className="group hover:border-primary-500/30 transition-all">
-                  <CardContent className="p-6">
-                    <div className="w-12 h-12 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition-colors">
-                      <Icon className="w-6 h-6 text-primary-500" />
+        <div className="container relative mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16 space-y-4">
+              <h2 className="text-3xl md:text-5xl font-bold">
+                Why Choose{" "}
+                <span className="bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+                  Novyrix
+                </span>
+                ?
+              </h2>
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                We're not a "website design" company. We're your strategic technology partner.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Shield,
+                  title: "Radical Transparency",
+                  description: "Every cost itemized. No hidden fees. Know exactly what you're paying for.",
+                },
+                {
+                  icon: Code2,
+                  title: "Custom Node.js Stack",
+                  description: "Modern, scalable technology. Real engineering for real business value.",
+                },
+                {
+                  icon: Zap,
+                  title: "Fixed-Price Model",
+                  description: "Know the total cost upfront. We're incentivized to be efficient.",
+                },
+                {
+                  icon: TrendingUp,
+                  title: "Built to Scale",
+                  description: "Your digital asset grows with your business. Handle 10 or 10,000 users.",
+                },
+                {
+                  icon: Sparkles,
+                  title: "AI-Powered Quoting",
+                  description: "Novy translates your goals into technical solutions instantly.",
+                },
+                {
+                  icon: CheckCircle2,
+                  title: "KRA eTIMS Experts",
+                  description: "Compliance automation for Kenyan businesses. M-Pesa & API integrations.",
+                }
+              ].map((feature, idx) => (
+                <div
+                  key={idx}
+                  className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900/50 to-slate-800/50 p-6 border border-slate-800 hover:border-slate-700 transition-all duration-300"
+                >
+                  {/* Hover gradient effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 via-purple-500/0 to-primary-500/0 opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
+
+                  <div className="relative space-y-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500/20 to-purple-500/20 flex items-center justify-center border border-primary-500/20 group-hover:scale-110 transition-transform duration-300">
+                      <feature.icon className="w-6 h-6 text-primary-400" />
                     </div>
-                    <h3 className="text-xl font-display font-bold mb-2 text-white">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">
+                    <h3 className="text-xl font-bold text-white">{feature.title}</h3>
+                    <p className="text-gray-400 leading-relaxed text-sm">
                       {feature.description}
                     </p>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="container mx-auto px-4 py-20 border-t border-white/5">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            Our Services
-          </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Comprehensive digital solutions tailored to your business needs
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Website Development */}
-          <Card variant="interactive" hover className="group">
-            <CardHeader>
-              <div className="w-14 h-14 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition-colors">
-                <Code className="w-7 h-7 text-primary-500" />
-              </div>
-              <CardTitle>Website Development</CardTitle>
-              <CardDescription>
-                Modern, responsive websites built with the latest technologies
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm text-gray-400">
-              <p>• Landing pages from KES 30,000</p>
-              <p>• Blog integration: +KES 15,000</p>
-              <p>• E-commerce: +KES 60,000</p>
-              <p>• Custom API: +KES 35,000</p>
-              <Button variant="ghost" size="sm" className="mt-4 w-full" asChild>
-                <Link href="/calculators">Calculate Quote →</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Software Development */}
-          <Card variant="interactive" hover className="group">
-            <CardHeader>
-              <div className="w-14 h-14 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition-colors">
-                <Sparkles className="w-7 h-7 text-primary-500" />
-              </div>
-              <CardTitle>Software Development</CardTitle>
-              <CardDescription>
-                Custom software solutions for complex business requirements
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm text-gray-400">
-              <p>• Small projects: KES 400K - 900K</p>
-              <p>• Medium projects: KES 900K - 2.5M</p>
-              <p>• Enterprise: KES 2.5M+</p>
-              <p>• Transparent tier-based pricing</p>
-              <Button variant="ghost" size="sm" className="mt-4 w-full" asChild>
-                <Link href="/calculators">Get Estimate →</Link>
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Workflow Automation */}
-          <Card variant="interactive" hover className="group">
-            <CardHeader>
-              <div className="w-14 h-14 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center mb-4 group-hover:bg-primary-500/20 transition-colors">
-                <Zap className="w-7 h-7 text-primary-500" />
-              </div>
-              <CardTitle>Workflow Automation</CardTitle>
-              <CardDescription>
-                Streamline operations and boost productivity with automation
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm text-gray-400">
-              <p>• Save 10-20 hours per week</p>
-              <p>• Integration with existing tools</p>
-              <p>• Custom automation solutions</p>
-              <p>• Qualification-based pricing</p>
-              <Button variant="ghost" size="sm" className="mt-4 w-full" asChild>
-                <Link href="/calculators">Qualify Now →</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="container mx-auto px-4 py-20 border-t border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-              How It Works
-            </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Get your project started in four simple steps
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              {
-                step: "01",
-                title: "Choose Service",
-                description: "Select from website development, software, or automation services",
-              },
-              {
-                step: "02",
-                title: "Get Quote",
-                description: "Use our transparent calculators to get an instant, accurate quote",
-              },
-              {
-                step: "03",
-                title: "Lock In Price",
-                description: "Submit your quote and lock in your price with no hidden fees",
-              },
-              {
-                step: "04",
-                title: "We Build",
-                description: "Our team brings your vision to life with regular updates",
-              },
-            ].map((item, index) => (
-              <div key={index} className="text-center relative">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-500/10 border-2 border-primary-500/30 text-primary-500 font-display font-bold text-2xl mb-4">
-                  {item.step}
+                  </div>
                 </div>
-                <h3 className="text-xl font-display font-bold mb-2 text-white">
-                  {item.title}
-                </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  {item.description}
-                </p>
-                {index < 3 && (
-                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-primary-500/50 to-transparent" />
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="container mx-auto px-4 py-20 border-t border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-              Client Success Stories
+      {/* Social Proof Section - Minimalist */}
+      <section className="relative py-24 md:py-32 bg-black bg-grid-white/[0.02]">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
+
+        <div className="container relative mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center space-y-8 mb-16">
+              <div className="flex justify-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-6 h-6 fill-primary-500 text-primary-500" />
+                ))}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Trusted by Kenya's Growing Businesses
+              </h2>
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                From funded startups to established SMEs, we've delivered 50+ custom solutions.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+              {[
+                { label: "Projects", value: "50+" },
+                { label: "Clients", value: "30+" },
+                { label: "Code Lines", value: "500K+" },
+                { label: "Uptime", value: "99.9%" },
+              ].map((stat, idx) => (
+                <div key={idx} className="text-center p-6 rounded-xl bg-slate-900/30 border border-slate-800">
+                  <div className="text-4xl font-black bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-gray-500">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <Link href="/ai-consultant">
+                <button className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-sm font-semibold leading-6 text-white inline-block">
+                  <span className="absolute inset-0 overflow-hidden rounded-full">
+                    <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  </span>
+                  <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-3 px-8 ring-1 ring-white/10">
+                    <span>Talk to Novy AI Now</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                  <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-primary-400/0 via-primary-400/90 to-primary-400/0 transition-opacity duration-500 group-hover:opacity-40" />
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - More minimal */}
+      <section className="relative py-24 md:py-32 border-t border-slate-800 bg-black bg-grid-white/[0.02]">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-950/10 via-black/50 to-purple-950/10" />
+
+        <div className="container relative mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <h2 className="text-4xl md:text-5xl font-black">
+              Ready to Build Your{" "}
+              <span className="bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
+                Digital Asset
+              </span>
+              ?
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              See what our clients say about working with Novyrix
+              Get an instant, transparent quote from Novy AI. No sales calls required.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "James Mwangi",
-                role: "CEO, TechStart Kenya",
-                content: "Novyrix transformed our digital presence with a stunning website and custom CRM. The transparent pricing made budgeting easy!",
-                rating: 5,
-              },
-              {
-                name: "Sarah Wanjiru",
-                role: "Director, Savanna Retail",
-                content: "The workflow automation saved us 15 hours per week. ROI was achieved in just 2 months. Highly recommend!",
-                rating: 5,
-              },
-              {
-                name: "David Omondi",
-                role: "Founder, EduLearn",
-                content: "Professional team, clear communication, and delivered on time. Our e-learning platform exceeded expectations!",
-                rating: 5,
-              },
-            ].map((testimonial, index) => (
-              <Card key={index} variant="default">
-                <CardContent className="p-6">
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className="w-5 h-5 text-primary-500"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/ai-consultant">
+                <button className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-sm font-semibold leading-6 text-white inline-block">
+                  <span className="absolute inset-0 overflow-hidden rounded-full">
+                    <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  </span>
+                  <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-3 px-8 ring-1 ring-white/10">
+                    <Sparkles className="w-4 h-4" />
+                    <span>Get Instant Quote</span>
                   </div>
-                  <p className="text-gray-400 mb-6 leading-relaxed">
-                    "{testimonial.content}"
-                  </p>
-                  <div>
-                    <div className="font-display font-bold text-white">
-                      {testimonial.name}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {testimonial.role}
-                    </div>
+                  <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
+                </button>
+              </Link>
+              <Link href="/services">
+                <button className="group cursor-pointer relative rounded-full p-px text-sm font-semibold leading-6 text-white inline-block border border-slate-700 hover:border-slate-600 transition-colors">
+                  <div className="relative flex space-x-2 items-center z-10 rounded-full bg-slate-900/50 py-3 px-8">
+                    <span>Explore Services</span>
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="container mx-auto px-4 py-20 border-t border-white/5">
-        <Card variant="highlighted" className="max-w-4xl mx-auto text-center p-12">
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Ready to Get Started?
-          </h2>
-          <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            Use our transparent pricing calculators to get an instant quote
-            for your project. No hidden fees, no surprises.
-          </p>
-          <Button size="xl" asChild>
-            <Link href="/calculators" className="inline-flex items-center gap-2">
-              Calculate Your Quote
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </Button>
-        </Card>
-      </section>
+      {/* AI Chat Modal */}
+      <AIChatModal
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        initialQuery={searchQuery}
+      />
     </main>
   );
 }

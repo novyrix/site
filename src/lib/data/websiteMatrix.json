@@ -15,7 +15,11 @@
       "setup",
       "project",
       "base",
-      "core"
+      "core",
+      "system",
+      "platform",
+      "application",
+      "portal"
     ]
   },
   "DSN-001": {
@@ -100,7 +104,18 @@
       "team",
       "advanced cms",
       "custom fields",
-      "content types"
+      "content types",
+      "employee profiles",
+      "staff profiles",
+      "employee directory",
+      "team directory",
+      "hr records",
+      "employee database",
+      "staff database",
+      "personnel records",
+      "employee information",
+      "staff information",
+      "team members database"
     ]
   },
   "AUTH-001": {
@@ -118,7 +133,20 @@
       "account",
       "profile",
       "password",
-      "members"
+      "members",
+      "employees",
+      "staff",
+      "workers",
+      "team members",
+      "personnel",
+      "employee management",
+      "staff management",
+      "user management",
+      "hr system",
+      "hris",
+      "human resources",
+      "employee portal",
+      "staff portal"
     ]
   },
   "AUTH-002": {
@@ -148,7 +176,19 @@
       "access control",
       "admin",
       "moderator",
-      "user levels"
+      "user levels",
+      "departments",
+      "employee roles",
+      "staff roles",
+      "manager access",
+      "supervisor",
+      "hr manager",
+      "department head",
+      "organizational structure",
+      "hierarchy",
+      "employee levels",
+      "job titles",
+      "position access"
     ]
   },
   "AUTH-004": {
@@ -347,7 +387,106 @@
       "crm",
       "google maps",
       "zapier",
-      "webhook"
+      "webhook",
+      "hr software",
+      "payroll system",
+      "recruitment platform",
+      "ats",
+      "applicant tracking",
+      "job board",
+      "hr integration",
+      "employee system",
+      "staff system"
+    ]
+  },
+  "DOC-001": {
+    "id": "DOC-001",
+    "name": "Document Generation & PDF Export",
+    "category": "features",
+    "price": 55000,
+    "description": "Automated generation of custom documents and PDFs (e.g., payslips, contracts, certificates, invoices, reports) with dynamic data population and downloadable outputs",
+    "keywords": [
+      "pdf",
+      "document",
+      "generate",
+      "export",
+      "print",
+      "payslip",
+      "payslips",
+      "salary slip",
+      "pay stub",
+      "contract",
+      "agreement",
+      "certificate",
+      "invoice",
+      "receipt",
+      "report",
+      "document generation",
+      "pdf generation",
+      "automated documents",
+      "employee documents",
+      "staff documents",
+      "hr documents"
+    ]
+  },
+  "FORM-001": {
+    "id": "FORM-001",
+    "name": "Advanced Custom Forms",
+    "category": "features",
+    "price": 40000,
+    "description": "Dynamic, multi-step custom forms with conditional logic, file uploads, validation, and admin management (e.g., job applications, survey forms, registration forms)",
+    "keywords": [
+      "forms",
+      "custom forms",
+      "application",
+      "applications",
+      "job application",
+      "job applications",
+      "apply",
+      "recruitment",
+      "hiring",
+      "careers",
+      "vacancies",
+      "positions",
+      "form builder",
+      "survey",
+      "questionnaire",
+      "registration",
+      "submission",
+      "file upload",
+      "cv upload",
+      "resume upload",
+      "multi-step form",
+      "application form",
+      "employment form",
+      "candidate application"
+    ]
+  },
+  "DASH-001": {
+    "id": "DASH-001",
+    "name": "Custom Dashboard & Analytics",
+    "category": "features",
+    "price": 75000,
+    "description": "Interactive dashboards with data visualization, charts, KPI tracking, and real-time analytics (e.g., employee metrics, sales dashboards, HR analytics)",
+    "keywords": [
+      "dashboard",
+      "analytics",
+      "reports",
+      "reporting",
+      "charts",
+      "graphs",
+      "metrics",
+      "kpi",
+      "statistics",
+      "data visualization",
+      "employee metrics",
+      "hr analytics",
+      "staff analytics",
+      "performance metrics",
+      "business intelligence",
+      "insights",
+      "employee dashboard",
+      "management dashboard"
     ]
   }
 }

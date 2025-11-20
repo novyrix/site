@@ -246,3 +246,21 @@ model PricingBlock {
   @@index([serviceType])
   @@index([isActive])
 }
+
+model UnmappedQuery {
+  id           String   @id @default(cuid())
+  sessionId    String
+  userMessage  String   @db.Text
+  aiResponse   String?  @db.Text
+  featuresFound Int     @default(0) // Number of features matched
+  wasHelpful   Boolean  @default(false) // Did it successfully help user?
+  needsReview  Boolean  @default(true) // Flag for manual review
+  reviewNotes  String?  @db.Text
+
+  createdAt    DateTime @default(now())
+  reviewedAt   DateTime?
+
+  @@index([needsReview])
+  @@index([createdAt])
+  @@index([sessionId])
+}

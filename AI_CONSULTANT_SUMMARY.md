@@ -182,7 +182,7 @@ docs/
 The AI is guided by a comprehensive system prompt that enforces:
 
 1. **Mission**: Translate business goals → technical specs → transparent quotes
-2. **Principles**: 
+2. **Principles**:
    - Radical transparency
    - Mandatory foundations
    - Consultative tone
@@ -403,10 +403,10 @@ It represents a significant competitive advantage for Novyrix, implementing cutt
 
 ---
 
-**Built by**: GitHub Copilot & Novyrix Team  
-**Deployed**: November 17, 2025  
-**Status**: ✅ Production Ready  
-**Version**: 1.0.0  
+**Built by**: GitHub Copilot & Novyrix Team
+**Deployed**: November 17, 2025
+**Status**: ✅ Production Ready
+**Version**: 1.0.0
 
 **URL**: https://www.novyrix.com/ai-consultant
 

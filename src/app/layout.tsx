@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Preloader } from "@/components/preloader";
 import { SessionProvider } from "@/components/session-provider";
 import { ToastProvider } from "@/components/ui/toast";
 import { CookieConsent } from "@/components/cookie-consent";
@@ -11,45 +10,67 @@ import { auth } from "@/lib/auth";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const inter = Inter({
+// Modern, professional fonts - Geist is Vercel's design system font
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist",
   display: "swap",
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-const spaceGrotesk = Space_Grotesk({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-geist-mono",
   display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Novyrix | Digital IT Solutions in Kenya",
-  description: "Build world-class software, websites and digital workflows for Kenyan companies. Transparent pricing, modern tech, exceptional results.",
-  keywords: ["web development kenya", "software development", "workflow automation", "IT solutions kenya"],
-  authors: [{ name: "Novyrix" }],
+  metadataBase: new URL('https://novyrix.com'),
+  title: {
+    default: "Novyrix | Custom Web Development & Automation Solutions Kenya",
+    template: "%s | Novyrix"
+  },
+  description: "Transform your business with transparent, custom web applications and workflow automation. Powered by Novy AI for instant quotes. Node.js experts serving Kenyan SMEs, startups & enterprises.",
+  keywords: [
+    "custom web development Kenya", "web application development Nairobi", "workflow automation Kenya",
+    "Node.js developers Kenya", "React developers Nairobi", "API integration services",
+    "KRA eTIMS integration", "M-Pesa API integration", "e-commerce platform development",
+    "SaaS development Kenya", "digital transformation Kenya", "transparent pricing software",
+    "AI-powered quotations", "Nairobi software company", "SME digital solutions"
+  ],
+  authors: [{ name: "Novyrix Digital", url: "https://novyrix.com" }],
+  creator: "Novyrix",
+  publisher: "Novyrix Digital",
+  category: "Technology",
   openGraph: {
-    title: "Novyrix | Digital IT Solutions in Kenya",
-    description: "Build world-class software, websites and digital workflows for Kenyan companies.",
+    type: "website",
+    locale: "en_KE",
     url: "https://novyrix.com",
     siteName: "Novyrix",
-    locale: "en_KE",
-    type: "website",
+    title: "Novyrix | Custom Web Development & Automation Solutions Kenya",
+    description: "Transform your business with transparent, custom web applications. Get instant quotes with Novy AI.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Novyrix - Custom Web Development" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Novyrix | Digital IT Solutions in Kenya",
-    description: "Build world-class software, websites and digital workflows for Kenyan companies.",
+    title: "Novyrix | Custom Web Development & Automation Kenya",
+    description: "Transform your business with transparent, custom web applications. Get instant quotes with Novy AI.",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: "https://novyrix.com",
   },
 };
 
@@ -61,11 +82,27 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
-      <body className="antialiased">
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Novyrix",
+              description: "Custom web development and workflow automation for Kenyan businesses",
+              url: "https://novyrix.com",
+              logo: "https://novyrix.com/logo.png",
+              address: { "@type": "PostalAddress", addressCountry: "KE", addressLocality: "Nairobi" },
+              aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "30" }
+            })
+          }}
+        />
+      </head>
+      <body className="antialiased" suppressHydrationWarning>
         <SessionProvider session={session}>
           <ToastProvider>
-            <Preloader />
             <Navigation />
             {children}
             <Footer />

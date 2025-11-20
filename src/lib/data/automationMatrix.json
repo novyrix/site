@@ -205,5 +205,104 @@
       "webhook",
       "event"
     ]
+  },
+  "HR-001": {
+    "id": "HR-001",
+    "name": "Payroll Automation",
+    "category": "hr",
+    "price": 85000,
+    "description": "Automated payroll processing including salary calculations, deductions, tax computations, and payslip generation with integration to accounting systems",
+    "keywords": [
+      "payroll",
+      "salary",
+      "wages",
+      "payslips",
+      "pay slip",
+      "salary slip",
+      "pay stub",
+      "compensation",
+      "payroll processing",
+      "salary calculation",
+      "deductions",
+      "tax calculation",
+      "paye",
+      "nssf",
+      "nhif",
+      "employee payment",
+      "staff payment",
+      "payroll automation"
+    ]
+  },
+  "HR-002": {
+    "id": "HR-002",
+    "name": "Recruitment Workflow Automation",
+    "category": "hr",
+    "price": 70000,
+    "description": "End-to-end recruitment automation including job posting distribution, application tracking, candidate screening, interview scheduling, and hiring workflows",
+    "keywords": [
+      "recruitment",
+      "hiring",
+      "job applications",
+      "applicant tracking",
+      "ats",
+      "candidate management",
+      "job posting",
+      "vacancies",
+      "careers",
+      "interview scheduling",
+      "candidate screening",
+      "resume parsing",
+      "cv processing",
+      "hiring workflow",
+      "onboarding",
+      "recruitment automation",
+      "talent acquisition",
+      "job board integration"
+    ]
+  },
+  "HR-003": {
+    "id": "HR-003",
+    "name": "Employee Onboarding Automation",
+    "category": "hr",
+    "price": 60000,
+    "description": "Automated employee onboarding workflows including document collection, account provisioning, training assignment, and orientation scheduling",
+    "keywords": [
+      "onboarding",
+      "new employee",
+      "new hire",
+      "employee setup",
+      "orientation",
+      "induction",
+      "training assignment",
+      "document collection",
+      "account creation",
+      "provisioning",
+      "employee activation",
+      "joining process",
+      "welcome workflow"
+    ]
+  },
+  "HR-004": {
+    "id": "HR-004",
+    "name": "Leave Management Automation",
+    "category": "hr",
+    "price": 55000,
+    "description": "Automated leave request, approval workflows, balance tracking, and calendar integration for employee time-off management",
+    "keywords": [
+      "leave",
+      "time off",
+      "vacation",
+      "annual leave",
+      "sick leave",
+      "absence",
+      "leave management",
+      "leave request",
+      "leave approval",
+      "leave balance",
+      "time off tracking",
+      "holiday management",
+      "pto",
+      "paid time off"
+    ]
   }
 }

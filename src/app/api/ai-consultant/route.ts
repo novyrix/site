@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { openai, AI_MODEL, CONSULTANT_SYSTEM_PROMPT } from '@/lib/ai/openai';
+import { prisma } from '@/lib/prisma';
 import {
   tools,
   searchFeatures,
@@ -8,8 +9,13 @@ import {
   formatKES,
   type Quote,
   type QuoteItem,
-  type ServiceType
+  type ServiceType,
+  type PricingTier
 } from '@/lib/ai/quote-tools';
+
+// Configure route for longer timeout (OpenAI can take time)
+export const maxDuration = 60; // 60 seconds
+export const dynamic = 'force-dynamic';
 
 // In-memory session storage (in production, use Redis or database)
 const sessions = new Map<string, {
@@ -76,7 +82,7 @@ export async function POST(req: NextRequest) {
 
         switch (functionName) {
           case 'start_quote':
-            result = handleStartQuote(session, args.serviceType);
+            result = handleStartQuote(session, args.serviceType, args.pricingTier || 'enterprise');
             break;
 
           case 'find_features':
@@ -160,9 +166,22 @@ export async function POST(req: NextRequest) {
 }
 
 // Function handlers
-function handleStartQuote(session: any, serviceType: ServiceType) {
-  const mandatoryFeature = serviceType === 'website' ? 'CORE-FOUNDATION' : 'WF-CORE';
-  const feature = getFeatureById(mandatoryFeature, serviceType);
+function handleStartQuote(session: any, serviceType: ServiceType, pricingTier: PricingTier) {
+  let mandatoryFeature: string;
+  let searchType: ServiceType;
+
+  // Determine base package based on tier
+  if (pricingTier === 'starter') {
+    // Starter tier: PKG-ONE (30k) or PKG-STD (50k)
+    mandatoryFeature = serviceType === 'website' ? 'PKG-STD' : 'PKG-ONE';
+    searchType = 'starter';
+  } else {
+    // Enterprise tier: CORE-FOUNDATION (150k) or WF-CORE
+    mandatoryFeature = serviceType === 'website' ? 'CORE-FOUNDATION' : 'WF-CORE';
+    searchType = serviceType;
+  }
+
+  const feature = getFeatureById(mandatoryFeature, searchType);
 
   if (!feature) {
     return { error: 'Failed to initialize quote' };
@@ -170,6 +189,7 @@ function handleStartQuote(session: any, serviceType: ServiceType) {
 
   session.quote = {
     serviceType,
+    pricingTier,
     items: [feature],
     total: feature.price,
     mandatory: [feature],
@@ -178,13 +198,23 @@ function handleStartQuote(session: any, serviceType: ServiceType) {
 
   return {
     success: true,
-    message: `Started ${serviceType} quote with ${feature.name} (${formatKES(feature.price)})`,
+    message: `Started ${pricingTier} tier ${serviceType} quote with ${feature.name} (${formatKES(feature.price)})`,
     quote: session.quote
   };
 }
 
 function handleFindFeatures(userGoal: string, serviceType: ServiceType) {
   const features = searchFeatures(userGoal, serviceType);
+
+  // Log unmapped queries (queries with poor results) for training
+  const shouldLog = features.length < 3; // Less than 3 good matches = needs review
+
+  if (shouldLog) {
+    // Log asynchronously without blocking response
+    logUnmappedQuery(userGoal, features.length).catch(err =>
+      console.error('Failed to log unmapped query:', err)
+    );
+  }
 
   return {
     success: true,
@@ -197,6 +227,23 @@ function handleFindFeatures(userGoal: string, serviceType: ServiceType) {
     })),
     message: `Found ${features.length} matching features`
   };
+}
+
+// Async function to log unmapped queries for AI training
+async function logUnmappedQuery(userMessage: string, featuresFound: number) {
+  try {
+    await prisma.unmappedQuery.create({
+      data: {
+        sessionId: `training-${Date.now()}`,
+        userMessage,
+        featuresFound,
+        wasHelpful: featuresFound >= 3,
+        needsReview: featuresFound < 3, // Flag for manual review if poor results
+      }
+    });
+  } catch (error) {
+    console.error('Error logging unmapped query:', error);
+  }
 }
 
 function handleAddFeature(session: any, featureId: string) {

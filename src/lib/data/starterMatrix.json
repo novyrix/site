@@ -1,0 +1,192 @@
+{
+  "meta": {
+    "version": "3.0",
+    "last_updated": "2024-11-20",
+    "currency": "KES",
+    "currency_symbol": "KSh",
+    "app_name": "Novy AI",
+    "company": "Novyrix Digital",
+    "tier": "starter"
+  },
+  "personality_constants": {
+    "tone": "Expert, granular, transparent. Explain the 'why' behind every cost.",
+    "mission": "To provide transparent, itemized high-performance web development.",
+    "sales_strategy": "Educate the client. Use the 'why_we_charge' field to justify costs."
+  },
+  "pricing_matrix": {
+    "development_base": [
+      {
+        "id": "PKG-ONE",
+        "name": "The 'Landing' Package (One-Pager)",
+        "category": "starter_base",
+        "price": 30000,
+        "billing_type": "one_time",
+        "description": "A high-performance single-page site. Perfect for portfolios or digital business cards.",
+        "features": ["Single Scrollable Page", "Standard Contact Form", "Mobile Responsive", "Node.js Performance"],
+        "why_we_charge": "Covers the setup of the Node.js environment, mobile responsiveness testing, and the core single-page architecture.",
+        "keywords": ["landing page", "one page", "simple site", "portfolio", "single page", "starter", "small business", "freelancer", "personal website", "coming soon"]
+      },
+      {
+        "id": "PKG-STD",
+        "name": "The 'Business' Package (5-Pager)",
+        "category": "starter_base",
+        "price": 50000,
+        "billing_type": "one_time",
+        "description": "Standard 5-page corporate identity site (Home, About, Services, FAQ, Contact).",
+        "features": ["5 Distinct Pages", "Admin Dashboard", "Basic SEO", "Map Embed"],
+        "why_we_charge": "Covers the development of 5 distinct layouts, routing logic, and a basic admin panel for you to edit text.",
+        "keywords": ["business site", "standard", "corporate", "5 pages", "company website", "small business", "startup", "professional site", "brochure site"]
+      }
+    ],
+    "hosting_infrastructure": [
+      {
+        "id": "HOST-YR",
+        "name": "Novyrix Managed Cloud (Annual)",
+        "category": "hosting",
+        "price": 13000,
+        "billing_type": "recurring_yearly",
+        "description": "Premium Node.js hosting, SSL, and daily backups. (~$100/yr)",
+        "why_we_charge": "Node.js apps require specialized servers (VPS), not cheap shared hosting. This covers server costs, SSL renewal, and automated backups.",
+        "keywords": ["hosting", "server", "online", "yearly", "domain", "ssl", "backup", "uptime"]
+      },
+      {
+        "id": "HOST-MO",
+        "name": "Novyrix Managed Cloud (Monthly)",
+        "category": "hosting",
+        "price": 1300,
+        "billing_type": "recurring_monthly",
+        "description": "Premium Node.js hosting. (~$10/mo)",
+        "why_we_charge": "Flexible monthly option for server maintenance and uptime monitoring.",
+        "keywords": ["monthly hosting", "pay monthly", "flexible hosting"]
+      }
+    ],
+    "micro_features_and_ui": [
+      {
+        "id": "UI-WHATSAPP",
+        "name": "WhatsApp Click-to-Chat",
+        "category": "ui_feature",
+        "price": 3000,
+        "billing_type": "one_time",
+        "description": "Floating WhatsApp button that opens a chat with your number.",
+        "why_we_charge": "Implementation of the floating script across all pages and mobile testing to ensure it doesn't block content.",
+        "keywords": ["whatsapp", "chat button", "talk to us", "contact widget", "floating button", "whatsapp widget"]
+      },
+      {
+        "id": "UI-MAP-ADV",
+        "name": "Advanced Google Maps API",
+        "category": "ui_feature",
+        "price": 8000,
+        "billing_type": "one_time",
+        "description": "Custom map with branded colors and multiple location pins.",
+        "why_we_charge": "Requires setting up a Google Cloud API key and coding custom markers/styles.",
+        "keywords": ["google map", "location", "pins", "branches", "custom map", "directions", "find us", "multiple locations"]
+      },
+      {
+        "id": "UI-GALLERY",
+        "name": "Dynamic Image Gallery",
+        "category": "ui_feature",
+        "price": 5000,
+        "billing_type": "one_time",
+        "description": "Grid layout with 'Lightbox' (pop-up) view for images.",
+        "why_we_charge": "Implementation of a responsive masonry grid and optimizing images for fast loading.",
+        "keywords": ["gallery", "photos", "portfolio images", "pictures", "image viewer", "lightbox", "photo grid", "showcase"]
+      },
+      {
+        "id": "UI-DARKMODE",
+        "name": "Dark/Light Mode Toggle",
+        "category": "ui_feature",
+        "price": 8000,
+        "billing_type": "one_time",
+        "description": "Allow users to switch between dark and light themes.",
+        "why_we_charge": "Doubles the CSS work as every component needs two color palettes defined and tested.",
+        "keywords": ["dark mode", "night mode", "theme switcher", "light mode", "theme toggle"]
+      }
+    ],
+    "backend_logic_and_data": [
+      {
+        "id": "LOGIC-PDF",
+        "name": "Dynamic PDF Generation",
+        "category": "backend_logic",
+        "price": 9000,
+        "billing_type": "one_time",
+        "description": "Generate branded PDFs (invoices, tickets, reports) on the fly.",
+        "why_we_charge": "Coding the exact pixel-perfect layout of the PDF using a library like 'Puppeteer' or 'PDFKit'.",
+        "keywords": ["pdf", "download invoice", "generate report", "ticket", "pdf generation", "invoice pdf", "receipt", "certificate"]
+      },
+      {
+        "id": "LOGIC-SEARCH",
+        "name": "Advanced Site Search",
+        "category": "backend_logic",
+        "price": 15000,
+        "billing_type": "one_time",
+        "description": "Real-time search with filtering and auto-complete.",
+        "why_we_charge": "Requires indexing your content and building a query algorithm for instant results.",
+        "keywords": ["search bar", "find", "filter", "search functionality", "site search", "autocomplete"]
+      },
+      {
+        "id": "LOGIC-FORM-ADV",
+        "name": "Complex Logic Form",
+        "category": "backend_logic",
+        "price": 6000,
+        "billing_type": "one_time",
+        "description": "Forms with conditional logic (e.g., 'If X, show Y') or file uploads.",
+        "why_we_charge": "Coding the validation rules, file handling security, and conditional rendering logic.",
+        "keywords": ["application form", "upload file", "complex form", "survey", "multi-step form", "conditional form", "file upload"]
+      }
+    ],
+    "integrations_and_api": [
+      {
+        "id": "INT-MPESA",
+        "name": "M-Pesa Integration (STK Push)",
+        "category": "integration",
+        "price": 25000,
+        "billing_type": "one_time",
+        "description": "Automatic payment prompts to client phones.",
+        "why_we_charge": "Secure connection to Safaricom Daraja API, callback handling, and transaction verification logic.",
+        "keywords": ["mpesa", "payment", "lipa na mpesa", "stk push", "mobile payment", "daraja", "safaricom"]
+      },
+      {
+        "id": "INT-SOCIAL",
+        "name": "Live Social Media Feed",
+        "category": "integration",
+        "price": 5000,
+        "billing_type": "one_time",
+        "description": "Displaying your latest Instagram or Twitter posts on the site.",
+        "why_we_charge": "Connecting to the social platform's API and styling the feed to match your website.",
+        "keywords": ["instagram feed", "twitter feed", "social wall", "facebook feed", "social media", "live feed"]
+      },
+      {
+        "id": "INT-ANALYTICS",
+        "name": "Advanced Analytics Pack",
+        "category": "integration",
+        "price": 5000,
+        "billing_type": "one_time",
+        "description": "Google Analytics 4 + Facebook Pixel setup.",
+        "why_we_charge": "Correctly configuring event tracking (clicks, conversions) so you get accurate data.",
+        "keywords": ["tracking", "analytics", "pixel", "who is visiting", "google analytics", "facebook pixel", "conversion tracking"]
+      }
+    ],
+    "content_and_creative": [
+      {
+        "id": "CNT-COPY",
+        "name": "Professional Copywriting (Per Page)",
+        "category": "content",
+        "price": 2000,
+        "billing_type": "per_unit",
+        "description": "Writing persuasive, SEO-friendly text for your pages.",
+        "why_we_charge": "Professional writing time to ensure your brand voice converts visitors into customers.",
+        "keywords": ["write text", "content", "copywriting", "seo content", "page content", "professional writing"]
+      },
+      {
+        "id": "CNT-STOCK",
+        "name": "Premium Stock Image Sourcing (Per 5)",
+        "category": "content",
+        "price": 3000,
+        "billing_type": "one_time",
+        "description": "Selection and licensing of high-quality stock photos.",
+        "why_we_charge": "Time spent searching, purchasing rights, and optimizing images for web speed.",
+        "keywords": ["images", "photos", "pictures", "stock photos", "professional images"]
+      }
+    ]
+  }
+}
