@@ -9,20 +9,44 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { sessionId, message, visitorId, email, action } = body;
 
+    if (!sessionId) {
+      return NextResponse.json({ error: "Session ID is required" }, { status: 400 });
+    }
+
     // Handle "Talk to Human" action
     if (action === "request_human") {
-      const session = await prisma.chatSession.update({
+      // Ensure session exists first
+      const existingSession = await prisma.chatSession.findUnique({
         where: { id: sessionId },
-        data: { status: "WAITING_FOR_AGENT" },
       });
 
+      if (!existingSession) {
+         // Create it if it doesn't exist (edge case)
+         await prisma.chatSession.create({
+            data: {
+              id: sessionId,
+              visitorId: visitorId || "unknown",
+              status: "WAITING_FOR_AGENT",
+            },
+         });
+      } else {
+        await prisma.chatSession.update({
+            where: { id: sessionId },
+            data: { status: "WAITING_FOR_AGENT" },
+        });
+      }
+
       // Send email notification
-      await resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev",
-        to: process.env.ADMIN_EMAIL || "admin@novyrix.com",
-        subject: `New Chat Request from ${session.name || "Visitor"}`,
-        html: `<p>User ${session.id} is requesting a human agent.</p><p>Visitor ID: ${visitorId}</p>`,
-      });
+      try {
+        await resend.emails.send({
+            from: process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev",
+            to: process.env.ADMIN_EMAIL || "admin@novyrix.com",
+            subject: `New Chat Request from Visitor`,
+            html: `<p>User ${sessionId} is requesting a human agent.</p><p>Visitor ID: ${visitorId}</p>`,
+        });
+      } catch (emailError) {
+        console.error("Failed to send email:", emailError);
+      }
 
       return NextResponse.json({
         message: "Agent notified",
@@ -39,7 +63,7 @@ export async function POST(req: NextRequest) {
       session = await prisma.chatSession.create({
         data: {
           id: sessionId,
-          visitorId,
+          visitorId: visitorId || "unknown",
           status: "ACTIVE",
         },
       });
@@ -54,13 +78,15 @@ export async function POST(req: NextRequest) {
     }
 
     // Save User Message
-    await prisma.chatMessage.create({
-      data: {
-        sessionId,
-        sender: "USER",
-        content: message,
-      },
-    });
+    if (message) {
+        await prisma.chatMessage.create({
+            data: {
+                sessionId,
+                sender: "USER",
+                content: message,
+            },
+        });
+    }
 
     // Logic for AI vs Human
     if (session.status === "WAITING_FOR_AGENT") {
