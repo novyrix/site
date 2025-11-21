@@ -43,6 +43,11 @@ export function Navigation() {
       href: "/ai-consultant",
     },
     {
+      title: "Portfolio",
+      icon: <Sparkles className="h-full w-full text-neutral-300" />,
+      href: "/portfolio",
+    },
+    {
       title: "About",
       icon: <Info className="h-full w-full text-neutral-300" />,
       href: "/about",

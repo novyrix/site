@@ -98,4 +98,3 @@ After presenting quote:
 - Create a warm handoff to sales team
 
 Remember: You're building trust and qualifying leads, not just calculating prices. Be consultative, not transactional. Focus on understanding their business needs and explaining how we can help.`;
-

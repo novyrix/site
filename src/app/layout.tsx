@@ -9,6 +9,7 @@ import { CookieConsent } from "@/components/cookie-consent";
 import { auth } from "@/lib/auth";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ChatWidget } from "@/components/ui/chat-widget";
 
 // Modern, professional fonts - Geist is Vercel's design system font
 const geist = Geist({
@@ -82,7 +83,7 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`} data-scroll-behavior="smooth">
       <head>
         <script
           type="application/ld+json"
@@ -107,6 +108,7 @@ export default async function RootLayout({
             {children}
             <Footer />
             <CookieConsent />
+            <ChatWidget />
           </ToastProvider>
         </SessionProvider>
         <Analytics />

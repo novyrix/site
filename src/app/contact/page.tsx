@@ -1,86 +1,95 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact-form";
+import { Spotlight } from "@/components/ui/spotlight";
+import Link from "next/link";
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-black text-white pt-32 pb-20">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 gradient-text">
-            Get in Touch
+    <main className="min-h-screen bg-black/[0.96] text-white antialiased bg-grid-white/[0.02]">
+      {/* Hero Section */}
+      <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
+        <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+        <div className="container relative z-10 mx-auto px-4 text-center">
+          <h1 className="text-5xl md:text-7xl font-black mb-6">
+            Get in <span className="text-primary-400">Touch</span>
           </h1>
-          <p className="text-xl text-gray-400 leading-relaxed">
-            Ready to start your project? We'd love to hear from you
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            Ready to start your project? We'd love to hear from you.
           </p>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto mb-16">
+      <div className="container mx-auto px-4 pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Form */}
-          <div>
-            <Card variant="highlighted" className="p-8">
-              <h2 className="text-2xl font-display font-bold mb-6">Send us a Message</h2>
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
+            <div className="relative bg-slate-900 ring-1 ring-white/10 rounded-2xl p-8 h-full">
+              <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
               <ContactForm />
-            </Card>
+            </div>
           </div>
 
           {/* Contact Info */}
           <div className="space-y-6">
-            <Card variant="default" className="p-6">
+            <div className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 hover:bg-slate-900/80 transition-colors">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-6 h-6 text-primary-500" />
+                <div className="w-12 h-12 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-6 h-6 text-primary-400" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold mb-2">Email</h3>
-                  <a href="mailto:info@novyrix.com" className="text-gray-400 hover:text-primary-500 transition-colors">
+                  <h3 className="font-bold text-lg mb-1">Email</h3>
+                  <a href="mailto:info@novyrix.com" className="text-gray-400 hover:text-primary-400 transition-colors">
                     info@novyrix.com
                   </a>
                   <p className="text-sm text-gray-500 mt-1">We'll respond within 24 hours</p>
                 </div>
               </div>
-            </Card>
+            </div>
 
-            <Card variant="default" className="p-6">
+            <div className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 hover:bg-slate-900/80 transition-colors">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-primary-500" />
+                <div className="w-12 h-12 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-6 h-6 text-primary-400" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold mb-2">Phone</h3>
-                  <a href="tel:+254790778103" className="text-gray-400 hover:text-primary-500 transition-colors">
+                  <h3 className="font-bold text-lg mb-1">Phone</h3>
+                  <a href="tel:+254790778103" className="text-gray-400 hover:text-primary-400 transition-colors">
                     +254 790 778 103
                   </a>
                   <p className="text-sm text-gray-500 mt-1">Mon-Fri, 9am-6pm EAT</p>
                 </div>
               </div>
-            </Card>
+            </div>
 
-            <Card variant="default" className="p-6">
+            <div className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 hover:bg-slate-900/80 transition-colors">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary-500/10 border border-primary-500/20 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-primary-500" />
+                <div className="w-12 h-12 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-6 h-6 text-primary-400" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold mb-2">Location</h3>
+                  <h3 className="font-bold text-lg mb-1">Location</h3>
                   <p className="text-gray-400">Nairobi, Kenya</p>
                   <p className="text-sm text-gray-500 mt-1">Serving clients globally</p>
                 </div>
               </div>
-            </Card>
+            </div>
 
-            <Card variant="highlighted" className="p-6">
-              <h3 className="text-xl font-display font-bold mb-3">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-900/20 to-purple-900/20 border border-primary-500/20 p-8 text-center">
+              <h3 className="text-xl font-bold mb-3">
                 Prefer to Get a Quote First?
               </h3>
-              <p className="text-gray-400 mb-4 text-sm">
-                Use our transparent calculators to get an instant quote for your project
+              <p className="text-gray-400 mb-6 text-sm">
+                Use our AI consultant to get an instant, transparent quote for your project.
               </p>
-              <Button size="md" className="w-full" asChild>
-                <a href="/calculators">Calculate Your Quote</a>
-              </Button>
-            </Card>
+              <Link href="/ai-consultant">
+                <Button className="w-full bg-primary-600 hover:bg-primary-700">
+                  <span className="mr-2">Talk to Novy AI</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -3,26 +3,22 @@
 import { useState } from 'react';
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Sparkles, Search, Zap, Shield, Code2, TrendingUp, CheckCircle2, Star, ChevronRight } from "lucide-react";
+import { ArrowRight, Sparkles, Search, Zap, Shield, Code2, TrendingUp, CheckCircle2, Star, ChevronRight, Globe, Smartphone, Database, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Spotlight } from "@/components/ui/spotlight";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
-import { AIChatModal } from "@/components/ui/ai-chat-modal";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import { HoverEffect } from "@/components/ui/card-hover-effect";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [isChatOpen, setIsChatOpen] = useState(false);
-
-  const handleQuoteSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      setIsChatOpen(true);
-    }
-  };
 
   const handlePlaceholderSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsChatOpen(true);
+    // Redirect to services or open chat (future)
+    // For now, just log
+    console.log("Search:", searchQuery);
   };
 
   const placeholders = [
@@ -33,9 +29,85 @@ export default function Home() {
     "I want a portfolio website with a blog section...",
   ];
 
-  const quickPrompts = [
-    "I need an e-commerce website",
-    "Help me automate payroll",
+  const techStack = [
+    { quote: "Next.js 14", name: "The React Framework", title: "Frontend" },
+    { quote: "Node.js", name: "JavaScript Runtime", title: "Backend" },
+    { quote: "TypeScript", name: "Type Safety", title: "Language" },
+    { quote: "Prisma ORM", name: "Database Tooling", title: "Data" },
+    { quote: "Tailwind CSS", name: "Utility-first CSS", title: "Styling" },
+    { quote: "PostgreSQL", name: "Relational Database", title: "Storage" },
+    { quote: "Docker", name: "Containerization", title: "DevOps" },
+    { quote: "AWS", name: "Cloud Infrastructure", title: "Hosting" },
+  ];
+
+  const services = [
+    {
+      title: "Custom Web Applications",
+      description: "Scalable, high-performance web apps built with Next.js. From SaaS platforms to internal tools.",
+      link: "/services/web-development",
+      icon: <Globe className="w-8 h-8" />,
+    },
+    {
+      title: "Workflow Automation",
+      description: "Eliminate manual tasks. We connect your apps (CRM, Email, Sheets) to work together automatically.",
+      link: "/services/automation",
+      icon: <Zap className="w-8 h-8" />,
+    },
+    {
+      title: "Mobile App Development",
+      description: "Native-feeling cross-platform mobile apps using React Native. iOS and Android from one codebase.",
+      link: "/services/mobile",
+      icon: <Smartphone className="w-8 h-8" />,
+    },
+    {
+      title: "API Integration",
+      description: "Connect M-Pesa, KRA eTIMS, SMS gateways, and 3rd party APIs seamlessly into your systems.",
+      link: "/services/api-integration",
+      icon: <Code2 className="w-8 h-8" />,
+    },
+    {
+      title: "Database Design",
+      description: "Secure, optimized database architecture. We ensure your data is safe, fast, and scalable.",
+      link: "/services/database",
+      icon: <Database className="w-8 h-8" />,
+    },
+    {
+      title: "Enterprise Security",
+      description: "Bank-grade security implementation. Auth, encryption, and compliance built-in from day one.",
+      link: "/services/security",
+      icon: <Lock className="w-8 h-8" />,
+    },
+  ];
+
+  const bentoItems = [
+    {
+      title: "Radical Transparency",
+      description: "Every cost itemized. No hidden fees. Know exactly what you're paying for before we start.",
+      header: <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 border border-neutral-700" />,
+      icon: <Shield className="h-4 w-4 text-neutral-300" />,
+      className: "md:col-span-2",
+    },
+    {
+      title: "Fixed-Price Model",
+      description: "Know the total cost upfront. We're incentivized to be efficient, not to bill hours.",
+      header: <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 border border-neutral-700" />,
+      icon: <Zap className="h-4 w-4 text-neutral-300" />,
+      className: "md:col-span-1",
+    },
+    {
+      title: "Built to Scale",
+      description: "Your digital asset grows with your business. Handle 10 or 10,000 users without a rewrite.",
+      header: <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 border border-neutral-700" />,
+      icon: <TrendingUp className="h-4 w-4 text-neutral-300" />,
+      className: "md:col-span-1",
+    },
+    {
+      title: "Made in Kenya",
+      description: "Local understanding, global standards. We build solutions that work for the Kenyan market.",
+      header: <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 border border-neutral-700" />,
+      icon: <CheckCircle2 className="h-4 w-4 text-neutral-300" />,
+      className: "md:col-span-2",
+    },
   ];
 
   return (
@@ -121,131 +193,119 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Novyrix Section - Aceternity Card Style */}
-      <section className="relative py-24 md:py-32 bg-black bg-grid-white/[0.02]">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
+      {/* Tech Stack Ticker */}
+      <section className="py-10 bg-black border-y border-white/5">
+        <div className="container mx-auto px-4 mb-6 text-center">
+          <p className="text-sm text-gray-500 uppercase tracking-widest">Powered by Modern Tech Stack</p>
+        </div>
+        <InfiniteMovingCards
+          items={techStack}
+          direction="right"
+          speed="slow"
+        />
+      </section>
 
-        <div className="container relative mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 space-y-4">
-              <h2 className="text-3xl md:text-5xl font-bold">
-                Why Choose{" "}
-                <span className="bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent">
-                  Novyrix
-                </span>
-                ?
-              </h2>
-              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                We're not a "website design" company. We're your strategic technology partner.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  icon: Shield,
-                  title: "Radical Transparency",
-                  description: "Every cost itemized. No hidden fees. Know exactly what you're paying for.",
-                },
-                {
-                  icon: Code2,
-                  title: "Custom Node.js Stack",
-                  description: "Modern, scalable technology. Real engineering for real business value.",
-                },
-                {
-                  icon: Zap,
-                  title: "Fixed-Price Model",
-                  description: "Know the total cost upfront. We're incentivized to be efficient.",
-                },
-                {
-                  icon: TrendingUp,
-                  title: "Built to Scale",
-                  description: "Your digital asset grows with your business. Handle 10 or 10,000 users.",
-                },
-                {
-                  icon: Sparkles,
-                  title: "AI-Powered Quoting",
-                  description: "Novy translates your goals into technical solutions instantly.",
-                },
-                {
-                  icon: CheckCircle2,
-                  title: "KRA eTIMS Experts",
-                  description: "Compliance automation for Kenyan businesses. M-Pesa & API integrations.",
-                }
-              ].map((feature, idx) => (
-                <div
-                  key={idx}
-                  className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900/50 to-slate-800/50 p-6 border border-slate-800 hover:border-slate-700 transition-all duration-300"
-                >
-                  {/* Hover gradient effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 via-purple-500/0 to-primary-500/0 opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
-
-                  <div className="relative space-y-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500/20 to-purple-500/20 flex items-center justify-center border border-primary-500/20 group-hover:scale-110 transition-transform duration-300">
-                      <feature.icon className="w-6 h-6 text-primary-400" />
-                    </div>
-                    <h3 className="text-xl font-bold text-white">{feature.title}</h3>
-                    <p className="text-gray-400 leading-relaxed text-sm">
-                      {feature.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Services Section - Hover Effect */}
+      <section className="py-24 bg-black bg-grid-white/[0.02]">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold">
+              What We <span className="text-primary-400">Build</span>
+            </h2>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              End-to-end digital solutions tailored to your business needs.
+            </p>
           </div>
+          <HoverEffect items={services} />
         </div>
       </section>
 
-      {/* Social Proof Section - Minimalist */}
-      <section className="relative py-24 md:py-32 bg-black bg-grid-white/[0.02]">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
+      {/* Why Novyrix Section - Bento Grid */}
+      <section className="py-24 bg-black relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-primary-950/5 to-black" />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold">
+              Why Choose <span className="text-primary-400">Novyrix</span>?
+            </h2>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              We're not just developers. We're your strategic technology partners.
+            </p>
+          </div>
 
-        <div className="container relative mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center space-y-8 mb-16">
-              <div className="flex justify-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-6 h-6 fill-primary-500 text-primary-500" />
-                ))}
+          <BentoGrid className="max-w-4xl mx-auto">
+            {bentoItems.map((item, i) => (
+              <BentoGridItem
+                key={i}
+                title={item.title}
+                description={item.description}
+                header={item.header}
+                icon={item.icon}
+                className={item.className}
+              />
+            ))}
+          </BentoGrid>
+        </div>
+      </section>
+
+      {/* Pricing Section - Simple Cards */}
+      <section className="py-24 bg-black bg-grid-white/[0.02]">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold">
+              Transparent <span className="text-primary-400">Pricing</span>
+            </h2>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              No hidden fees. Choose the package that fits your stage of growth.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                name: "Starter",
+                price: "KES 35,000",
+                desc: "Perfect for small businesses establishing a digital presence.",
+                features: ["Custom Website (5 Pages)", "Mobile Responsive", "Contact Form", "Basic SEO", "1 Month Support"],
+                highlight: false
+              },
+              {
+                name: "Professional",
+                price: "KES 75,000",
+                desc: "For growing businesses needing dynamic features and automation.",
+                features: ["Dynamic Web App", "CMS Integration", "User Authentication", "Database Setup", "3 Months Support"],
+                highlight: true
+              },
+              {
+                name: "Enterprise",
+                price: "Custom",
+                desc: "Full-scale digital transformation for established organizations.",
+                features: ["Custom Software Dev", "API Integrations", "Cloud Infrastructure", "SLA Support", "Dedicated Team"],
+                highlight: false
+              }
+            ].map((plan, idx) => (
+              <div key={idx} className={`relative rounded-2xl p-8 border ${plan.highlight ? 'border-primary-500 bg-primary-950/10' : 'border-white/10 bg-slate-900/20'} flex flex-col`}>
+                {plan.highlight && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+                    Most Popular
+                  </div>
+                )}
+                <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
+                <div className="text-3xl font-black mb-4">{plan.price}</div>
+                <p className="text-gray-400 text-sm mb-6">{plan.desc}</p>
+                <ul className="space-y-3 mb-8 flex-1">
+                  {plan.features.map((feat, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-gray-300">
+                      <CheckCircle2 className="w-4 h-4 text-primary-400" />
+                      {feat}
+                    </li>
+                  ))}
+                </ul>
+                <Button className={`w-full ${plan.highlight ? 'bg-primary-600 hover:bg-primary-700' : 'bg-white/10 hover:bg-white/20'}`}>
+                  Get Started
+                </Button>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold">
-                Trusted by Kenya's Growing Businesses
-              </h2>
-              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                From funded startups to established SMEs, we've delivered 50+ custom solutions.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-              {[
-                { label: "Projects", value: "50+" },
-                { label: "Clients", value: "30+" },
-                { label: "Code Lines", value: "500K+" },
-                { label: "Uptime", value: "99.9%" },
-              ].map((stat, idx) => (
-                <div key={idx} className="text-center p-6 rounded-xl bg-slate-900/30 border border-slate-800">
-                  <div className="text-4xl font-black bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-500">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="text-center">
-              <Link href="/ai-consultant">
-                <button className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-sm font-semibold leading-6 text-white inline-block">
-                  <span className="absolute inset-0 overflow-hidden rounded-full">
-                    <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  </span>
-                  <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-3 px-8 ring-1 ring-white/10">
-                    <span>Talk to Novy AI Now</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                  <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-primary-400/0 via-primary-400/90 to-primary-400/0 transition-opacity duration-500 group-hover:opacity-40" />
-                </button>
-              </Link>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -291,13 +351,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* AI Chat Modal */}
-      <AIChatModal
-        isOpen={isChatOpen}
-        onClose={() => setIsChatOpen(false)}
-        initialQuery={searchQuery}
-      />
     </main>
   );
 }
