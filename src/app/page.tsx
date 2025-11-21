@@ -60,7 +60,7 @@ export default function Home() {
                   <div className="w-4 h-4 flex items-center justify-center relative">
                     <Image
                       src="/novyrix-logo.png"
-                      alt="Novy AI"
+                      alt="Made in Kenya"
                       width={16}
                       height={16}
                       className="object-contain"
@@ -71,7 +71,7 @@ export default function Home() {
                     />
                     <Sparkles className="w-2.5 h-2.5 text-orange-400 hidden" />
                   </div>
-                  <span>Powered by Novy AI</span>
+                  <span>Made in Kenya</span>
                   <span className="px-2 py-0.5 text-[10px] bg-orange-500/20 text-orange-400 rounded-full">Beta</span>
                 </div>
                 <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-orange-400/0 via-orange-400/90 to-orange-400/0 transition-opacity duration-500 group-hover:opacity-40" />
@@ -100,31 +100,13 @@ export default function Home() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onSubmit={handlePlaceholderSubmit}
               />
-
-              {/* Quick Prompts - More subtle */}
-              <div className="flex flex-wrap gap-2 justify-center mt-4 text-sm">
-                <span className="text-gray-600">Try:</span>
-                {quickPrompts.map((prompt, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => {
-                      setSearchQuery(prompt);
-                      setIsChatOpen(true);
-                    }}
-                    className="px-3 py-1 rounded-full bg-slate-800/50 hover:bg-slate-800 border border-slate-700/50 hover:border-slate-600 text-gray-400 hover:text-gray-300 transition-all duration-200"
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </div>
             </div>
 
             {/* Trust Indicators - More minimal */}
             <div className="flex flex-wrap items-center justify-center gap-6 pt-4 text-sm text-gray-500">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
-                <span>Instant AI Quotes</span>
+                <span>Instant Quotes</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
