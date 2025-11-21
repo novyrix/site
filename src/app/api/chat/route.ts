@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
+import OpenAI from "openai";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export async function POST(req: NextRequest) {
   try {
@@ -90,18 +94,38 @@ export async function POST(req: NextRequest) {
 
     // Logic for AI vs Human
     if (session.status === "WAITING_FOR_AGENT") {
-      // Notify admin again if needed (debounce this in real app)
-      // For now, just acknowledge
       return NextResponse.json({ status: "waiting" });
     }
 
-    // AI Response (Mocked for now as requested "disable AI", or simple auto-reply)
-    // The user said "disable the AI for now... let it be a chatbot".
-    // I'll implement a simple rule-based bot here or call the AI if I want.
-    // Let's use a simple auto-reply for now to be safe, or a very basic AI.
+    // Fetch conversation history for context
+    const history = await prisma.chatMessage.findMany({
+      where: { sessionId },
+      orderBy: { createdAt: "asc" },
+      take: 10, // Limit context window
+    });
 
-    // For this specific request, I'll simulate a basic bot that tries to be helpful but offers human help.
-    const aiResponse = "Thanks for reaching out! I'm the Novyrix assistant. I can help with basic questions about our services. If you need specific pricing or custom quotes, please click 'Talk to Human'.";
+    const messages = history.map((msg) => ({
+      role: msg.sender === "USER" ? "user" : "assistant",
+      content: msg.content,
+    }));
+
+    // Generate AI Response with Context
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content: `You are Novy, the AI assistant for Novyrix Digital. 
+          You are helpful, professional, and concise.
+          Novyrix provides custom web development, workflow automation, and software solutions in Kenya.
+          If you don't know an answer, suggest they click "Talk to Human".
+          Keep responses under 3 sentences unless detailed info is requested.`
+        },
+        ...messages as any
+      ],
+    });
+
+    const aiResponse = completion.choices[0].message.content || "I'm sorry, I couldn't generate a response. Please try again.";
 
     await prisma.chatMessage.create({
       data: {
