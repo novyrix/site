@@ -158,7 +158,7 @@ export default function AIConsultantPage() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-500 to-purple-500 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -187,7 +187,7 @@ export default function AIConsultantPage() {
                     <div
                       className={`w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center ${
                         message.role === 'assistant'
-                          ? 'bg-gradient-to-br from-primary-500 to-purple-500'
+                          ? 'bg-gradient-to-br from-primary-400 to-primary-600'
                           : 'bg-white/10'
                       }`}
                     >
@@ -226,7 +226,7 @@ export default function AIConsultantPage() {
 
                 {isLoading && (
                   <div className="flex gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-purple-500 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
                       <Sparkles className="w-5 h-5 text-white" />
                     </div>
                     <div className="bg-white/5 border border-white/10 rounded-xl p-4">

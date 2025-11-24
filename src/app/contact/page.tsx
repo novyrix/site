@@ -24,7 +24,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Form */}
           <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-primary-400 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
             <div className="relative bg-slate-900 ring-1 ring-white/10 rounded-2xl p-8 h-full">
               <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
               <ContactForm />
@@ -76,7 +76,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-900/20 to-purple-900/20 border border-primary-500/20 p-8 text-center">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-900/20 to-primary-800/20 border border-primary-500/20 p-8 text-center">
               <h3 className="text-xl font-bold mb-3">
                 Prefer to Get a Quote First?
               </h3>

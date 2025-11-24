@@ -384,6 +384,48 @@ p, .body {
   animation: spotlight 2s ease 0.75s 1 forwards;
 }
 
+/* Animated Service Card Animation */
+@keyframes move {
+  0% {
+    transform: translateY(-50%) translateX(0);
+  }
+  100% {
+    transform: translateY(-50%) translateX(-20px);
+  }
+}
+
+.animate-move {
+  animation: move 3s ease-in-out infinite alternate;
+}
+
+/* Bounce animation for service cards */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.1);
+  }
+}
+
+/* Carousel animation for logo scrolling */
+@keyframes carousel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-carousel {
+  animation: carousel 15s linear infinite;
+}
+
+.animate-carousel:hover {
+  animation-play-state: paused;
+}
+
 /* Utility Classes */
 .animation-delay-200 {
   animation-delay: 0.2s;

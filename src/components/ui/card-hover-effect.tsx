@@ -37,7 +37,7 @@ export const HoverEffect = ({
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-800/[0.8] block rounded-3xl"
+                className="absolute inset-0 h-full w-full bg-gradient-to-br from-primary-500/10 to-primary-600/5 block rounded-3xl border border-primary-500/20"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -71,7 +71,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden bg-black border border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
+        "rounded-2xl h-full w-full p-4 overflow-hidden bg-black/50 backdrop-blur-sm border border-white/[0.1] group-hover:border-primary-500/40 relative z-20 transition-all duration-300",
         className
       )}
     >
@@ -92,9 +92,9 @@ export const CardTitle = ({
   icon?: React.ReactNode;
 }) => {
   return (
-    <div className="flex items-center gap-2 mb-2">
-      {icon && <div className="text-orange-500">{icon}</div>}
-      <h4 className={cn("text-zinc-100 font-bold tracking-wide", className)}>
+    <div className="flex items-center gap-3 mb-3">
+      {icon && <div className="text-primary-500 group-hover:text-primary-400 transition-colors duration-300 group-hover:scale-110 transform transition-transform">{icon}</div>}
+      <h4 className={cn("text-zinc-100 font-bold tracking-wide text-lg group-hover:text-primary-400 transition-colors duration-300", className)}>
         {children}
       </h4>
     </div>

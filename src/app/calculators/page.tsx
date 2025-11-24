@@ -20,7 +20,7 @@ export default function CalculatorsPage() {
         <div className="max-w-5xl mx-auto mb-12">
           <Card variant="highlighted" className="p-8">
             <div className="flex flex-col md:flex-row items-center gap-6">
-              <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-primary-500 to-purple-500 flex items-center justify-center flex-shrink-0">
+              <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center flex-shrink-0">
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
               <div className="flex-1 text-center md:text-left">

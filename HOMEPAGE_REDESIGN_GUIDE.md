@@ -103,17 +103,17 @@ Component Structure:
 npx shadcn@latest add @react-bits/Lightning-JS-CSS
 
 <section className="relative py-32 overflow-hidden">
-  <Lightning 
+  <Lightning
     hue={220}      // Blue lightning
     speed={1}       // Normal speed
     intensity={1}   // High intensity
     size={1}
   />
-  
+
   <div className="relative z-10">
     <h2>Lightning-Fast Performance</h2>
     <p>Built for speed. Our applications load in under 2 seconds</p>
-    
+
     <div className="grid grid-cols-3 gap-8">
       <Metric icon={<Zap />} value="< 2s" label="Page Load Time" />
       <Metric icon={<TrendingUp />} value="99.9%" label="Uptime" />
@@ -129,7 +129,7 @@ npx shadcn@latest add @react-bits/Lightning-JS-CSS
 **Implementation:**
 ```typescript
 // Only on Enterprise tier card
-<PricingCard 
+<PricingCard
   tier="enterprise"
   className="relative cursor-enterprise"
 >
@@ -162,7 +162,7 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        <TargetCursor 
+        <TargetCursor
           spinDuration={2}
           hideDefaultCursor={true}
           parallaxOn={true}
@@ -347,8 +347,8 @@ import { Calendar } from '@/components/ui/calendar';
     </p>
     <div className="flex flex-wrap justify-center items-center gap-12 opacity-60">
       {companyLogos.map(logo => (
-        <Image 
-          src={logo.src} 
+        <Image
+          src={logo.src}
           alt={logo.name}
           width={120}
           height={40}
@@ -389,7 +389,7 @@ const breakpoints = {
 ### Code Splitting
 ```typescript
 // Lazy load heavy animations
-const Orb = dynamic(() => import('@/components/ui/orb'), { 
+const Orb = dynamic(() => import('@/components/ui/orb'), {
   ssr: false,
   loading: () => <div className="animate-pulse" />
 });

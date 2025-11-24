@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
       messages: [
         {
           role: "system",
-          content: `You are Novy, the AI assistant for Novyrix Digital. 
+          content: `You are Novy, the AI assistant for Novyrix Digital.
           You are helpful, professional, and concise.
           Novyrix provides custom web development, workflow automation, and software solutions in Kenya.
           If you don't know an answer, suggest they click "Talk to Human".

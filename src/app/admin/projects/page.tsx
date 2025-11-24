@@ -105,7 +105,7 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
 
   const serviceTypeConfig: { [key: string]: { label: string; icon: any; color: string } } = {
     WEBSITE_DEVELOPMENT: { label: 'Website', icon: Globe, color: 'text-blue-400' },
-    SOFTWARE_DEVELOPMENT: { label: 'Software', icon: Code, color: 'text-purple-400' },
+    SOFTWARE_DEVELOPMENT: { label: 'Software', icon: Code, color: 'text-primary-400' },
     WORKFLOW_AUTOMATION: { label: 'Automation', icon: Zap, color: 'text-orange-400' },
   };
 
@@ -143,7 +143,7 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           <Link
             href="/admin/projects"
-            className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-4"
+            className="bg-gradient-to-br from-primary-500/10 to-primary-600/5 border border-primary-500/20 rounded-xl p-4"
           >
             <div className="flex items-center gap-2 mb-2">
               <Briefcase className="w-5 h-5 text-purple-400" />

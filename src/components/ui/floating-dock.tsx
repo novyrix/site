@@ -8,7 +8,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export const FloatingDock = ({
   items,
@@ -36,7 +36,7 @@ const FloatingDockMobile = ({
 }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className={cn("relative block md:hidden", className)}>
+    <div className={cn("fixed bottom-8 left-1/2 -translate-x-1/2 z-50 block md:hidden", className)}>
       <AnimatePresence>
         {open && (
           <motion.div
@@ -105,13 +105,43 @@ const FloatingDockDesktop = ({
   items: { title: string; icon: React.ReactNode; href: string }[];
   className?: string;
 }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
   let mouseX = useMotionValue(Infinity);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroSection = document.querySelector("section");
+      if (!heroSection) return;
+
+      const heroHeight = heroSection.offsetHeight;
+      const scrollPosition = window.scrollY;
+      const threshold = heroHeight + (window.innerHeight * 0.3);
+
+      setIsScrolled(scrollPosition > threshold);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <motion.div
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
+      initial={{ top: "2rem", bottom: "auto" }}
+      animate={{
+        top: isScrolled ? "auto" : "2rem",
+        bottom: isScrolled ? "2rem" : "auto",
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      }}
       className={cn(
-        "mx-auto hidden md:flex h-16 gap-4 items-end rounded-2xl bg-slate-900/30 border border-white/10 backdrop-blur-xl px-4 pb-3 shadow-xl shadow-black/50",
+        "mx-auto hidden md:flex h-16 gap-4 items-end rounded-2xl bg-slate-900/30 border border-white/10 backdrop-blur-xl px-4 pb-3 shadow-xl shadow-black/50 fixed left-1/2 -translate-x-1/2 z-50",
         className
       )}
     >

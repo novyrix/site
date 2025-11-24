@@ -71,7 +71,7 @@ export default function AboutPage() {
             </div>
             <div className="relative h-[400px] rounded-2xl overflow-hidden border border-white/10 bg-slate-900/50">
                {/* Placeholder for team image or abstract graphic */}
-               <div className="absolute inset-0 bg-gradient-to-br from-primary-900/20 to-purple-900/20 flex items-center justify-center">
+               <div className="absolute inset-0 bg-gradient-to-br from-primary-900/20 to-primary-800/20 flex items-center justify-center">
                   <div className="text-center">
                     <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-primary-500/10 flex items-center justify-center border border-primary-500/20">
                       <Heart className="w-10 h-10 text-primary-400" />
