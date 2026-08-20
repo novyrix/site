@@ -161,7 +161,7 @@ Current automated evidence:
 - Payment visual QA: desktop light/dark and mobile passed with equal provider controls, fitting amounts, no overflow, and safe local checkout behavior.
 - Platform API: 12 of 12 tests passed, including the Google membership resolver and all existing money, provider, webhook, invoice, admin, and portal protections.
 - Production web build: all 65 generated routes compiled successfully.
-- Vercel preview: `https://novyrix-preview.vercel.app` points to ready deployment `dpl_d4kYknkBQJVVWhR4hxKZYphXjVSi`; homepage and login return 200, admin returns the expected unauthenticated redirect, and the custom missing route returns 404.
+- Vercel preview: `https://novyrix-preview.vercel.app` was verified against a ready protected preview deployment; homepage and login return 200, admin returns the expected unauthenticated redirect, and the custom missing route returns 404.
 
 Google auth is fail-closed. A Google profile must report a verified email; admin access requires an address in `NOVYRIX_ADMIN_EMAIL`; client access requires an existing, non-disabled portal user with at least one organization membership. Client provisioning now records the approved email without creating or displaying a temporary password. The old credentials provider can only be enabled explicitly outside Vercel.
 
