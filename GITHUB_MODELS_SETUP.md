@@ -5,11 +5,11 @@
 Your OpenAI API key has exceeded its quota. Good news: **GitHub Models is completely FREE with your Copilot Pro subscription!**
 
 ### Benefits:
-- ✅ **FREE** unlimited usage with Copilot Pro
-- ✅ Same GPT-4o model (latest from OpenAI)
-- ✅ No billing required
-- ✅ Built into your existing GitHub account
-- ✅ Fast and reliable
+- âœ… **FREE** unlimited usage with Copilot Pro
+- âœ… Same GPT-4o model (latest from OpenAI)
+- âœ… No billing required
+- âœ… Built into your existing GitHub account
+- âœ… Fast and reliable
 
 ## Setup Instructions (2 minutes)
 
@@ -17,7 +17,7 @@ Your OpenAI API key has exceeded its quota. Good news: **GitHub Models is comple
 
 1. Go to: **https://github.com/settings/tokens**
 
-2. Click **"Generate new token"** → **"Generate new token (classic)"**
+2. Click **"Generate new token"** â†’ **"Generate new token (classic)"**
 
 3. Configure your token:
    - **Note**: `Novyrix AI Consultant`
@@ -33,7 +33,7 @@ Your OpenAI API key has exceeded its quota. Good news: **GitHub Models is comple
 Open `.env.local` and update the `GITHUB_TOKEN` line:
 
 ```bash
-GITHUB_TOKEN="ghp_YourActualTokenHere123456789"
+GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
 ```
 
 Replace `your_github_token_here` with the token you just copied.
@@ -52,7 +52,7 @@ Visit http://localhost:3000/ai-consultant and send a message!
 
 ## What Changed?
 
-### Code Updates (Already Done ✅)
+### Code Updates (Already Done âœ…)
 
 1. **src/lib/ai/openai.ts** - Switched to GitHub Models endpoint:
    ```typescript
@@ -74,11 +74,11 @@ Everything else stays the same - same function calling, same models, same code!
 
 With your Copilot Pro subscription, you get access to:
 
-- ✅ `gpt-4o` (currently used) - Best for complex reasoning
-- ✅ `gpt-4o-mini` - Faster and cheaper for simple tasks
-- ✅ `gpt-3.5-turbo` - Fastest option
-- ✅ `o1-preview` - Advanced reasoning model
-- ✅ And more!
+- âœ… `gpt-4o` (currently used) - Best for complex reasoning
+- âœ… `gpt-4o-mini` - Faster and cheaper for simple tasks
+- âœ… `gpt-3.5-turbo` - Fastest option
+- âœ… `o1-preview` - Advanced reasoning model
+- âœ… And more!
 
 ## Troubleshooting
 
@@ -101,8 +101,8 @@ If you hit limits, just wait a minute and try again.
 
 | Provider | Cost per 1M tokens | Quota Issues |
 |----------|-------------------|--------------|
-| OpenAI Direct | $5 input / $15 output | ❌ Quota exceeded |
-| **GitHub Models** | **FREE** | ✅ Unlimited with Copilot Pro |
+| OpenAI Direct | $5 input / $15 output | âŒ Quota exceeded |
+| **GitHub Models** | **FREE** | âœ… Unlimited with Copilot Pro |
 
 ## Security Notes
 
@@ -115,10 +115,10 @@ If you hit limits, just wait a minute and try again.
 
 After setting up:
 
-1. ✅ Test AI Consultant with a complex query
-2. ✅ Verify quote generation works
-3. ✅ Monitor response times (should be 2-4 seconds)
-4. ✅ Check that all features are discovered correctly
+1. âœ… Test AI Consultant with a complex query
+2. âœ… Verify quote generation works
+3. âœ… Monitor response times (should be 2-4 seconds)
+4. âœ… Check that all features are discovered correctly
 
 ## Need Help?
 
@@ -131,4 +131,4 @@ If you have any issues:
 
 ---
 
-**Status**: Ready to use! Just add your token and restart the server. 🚀
+**Status**: Ready to use! Just add your token and restart the server. ðŸš€

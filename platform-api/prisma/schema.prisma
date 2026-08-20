@@ -1,0 +1,392 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrganizationType {
+  NGO
+  BITCOIN_FINTECH
+  STARTUP
+  GOV_ADJACENT
+  OTHER
+}
+
+enum Currency {
+  KES
+  USD
+}
+
+enum FitStatus {
+  PENDING
+  FIT
+  NOT_FIT
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+enum DiscoveryOutcome {
+  PROCEED
+  FOLLOW_UP
+  DECLINE
+}
+
+enum ProposalStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  DECLINED
+}
+
+enum EngagementType {
+  FIXED_SCOPE
+  RETAINER
+  DAY_RATE_ADVISORY
+}
+
+enum EngagementStatus {
+  ACTIVE
+  COMPLETED
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  OVERPAID
+  OVERDUE
+  VOID
+}
+
+enum PaymentProvider {
+  PAYSTACK
+  BTCPAY
+}
+
+enum PaymentAttemptStatus {
+  PENDING
+  PROCESSING
+  PAID
+  FAILED
+  EXPIRED
+  CANCELLED
+}
+
+enum WebhookProcessingStatus {
+  RECEIVED
+  PROCESSED
+  IGNORED
+  FAILED
+}
+
+enum PortalUserStatus {
+  INVITED
+  ACTIVE
+  DISABLED
+}
+
+enum PortalMembershipRole {
+  CLIENT
+}
+
+enum EngagementMilestoneStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  BLOCKED
+  COMPLETE
+}
+
+enum DeliverableStatus {
+  DRAFT
+  SHARED
+  ACCEPTED
+  SUPERSEDED
+}
+
+enum PortalMessageSender {
+  CLIENT
+  ADMIN
+}
+
+model Organization {
+  id               String           @id @default(cuid())
+  name             String
+  type             OrganizationType
+  country          String
+  resolvedCurrency Currency
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  leads            Lead[]
+  engagements      Engagement[]
+  portalMemberships PortalMembership[]
+
+  @@index([name])
+  @@index([country])
+}
+
+model Lead {
+  id                   String             @id @default(cuid())
+  reference            String             @unique
+  organizationId       String
+  contactName          String
+  contactEmail         String
+  servicesOfInterest   String[]
+  problemDescription   String
+  budgetRange          String?
+  fitStatus            FitStatus          @default(PENDING)
+  discoveryOutcome     DiscoveryOutcome?
+  discoveryNotes       String?
+  discoveryCompletedAt DateTime?
+  notificationStatus   NotificationStatus @default(PENDING)
+  source               String             @default("novyrix.com")
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  organization         Organization       @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  proposals            Proposal[]
+
+  @@index([organizationId])
+  @@index([contactEmail])
+  @@index([fitStatus, createdAt])
+  @@index([discoveryOutcome, createdAt])
+}
+
+model Proposal {
+  id               String             @id @default(cuid())
+  reference        String             @unique
+  leadId           String
+  serviceType      String
+  scopeSummary     String
+  timeline         String
+  engagementType   EngagementType
+  currency         Currency
+  totalAmountMinor BigInt
+  status           ProposalStatus     @default(DRAFT)
+  acceptedAt       DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  lead             Lead               @relation(fields: [leadId], references: [id], onDelete: Restrict)
+  lineItems        ProposalLineItem[]
+  engagement       Engagement?
+
+  @@index([leadId, createdAt])
+  @@index([status, createdAt])
+}
+
+model ProposalLineItem {
+  id               String   @id @default(cuid())
+  proposalId       String
+  description      String
+  quantity         Int      @default(1)
+  unitAmountMinor  BigInt
+  totalAmountMinor BigInt
+  position         Int
+  createdAt        DateTime @default(now())
+  proposal         Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+
+  @@unique([proposalId, position])
+  @@index([proposalId])
+}
+
+model Engagement {
+  id                   String           @id @default(cuid())
+  reference            String           @unique
+  organizationId       String
+  proposalId           String           @unique
+  type                 EngagementType
+  status               EngagementStatus @default(ACTIVE)
+  agreementReference   String
+  agreementConfirmedAt DateTime
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  organization         Organization     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  proposal             Proposal         @relation(fields: [proposalId], references: [id], onDelete: Restrict)
+  invoices             Invoice[]
+  milestones           EngagementMilestone[]
+  deliverables         Deliverable[]
+  portalMessages       PortalMessage[]
+
+  @@index([organizationId, status])
+}
+
+model Invoice {
+  id                 String             @id @default(cuid())
+  reference          String             @unique
+  engagementId       String
+  currency           Currency
+  totalAmountMinor   BigInt
+  status             InvoiceStatus      @default(PENDING)
+  paymentMethod      PaymentProvider?
+  paymentTokenHash   String             @unique
+  notificationStatus NotificationStatus @default(PENDING)
+  notificationSentAt DateTime?
+  dueAt              DateTime
+  sentAt             DateTime?
+  paidAt             DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  engagement         Engagement         @relation(fields: [engagementId], references: [id], onDelete: Restrict)
+  lineItems          InvoiceLineItem[]
+  paymentAttempts    PaymentAttempt[]
+  payments           Payment[]
+
+  @@index([engagementId, createdAt])
+  @@index([status, dueAt])
+}
+
+model InvoiceLineItem {
+  id               String   @id @default(cuid())
+  invoiceId        String
+  description      String
+  quantity         Int      @default(1)
+  unitAmountMinor  BigInt
+  totalAmountMinor BigInt
+  position         Int
+  createdAt        DateTime @default(now())
+  invoice          Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@unique([invoiceId, position])
+  @@index([invoiceId])
+}
+
+model PaymentAttempt {
+  id                String               @id @default(cuid())
+  invoiceId         String
+  provider          PaymentProvider
+  reference         String               @unique
+  providerReference String?
+  checkoutUrl       String?
+  amountMinor       BigInt
+  currency          Currency
+  status            PaymentAttemptStatus @default(PENDING)
+  providerStatus    String?
+  expiresAt         DateTime?
+  lastVerifiedAt    DateTime?
+  failureCode       String?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  invoice           Invoice              @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
+  payment           Payment?
+
+  @@unique([provider, providerReference])
+  @@index([invoiceId, provider, status])
+}
+
+model Payment {
+  id                        String             @id @default(cuid())
+  invoiceId                 String
+  attemptId                 String             @unique
+  provider                  PaymentProvider
+  providerPaymentId         String
+  amountMinor               BigInt
+  currency                  Currency
+  channel                   String?
+  receiptReference          String             @unique
+  receiptNotificationStatus NotificationStatus @default(PENDING)
+  receiptSentAt             DateTime?
+  paidAt                    DateTime
+  createdAt                 DateTime           @default(now())
+  invoice                   Invoice            @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
+  attempt                   PaymentAttempt     @relation(fields: [attemptId], references: [id], onDelete: Restrict)
+
+  @@unique([provider, providerPaymentId])
+  @@index([invoiceId, paidAt])
+}
+
+model WebhookEvent {
+  id           String                  @id @default(cuid())
+  provider     PaymentProvider
+  eventId      String
+  eventType    String
+  payloadHash  String
+  status       WebhookProcessingStatus @default(RECEIVED)
+  errorMessage String?
+  receivedAt   DateTime                @default(now())
+  processedAt  DateTime?
+
+  @@unique([provider, eventId])
+  @@index([provider, status, receivedAt])
+}
+
+model PortalUser {
+  id           String                @id @default(cuid())
+  email        String                @unique
+  name         String
+  passwordHash String?
+  status       PortalUserStatus      @default(INVITED)
+  lastLoginAt  DateTime?
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  memberships  PortalMembership[]
+  messages     PortalMessage[]
+
+  @@index([status, createdAt])
+}
+
+model PortalMembership {
+  id             String               @id @default(cuid())
+  portalUserId   String
+  organizationId String
+  role           PortalMembershipRole @default(CLIENT)
+  createdAt      DateTime             @default(now())
+  portalUser     PortalUser           @relation(fields: [portalUserId], references: [id], onDelete: Cascade)
+  organization   Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([portalUserId, organizationId])
+  @@index([organizationId])
+}
+
+model EngagementMilestone {
+  id          String                    @id @default(cuid())
+  engagementId String
+  title       String
+  description String?
+  status      EngagementMilestoneStatus @default(NOT_STARTED)
+  dueAt       DateTime?
+  completedAt DateTime?
+  position    Int
+  createdAt   DateTime                  @default(now())
+  updatedAt   DateTime                  @updatedAt
+  engagement  Engagement                @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+  deliverables Deliverable[]
+
+  @@unique([engagementId, position])
+  @@index([engagementId, status])
+}
+
+model Deliverable {
+  id           String             @id @default(cuid())
+  engagementId String
+  milestoneId  String?
+  title        String
+  description  String?
+  url          String?
+  status       DeliverableStatus  @default(SHARED)
+  sharedAt     DateTime?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  engagement   Engagement         @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+  milestone    EngagementMilestone? @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
+
+  @@index([engagementId, status])
+  @@index([milestoneId])
+}
+
+model PortalMessage {
+  id           String              @id @default(cuid())
+  engagementId String
+  portalUserId String?
+  sender       PortalMessageSender
+  body         String
+  createdAt    DateTime            @default(now())
+  engagement   Engagement          @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+  portalUser   PortalUser?         @relation(fields: [portalUserId], references: [id], onDelete: SetNull)
+
+  @@index([engagementId, createdAt])
+  @@index([portalUserId])
+}

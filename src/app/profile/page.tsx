@@ -7,6 +7,8 @@ import { User, Mail, Building2, Phone, Key, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { ProfileEditForm } from "@/components/profile-edit-form";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProfilePage() {
   const session = await auth();
 

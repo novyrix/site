@@ -6,6 +6,8 @@ import Link from "next/link";
 import { QuotesList } from "@/components/quotes-list";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function QuotesPage() {
   const session = await auth();
 

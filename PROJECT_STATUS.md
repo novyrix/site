@@ -1,322 +1,80 @@
-# 🎯 NOVYRIX PROJECT STATUS
+# Novyrix Project Status
 
-**Last Updated**: November 9, 2025
-**Status**: ✅ **Foundation Complete - Ready to Build**
+Last updated: 20 August 2026
 
----
+## Executive Summary
 
-## 📊 Project Overview
+Phase 1 is locally built and verified across the public site, platform API, infrastructure, operations console, and payment foundation. Phase 2 client portal code is implemented locally. The Phase 3 authority-content foundation is also complete locally with three indexed field notes, structured data, RSS, sitemap coverage, and responsive light and dark QA. The remaining platform work is production-gated, while campaign-specific Phase 3 work still needs confirmed event and proof inputs.
 
-**Project**: Novyrix Digital IT Solutions Platform
-**Tech Stack**: Next.js 14, TypeScript, Prisma, MySQL, Tailwind CSS
-**Repository**: https://github.com/novyrix/site
-**Local Server**: http://localhost:3000 ✅ Running
+The database architecture is the VPS PostgreSQL platform API. The root Next.js MySQL Prisma schema is retained only for inherited, retired pages so the app can compile.
 
----
+Local preview:
 
-## ✅ Completed Tasks (100%)
-
-### Setup & Configuration
-- [x] Next.js 14+ with TypeScript & App Router
-- [x] Tailwind CSS v4 with custom dark theme
-- [x] PostCSS configuration
-- [x] ESLint setup
-- [x] Git repository initialized
-
-### Database & Backend
-- [x] Prisma ORM installed
-- [x] MySQL2 driver installed
-- [x] Complete database schema created (10+ models)
-- [x] Prisma Client generated
-- [x] Environment variables configured
-
-### Authentication & Security
-- [x] NextAuth.js v5 installed
-- [x] bcryptjs for password hashing
-- [x] **NEXTAUTH_SECRET generated**: `TnmLmkw1ZGPvoBIs8mlC2UiJ+QYvBe63HaruAYKwsec=`
-- [x] Security headers configured
-- [x] .env.local file set up
-
-### UI & Design
-- [x] Framer Motion installed
-- [x] Lucide React icons installed
-- [x] Custom fonts configured (Inter, Space Grotesk, JetBrains Mono)
-- [x] Glassmorphism styles created
-- [x] Custom animations defined
-- [x] Orange (#FF6B35) on Black theme implemented
-- [x] Responsive breakpoints configured
-
-### Business Logic
-- [x] Complete pricing model analyzed
-- [x] Pricing constants file created (`src/lib/constants/pricing.ts`)
-- [x] Helper functions for calculations
-- [x] TypeScript types defined
-- [x] Database models for quotes, projects, invoices
-
-### Documentation
-- [x] README.md - Full project documentation
-- [x] SETUP_COMPLETE.md - Detailed setup guide
-- [x] GET_STARTED.md - Quick start instructions
-- [x] DATABASE_SETUP.md - Database connection help
-- [x] IMMEDIATE_STEPS_COMPLETE.md - Status update
-- [x] ROADMAP.md - 7-week development plan
-- [x] docs/Pricing_model.md - Business pricing reference
-
----
-
-## ⏳ Pending Action (You)
-
-### Database Connection
-**Status**: ⚠️ **Action Required**
-
-**Issue**: MySQL server not accessible at `localhost:3306`
-
-**Solution**: Update `.env.local` with correct database host
-```env
-DATABASE_URL="mysql://mdawidah_novyrix:ZsF40IaVYzIX@YOUR_HOST:3306/mdawidah_novyrix"
+```text
+http://127.0.0.1:4173/pay/preview
+http://127.0.0.1:4173/portal?preview=qa
+http://127.0.0.1:4173/blog
 ```
 
-**Instructions**: See `DATABASE_SETUP.md` for detailed help
+## Phase Status
 
-**Once Fixed**: Run `npm run prisma:push` to create tables
+| Area | Status | Notes |
+| --- | --- | --- |
+| Public site | Complete locally | Light default, dark theme, responsive pages, SEO metadata, structured data, legal drafts, crawler controls, no public rate card, and release QA are complete. |
+| Platform infrastructure | Complete | PostgreSQL runs on the Linux VPS private Docker network. Cloudflare Tunnel exposes the API at `api.novyrix.com`; the database port is not public. |
+| Inquiry flow | Complete | Public inquiry submissions create Organization and Lead records through the authenticated platform API and send Resend notifications. |
+| Operations console | Complete locally | Admin lead review, fit status, discovery notes, agreement capture, engagement creation, and itemized invoice creation are implemented and browser-tested. |
+| Payment foundation | Code complete, activation pending | Paystack and BTCPay credentials are staged locally with `PAYMENTS_LIVE=false`. Server-side checkout, verification, signed webhooks, replay protection, receipt delivery, and payment preview QA are implemented. |
+| Phase 2 portal | Complete locally, activation pending | PostgreSQL models, migration, platform API routes, client NextAuth login, protected portal proxy, dashboard, project, invoice, message screens, portal-native checkout, and admin provisioning controls are implemented. Production migration and real client provisioning remain approval-gated. |
+| Phase 3 content | Foundation complete locally | Indexed field-notes archive, three launch articles, typed content, Article schema, RSS, sitemap discovery, internal service paths, and light or dark responsive QA are complete. Editorial cadence and campaign work continue after owner review. |
+| Production release | Pending approval gates | Vercel preview, production env setup, fresh PostgreSQL backup, migration, legal review, provider checks, and final deployment remain. |
 
----
+## Completed This Cycle
 
-## 🚀 Next Steps
+- Archived the inherited site and kept the current rebuilt workspace separate.
+- Rebuilt Novyrix around the PRD positioning: custom platforms, AI automation, data systems, Bitcoin infrastructure, security engineering, and technical advisory.
+- Built a responsive visual system with light and dark theme support.
+- Removed public pricing figures and replaced legacy calculator flows with inquiry-led conversion.
+- Deployed the platform API and PostgreSQL architecture on the VPS through Cloudflare Tunnel.
+- Added Uptime Kuma monitoring and Resend notification paths.
+- Added the single-operator operations console for Phase 1 administration.
+- Added private invoice pages and payment-provider abstractions for Paystack and BTCPay.
+- Staged production payment provider credentials in ignored local ops secrets.
+- Added `pay.novyrix.com` callback and webhook route support.
+- Added the Phase 2 client portal with protected client login, engagement dashboard, milestones, deliverables, invoice ledger, portal-native checkout, message log, and admin provisioning controls.
+- Added review-copy privacy and terms policy drafts under `docs/legal`.
+- Replaced the blog scaffold with an indexed field-notes system and three practical launch articles on M-Pesa reconciliation, workflow audit trails, and BTCPay or Lightning invoice states.
+- Added typed editorial content, an architecture decision record, Blog and Article schema, canonical metadata, RSS, sitemap entries, and related-service paths.
+- Fixed the build so it no longer requires a misleading local `DATABASE_URL`.
 
-### Immediate (Today)
-1. ⚠️ Fix database connection (see DATABASE_SETUP.md)
-2. ✅ Push schema: `npm run prisma:push`
-3. ✅ Verify: `npm run prisma:studio`
+## Verification Snapshot
 
-### This Week (Week 1)
-Start building UI components (see ROADMAP.md):
-- Day 1-2: Button component
-- Day 3-4: Card component
-- Day 5: Navigation component
-- Day 6: Footer component
-- Day 7: Preloader component
+| Check | Result |
+| --- | --- |
+| Public API health | `https://api.novyrix.com/health` returned `{"status":"ok"}`. |
+| Production build | Passed with Next.js 16 and 64 app routes generated. |
+| TypeScript | `npx tsc --noEmit` passed. |
+| Platform API tests | 12 of 12 passed. |
+| Focused ESLint | Passed on changed payment and theme surfaces. |
+| Payment visual QA | Passed, zero browser errors, no overflow, safe preview click confirmed. |
+| Portal visual QA | Passed 10 of 10 portal route, theme, and breakpoint audits with zero browser errors and safe preview actions. |
+| Release HTTP audit | Current full run passed 515 of 515 checks. |
+| Release browser audit | Current full run passed all 20 desktop, mobile, light, and dark route audits. |
+| Lighthouse local mobile | 83 performance, 100 accessibility, 100 best practices, 100 SEO, zero CLS. |
+| Secret scan | No live provider keys found in tracked source. |
 
----
+## Open Gates
 
-## 📁 Important Files
+1. Qualified Kenyan legal review of privacy and terms drafts.
+2. Add production `AUTH_SECRET`, admin password hash, and frontend API token in Vercel encrypted env vars.
+3. Fresh PostgreSQL backup and validation before applying the discovery, payment, and portal migrations.
+4. Apply production migrations on the VPS and verify API, monitoring, inquiry, admin, invoice, and portal flows.
+5. Register Paystack and BTCPay webhooks against the final public payment host.
+6. Complete real low-value Paystack card, M-Pesa, BTCPay Lightning, and BTCPay on-chain checks.
+7. Enable `PAYMENTS_LIVE=true` only after both payment providers pass readiness and reconciliation checks.
+8. Review the three launch field notes and confirm timing and proof assets before event-specific campaign work.
+9. Deploy a Vercel preview, run Core Web Vitals and release QA, then promote only after approval.
 
-### Configuration
-- `.env.local` - Environment variables (⚠️ Update DATABASE_URL)
-- `next.config.ts` - Next.js config with security headers
-- `tailwind.config.ts` - Custom theme (orange on black)
-- `prisma/schema.prisma` - Database schema (ready to push)
+## Current Recommendation
 
-### Source Code
-- `src/app/layout.tsx` - Root layout
-- `src/app/page.tsx` - Homepage (placeholder, update in Week 2)
-- `src/app/globals.css` - Glassmorphism styles
-- `src/lib/prisma.ts` - Database client
-- `src/lib/constants/pricing.ts` - Pricing logic
-- `src/types/index.ts` - TypeScript definitions
-
-### Documentation
-- `README.md` - Start here for overview
-- `ROADMAP.md` - 7-week development plan
-- `DATABASE_SETUP.md` - Fix database connection
-- All other .md files in root directory
-
----
-
-## 📦 Installed Packages
-
-### Core
-- next@16.0.1
-- react@19.2.0
-- typescript@5.9.3
-
-### Database
-- @prisma/client@6.19.0
-- prisma@6.19.0
-- mysql2@3.15.3
-
-### Authentication
-- next-auth@5.0.0-beta.30
-- bcryptjs@3.0.3
-
-### UI & Animation
-- framer-motion@12.23.24
-- lucide-react@0.553.0
-- class-variance-authority@0.7.1
-- clsx@2.1.1
-
-### Styling
-- tailwindcss@4.1.17
-- @tailwindcss/postcss@4.1.17
-- autoprefixer@10.4.21
-
----
-
-## 🎨 Design System
-
-### Colors
-```css
-Primary: #FF6B35 (Orange)
-Background: #000000 (Black)
-Glass: rgba(255, 255, 255, 0.05-0.15)
-```
-
-### Fonts
-- **Display**: Space Grotesk (headings)
-- **Body**: Inter (paragraphs)
-- **Mono**: JetBrains Mono (code/numbers)
-
-### Components
-- `.glass-card` - Glassmorphism card with hover
-- `.glass-button` - Glass-effect button
-- `.gradient-text` - Orange gradient text
-- `.navbar-blur` - Sticky nav with blur
-
-### Animations
-- `animate-fade-in` - Fade in effect
-- `animate-slide-up` - Slide up entrance
-- `animate-float` - Floating animation
-- `animate-glow` - Glowing effect
-
----
-
-## 💰 Pricing Model Implementation
-
-### Website Development
-```typescript
-BASE_PRICE: 30000
-BLOG_CMS: +15000
-ADVANCED_GALLERY: +15000
-BOOKING_SYSTEM: +30000
-ECOMMERCE: +60000
-API_INTEGRATION: +35000
-
-HOSTING_BASIC_YEARLY: 3900
-HOSTING_ADVANCED_YEARLY: 5800
-CARE_PLAN_MONTHLY: 5000
-ECOMMERCE_PLAN_MONTHLY: 12000
-```
-
-### Software Development
-```typescript
-TIER_1: 400,000 - 900,000
-TIER_2: 900,000 - 2,500,000
-TIER_3: 2,500,000+
-DISCOVERY_PHASE: 75,000
-TECHNICAL_AUDIT: 100,000
-```
-
-All logic is in `src/lib/constants/pricing.ts`
-
----
-
-## 📈 Development Timeline
-
-```
-✅ Foundation    - COMPLETE (Nov 9, 2025)
-⏳ Week 1       - UI Components (Start after DB connection)
-⏳ Week 2       - Homepage
-⏳ Week 3       - Website Calculator
-⏳ Week 4       - Authentication
-⏳ Week 5       - Dashboards
-⏳ Week 6       - Additional Calculators
-⏳ Week 7       - Polish & Launch
-```
-
-**Estimated Launch**: 7 weeks from start
-
----
-
-## 🔧 Available Commands
-
-```bash
-# Development
-npm run dev              # Start dev server (currently running)
-npm run build            # Build for production
-npm run start            # Run production server
-npm run lint             # Run ESLint
-
-# Database
-npm run prisma:generate  # Generate Prisma Client (done)
-npm run prisma:push      # Push schema to DB (do this next!)
-npm run prisma:migrate   # Create migration (for production)
-npm run prisma:studio    # Open database GUI
-```
-
----
-
-## 📞 Quick Reference
-
-### Need Help?
-- **Database**: See `DATABASE_SETUP.md`
-- **Setup**: See `SETUP_COMPLETE.md`
-- **Getting Started**: See `GET_STARTED.md`
-- **Roadmap**: See `ROADMAP.md`
-- **Project Info**: See `README.md`
-
-### Useful Links
-- **Next.js Docs**: https://nextjs.org/docs
-- **Prisma Docs**: https://www.prisma.io/docs
-- **Tailwind v4 Docs**: https://tailwindcss.com/docs
-- **NextAuth.js**: https://authjs.dev
-- **Framer Motion**: https://www.framer.com/motion
-
----
-
-## ✨ What's Working Now
-
-- ✅ Development server at http://localhost:3000
-- ✅ Homepage displays successfully
-- ✅ Tailwind styles loading
-- ✅ Fonts configured
-- ✅ Design system ready
-- ✅ Secure auth secret set
-- ✅ All packages installed
-- ✅ TypeScript working
-- ✅ ESLint configured
-
----
-
-## ⚠️ What Needs Attention
-
-1. **Database Connection** (Priority 1)
-   - Update DATABASE_URL in `.env.local`
-   - Run `npm run prisma:push`
-   - See `DATABASE_SETUP.md` for help
-
-2. **Start Building** (Priority 2)
-   - Begin Week 1: UI Components
-   - Follow `ROADMAP.md`
-   - Reference component examples in documentation
-
----
-
-## 🎯 Success Criteria
-
-By the end of development, you will have:
-- ✅ Beautiful, responsive website
-- ✅ 3 working quote calculators
-- ✅ Client & admin dashboards
-- ✅ Secure authentication
-- ✅ Email notifications
-- ✅ Database integration
-- ✅ Production deployment
-- ✅ Ready to acquire customers!
-
----
-
-## 🚀 Current Focus
-
-**Primary Task**: Fix database connection
-**Next Task**: Start Week 1 (UI Components)
-**Timeline**: 7 weeks to launch
-
-**You're at the starting line with everything you need. Time to build Novyrix! 🚀**
-
----
-
-**Project Status**: ✅ **READY TO BUILD**
-**Dev Server**: ✅ **RUNNING**
-**Next Action**: ⚠️ **Fix database connection**
-
-**Let's make this happen! 💪**
+The public, portal, payment, and authority-content foundations are complete locally. The safest next sequence is: owner review of the field notes, legal review, Vercel preview setup, production env review, database backup, migration window, payment provider checks with tiny amounts, portal client provisioning test, then production promotion. Event campaign work should begin only after its participation and proof inputs are confirmed.

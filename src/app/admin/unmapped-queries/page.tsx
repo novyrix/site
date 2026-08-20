@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "Review and improve Novy AI's feature matching capabilities",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function UnmappedQueriesPage() {
   // Temporarily disabled auth for development
   // TODO: Re-enable auth check in production

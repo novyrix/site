@@ -1,108 +1,117 @@
-# 🗄️ Database Setup Instructions
+# Novyrix Database Setup
 
-## Important Notice
+Last updated: 20 August 2026
 
-Your database credentials are configured, but the database server is not accessible at `localhost:3306`. This is normal if your MySQL database is hosted remotely (e.g., on your web hosting provider).
+## Current Architecture
 
-## Current Database Configuration
+Phase 1 data lives in the platform API PostgreSQL database on the Linux VPS. The database runs inside Docker on a private network and is not exposed directly to the public internet.
 
-```
-Database: mdawidah_novyrix
-User: mdawidah_novyrix
-Password: ZsF40IaVYzIX
-Current URL: mysql://mdawidah_novyrix:ZsF40IaVYzIX@localhost:3306/mdawidah_novyrix
-```
+Public access path:
 
-## Action Required: Update Database URL
-
-### Option 1: Remote MySQL Database (Most Likely)
-
-If your MySQL is hosted remotely (e.g., cPanel, shared hosting), update the DATABASE_URL in `.env.local`:
-
-```env
-# Replace 'localhost' with your actual database host
-DATABASE_URL="mysql://mdawidah_novyrix:ZsF40IaVYzIX@your-database-host.com:3306/mdawidah_novyrix"
+```text
+browser -> novyrix.com -> Next.js server routes -> api.novyrix.com -> Fastify platform API -> private PostgreSQL
 ```
 
-**Common hosting providers:**
-- **cPanel/Shared Hosting**: Usually `localhost` or an IP like `127.0.0.1`
-- **Remote Server**: Full domain or IP address
-- **PlanetScale**: Use the connection string they provide
-- **Railway**: Use the connection URL from Railway dashboard
+Cloudflare Tunnel exposes the API hostname, not the raw PostgreSQL port.
 
-### Option 2: Local MySQL (If Testing Locally)
+## Source Of Truth
 
-If you want to use a local MySQL server:
+Use this schema for Phase 1 records:
 
-1. **Install MySQL locally:**
-   - Download from https://dev.mysql.com/downloads/mysql/
-   - Or install via package manager
+```text
+platform-api/prisma/schema.prisma
+```
 
-2. **Start MySQL service:**
-   ```powershell
-   # Windows - Start MySQL service
-   net start MySQL80
-   ```
+This schema owns:
 
-3. **Create the database:**
-   ```bash
-   mysql -u root -p
-   CREATE DATABASE mdawidah_novyrix;
-   CREATE USER 'mdawidah_novyrix'@'localhost' IDENTIFIED BY 'ZsF40IaVYzIX';
-   GRANT ALL PRIVILEGES ON mdawidah_novyrix.* TO 'mdawidah_novyrix'@'localhost';
-   FLUSH PRIVILEGES;
-   EXIT;
-   ```
+- Organization
+- Lead
+- Proposal
+- Engagement
+- Invoice
+- PaymentAttempt
+- Payment
+- WebhookEvent
 
-### Option 3: Use PlanetScale (Recommended for Development)
+The root schema at `prisma/schema.prisma` is legacy MySQL scaffolding retained only so inherited redirected pages can compile. Do not use the root schema for new Phase 1 production data.
 
-PlanetScale provides free serverless MySQL:
+## Local Frontend Environment
 
-1. Sign up at https://planetscale.com
-2. Create a new database
-3. Get connection string
-4. Update `.env.local` with PlanetScale URL
+The frontend should talk to the platform API through server-only variables:
 
-## Push Schema to Database
+```dotenv
+NOVYRIX_API_URL=https://api.novyrix.com
+NOVYRIX_API_TOKEN=<platform-api-shared-secret>
+```
 
-Once you've updated the DATABASE_URL with the correct host:
+Do not put database credentials in Vercel frontend env unless a future server-only route explicitly requires it. The current frontend does not need raw database access for Phase 1 workflows.
+
+## Platform API Environment
+
+The platform API host needs:
+
+```dotenv
+DATABASE_URL=postgresql://<user>:<password>@postgres:5432/<db>
+API_SHARED_SECRET=<shared-secret>
+RESEND_API_KEY=<resend-key>
+RESEND_FROM_EMAIL=<from-address>
+ADMIN_EMAIL=connect@novyrix.com
+PAYMENTS_LIVE=false
+PAYMENT_SITE_URL=https://pay.novyrix.com
+PAYMENT_LINK_SECRET=<distinct-random-secret>
+PAYSTACK_SECRET_KEY=<paystack-secret>
+BTCPAY_BASE_URL=https://pay.insats.org
+BTCPAY_API_KEY=<btcpay-api-key>
+BTCPAY_STORE_ID=<btcpay-store-id>
+BTCPAY_WEBHOOK_SECRET=<btcpay-webhook-secret>
+```
+
+Production provider credentials are staged locally in:
+
+```text
+X:\novyrix\_ops\secrets\payment-providers.env
+```
+
+They remain activation-gated with `PAYMENTS_LIVE=false`.
+
+## Migration Rules
+
+Production migration sequence:
+
+1. Confirm the latest scheduled PostgreSQL backup completed.
+2. Create a fresh pre-change backup.
+3. Validate the backup catalog entry.
+4. Copy reviewed platform API source and migrations to the VPS.
+5. Keep `PAYMENTS_LIVE=false`.
+6. Run `npx prisma migrate deploy` from the platform API migration container.
+7. Restart only the platform API service.
+8. Verify `/health`, inquiry persistence, admin readiness, Uptime Kuma, and payment readiness.
+
+Do not run `npm run prisma:push` from the frontend root against production. That command belongs to the legacy schema and is not part of the Phase 1 data plane.
+
+## Health Checks
+
+Public API:
+
+```powershell
+Invoke-RestMethod https://api.novyrix.com/health
+```
+
+Expected response:
+
+```json
+{"status":"ok"}
+```
+
+VPS service status:
 
 ```bash
-# Push schema to database
-npm run prisma:push
-
-# Verify with Prisma Studio
-npm run prisma:studio
+cd /srv/novyrix/deploy/novyrix-platform
+docker compose ps
 ```
 
-## Vercel Deployment
+Database exposure expectation:
 
-When deploying to Vercel, add the DATABASE_URL as an environment variable in your Vercel project settings with the production database URL.
-
-## Tables That Will Be Created
-
-When you run `prisma:push`, these tables will be created:
-
-- ✅ **User** - Client and admin accounts
-- ✅ **Account** - OAuth accounts (for future social login)
-- ✅ **Session** - User sessions
-- ✅ **VerificationToken** - Email verification tokens
-- ✅ **Quote** - All quote calculator data
-- ✅ **Project** - Active client projects
-- ✅ **Invoice** - Payment tracking
-- ✅ **SupportTicket** - Support tickets for Care Plan clients
-- ✅ **Service** - Available services
-- ✅ **PricingBlock** - Configurable pricing blocks
-
-## Need Help?
-
-If you're unsure about your database host:
-1. Check your hosting provider's cPanel or control panel
-2. Look for "MySQL Databases" or "Database Configuration"
-3. Find the "MySQL Host" or "Database Host" setting
-4. Use that value in your DATABASE_URL
-
----
-
-**Status**: ⚠️ Database connection not yet established
-**Next Step**: Update DATABASE_URL with correct host, then run `npm run prisma:push`
+```text
+PostgreSQL listens inside Docker only. External clients should not connect to port 5432.
+```

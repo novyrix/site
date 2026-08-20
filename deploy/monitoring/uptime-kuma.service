@@ -1,0 +1,22 @@
+[Unit]
+Description=Novyrix external uptime monitoring
+Documentation=https://github.com/louislam/uptime-kuma
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/eddie/apps/uptime-kuma
+Environment=NODE_ENV=production
+Environment=UPTIME_KUMA_HOST=127.0.0.1
+Environment=UPTIME_KUMA_PORT=3001
+Environment=UPTIME_KUMA_DB_TYPE=sqlite
+ExecStart=/home/eddie/.nvm/versions/node/v24.18.0/bin/node server/server.js
+Restart=on-failure
+RestartSec=10
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target

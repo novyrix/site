@@ -27,6 +27,8 @@ interface AdminClientsPageProps {
   };
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminClientsPage({ searchParams }: AdminClientsPageProps) {
   const session = await auth();
 

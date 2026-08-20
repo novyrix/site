@@ -30,6 +30,8 @@ interface AdminProjectsPageProps {
   };
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminProjectsPage({ searchParams }: AdminProjectsPageProps) {
   const session = await auth();
 

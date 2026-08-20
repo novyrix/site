@@ -63,6 +63,8 @@ const formatDate = (date: Date) => {
   }).format(new Date(date));
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const session = await auth();
   if (!session?.user) {

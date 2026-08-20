@@ -150,7 +150,7 @@ export default function WebDevelopmentPage() {
             Featured Projects
           </h2>
           <p className="text-neutral-400 text-center mb-16 max-w-2xl mx-auto">
-            Real applications we've built for real businesses. These aren't just pretty designs – they're production systems handling thousands of users.
+            Real applications we&apos;ve built for real businesses. These aren&apos;t just pretty designs. They&apos;re production systems handling thousands of users.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((project, index) => (

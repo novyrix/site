@@ -29,6 +29,8 @@ interface AdminQuotesPageProps {
   };
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminQuotesPage({ searchParams }: AdminQuotesPageProps) {
   const session = await auth();
 
@@ -349,7 +351,7 @@ export default async function AdminQuotesPage({ searchParams }: AdminQuotesPageP
                               Converted
                             </Link>
                           ) : (
-                            <span className="text-sm text-gray-500">—</span>
+                            <span className="text-sm text-gray-500">-</span>
                           )}
                         </td>
 

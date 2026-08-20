@@ -7,6 +7,8 @@ import Link from "next/link";
 import { ProjectsList } from "@/components/projects-list";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProjectsPage() {
   const session = await auth();
 

@@ -1,119 +1,141 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import "./glassmorphic-button.css";
-import { Navigation } from "@/components/navigation";
-import { Footer } from "@/components/footer";
-import { SessionProvider } from "@/components/session-provider";
-import { ToastProvider } from "@/components/ui/toast";
-import { CookieConsent } from "@/components/cookie-consent";
-import { auth } from "@/lib/auth";
+import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ChatWidget } from "@/components/ui/chat-widget";
+import { SiteFooter } from "@/components/site/site-footer";
+import { SiteHeader } from "@/components/site/site-header";
+import { SmoothScroll } from "@/components/site/smooth-scroll";
+import { ThemeProvider } from "@/components/site/theme-provider";
+import { ThemePreview } from "@/components/site/theme-preview";
+import "./globals.css";
 
-// Modern, professional fonts - Geist is Vercel's design system font
-const geist = Geist({
+const display = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-geist",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-display",
+  display: "optional",
+  weight: ["500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
+const body = Inter({
   subsets: ["latin"],
-  variable: "--font-geist-mono",
+  variable: "--font-body",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://novyrix.com'),
+  metadataBase: new URL("https://novyrix.com"),
   title: {
-    default: "Novyrix | Custom Web Development & Automation Solutions Kenya",
-    template: "%s | Novyrix"
+    default: "Custom Software Development in Kenya | Novyrix",
+    template: "%s | Novyrix",
   },
-  description: "Transform your business with transparent, custom web applications and workflow automation. Powered by Novy AI for instant quotes. Node.js experts serving Kenyan SMEs, startups & enterprises.",
+  description:
+    "Nairobi software engineering practice building custom platforms, AI automation, M-Pesa integrations, and Bitcoin infrastructure across Kenya and beyond.",
   keywords: [
-    "custom web development Kenya", "web application development Nairobi", "workflow automation Kenya",
-    "Node.js developers Kenya", "React developers Nairobi", "API integration services",
-    "KRA eTIMS integration", "M-Pesa API integration", "e-commerce platform development",
-    "SaaS development Kenya", "digital transformation Kenya", "transparent pricing software",
-    "AI-powered quotations", "Nairobi software company", "SME digital solutions"
+    "systems architecture Kenya",
+    "AI automation Kenya",
+    "Bitcoin infrastructure Africa",
+    "custom software development Nairobi",
+    "M-Pesa API integration Kenya",
+    "data integration services Kenya",
+    "technical advisory Nairobi",
   ],
-  authors: [{ name: "Novyrix Digital", url: "https://novyrix.com" }],
+  authors: [{ name: "Novyrix", url: "https://novyrix.com" }],
   creator: "Novyrix",
-  publisher: "Novyrix Digital",
-  category: "Technology",
+  publisher: "Novyrix",
   openGraph: {
     type: "website",
     locale: "en_KE",
     url: "https://novyrix.com",
     siteName: "Novyrix",
-    title: "Novyrix | Custom Web Development & Automation Solutions Kenya",
-    description: "Transform your business with transparent, custom web applications. Get instant quotes with Novy AI.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Novyrix - Custom Web Development" }],
+    title: "Custom Software Development in Kenya | Novyrix",
+    description:
+      "Nairobi software engineering practice building custom platforms, AI automation, payment integrations, and Bitcoin infrastructure.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Novyrix | Custom Web Development & Automation Kenya",
-    description: "Transform your business with transparent, custom web applications. Get instant quotes with Novy AI.",
-    images: ["/og-image.png"],
+    title: "Custom Software Development in Kenya | Novyrix",
+    description:
+      "Custom software, AI automation, payment integrations, and Bitcoin infrastructure from Nairobi.",
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  alternates: {
-    canonical: "https://novyrix.com",
-  },
+  robots: { index: true, follow: true },
 };
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const session = await auth();
+const vercelInsightsEnabled = process.env.VERCEL === "1";
 
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://novyrix.com/#organisation",
+      name: "Novyrix",
+      slogan: "Development, engineered.",
+      url: "https://novyrix.com",
+      logo: "https://novyrix.com/brand/novyrix-icon.svg",
+      email: "connect@novyrix.com",
+      founder: { "@id": "https://novyrix.com/#founder" },
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: "new projects",
+          email: "connect@novyrix.com",
+          availableLanguage: ["English"],
+        },
+        {
+          "@type": "ContactPoint",
+          contactType: "general enquiries",
+          email: "contact@novyrix.com",
+          availableLanguage: ["English"],
+        },
+      ],
+      areaServed: ["Kenya", "East Africa", "International"],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Nairobi",
+        addressCountry: "KE",
+      },
+    },
+    {
+      "@type": "Person",
+      "@id": "https://novyrix.com/#founder",
+      name: "Edmund",
+      email: "spira@novyrix.com",
+      url: "https://edmund.novyrix.com",
+      jobTitle: "Founder and systems engineer",
+      worksFor: { "@id": "https://novyrix.com/#organisation" },
+    },
+  ],
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`} data-scroll-behavior="smooth">
-      <head>
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
+      <body>
+        <ThemeProvider>
+          <ThemePreview />
+          <SmoothScroll />
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </ThemeProvider>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Novyrix",
-              description: "Custom web development and workflow automation for Kenyan businesses",
-              url: "https://novyrix.com",
-              logo: "https://novyrix.com/logo.png",
-              address: { "@type": "PostalAddress", addressCountry: "KE", addressLocality: "Nairobi" },
-              aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "30" }
-            })
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-      </head>
-      <body className="antialiased" suppressHydrationWarning>
-        <SessionProvider session={session}>
-          <ToastProvider>
-            <Navigation />
-            {children}
-            <Footer />
-            <CookieConsent />
-            <ChatWidget />
-          </ToastProvider>
-        </SessionProvider>
-        <Analytics />
-        <SpeedInsights />
+        {vercelInsightsEnabled ? <Analytics /> : null}
+        {vercelInsightsEnabled ? <SpeedInsights /> : null}
       </body>
     </html>
   );

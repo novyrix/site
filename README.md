@@ -1,294 +1,135 @@
-# 🚀 Novyrix - Digital IT Solutions Platform
+# Novyrix Platform
 
-Modern, glassmorphism-styled web platform for Novyrix - a Kenyan digital IT company specializing in software development, website development, and workflow automation.
+The Novyrix website and Phase 1 operations platform. The public experience is built in Next.js. Inquiry, engagement, invoice, and payment records are owned by a separate Fastify API backed by PostgreSQL.
 
-## 🎯 Project Overview
+Production deployment is approval-gated. Local completion does not authorize a Vercel deployment, DNS change, database migration, or payment activation.
 
-Novyrix is a transparent, modern IT solutions company that helps Kenyan businesses build world-class digital products. This platform features:
+## Current Scope
 
-- **Interactive Quote Calculator** - Get instant, transparent pricing for services
-- **Client Portal** - Track projects, quotes, and support tickets
-- **Admin Dashboard** - Manage clients, projects, and pricing
-- **Secure Authentication** - Separate client and admin login systems
-- **Care Plan System** - Subscription-based maintenance and support
+- Responsive public site with light mode by default and a persistent dark theme.
+- Search-focused service, work, pricing, about, blog, and inquiry routes.
+- Indexed field notes with typed content, Article schema, RSS, sitemap discovery, and related-service pathways.
+- Public inquiry capture through a server-only platform API credential.
+- Single-operator Operations Console for fit, discovery, agreement, engagement, invoicing, and portal provisioning.
+- Phase 2 client portal for engagement status, milestones, deliverables, invoice history, portal-native checkout, and logged project messages.
+- Private payment links with Paystack and BTCPay adapters kept disabled until both providers are verified.
+- Legacy registration, quote, chat, AI consultant, profile, and client-portal endpoints retired.
 
-## 🛠️ Tech Stack
+## Architecture
 
-### Core Framework
-- **Next.js 14+** - React framework with App Router
-- **TypeScript** - Type-safe development
-- **React 19** - Latest React features
+- `novyrix.com`: Next.js 16 on Vercel.
+- `api.novyrix.com`: Fastify platform API on the Novyrix Linux host through Cloudflare Tunnel.
+- PostgreSQL: private Docker network with no published database port.
+- Resend: inquiry, invoice, receipt, and monitoring email.
+- Uptime Kuma: independent public and tailnet-only health monitoring.
+- Paystack and BTCPay Server: server-side providers, activation-gated.
 
-### Styling
-- **Tailwind CSS** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **Glassmorphism** - Apple-inspired dark theme design
-- **Custom Fonts** - Inter, Space Grotesk, JetBrains Mono
+The browser never receives database, platform API, email, payment-provider, Cloudflare, or Tailscale credentials.
+The inherited root MySQL Prisma schema is kept only so retired pages can compile; Phase 1 records are stored in the platform API PostgreSQL database on the VPS.
 
-### Database & Auth
-- **Prisma ORM** - Type-safe database client
-- **MySQL** - Production database
-- **NextAuth.js v5** - Authentication system
-- **bcryptjs** - Password hashing
+## Repository Map
 
-### Additional Tools
-- **Lucide React** - Icon library
-- **Class Variance Authority** - Component variants
-- **clsx** - Conditional classes
-
-## 📁 Project Structure
-
-```
-novyrixapp/
-├── prisma/
-│   ├── schema.prisma          # Database schema
-│   └── migrations/            # Database migrations
-├── public/                    # Static assets
-├── src/
-│   ├── app/                   # Next.js App Router
-│   │   ├── (auth)/           # Auth routes (login, register)
-│   │   ├── (dashboard)/      # Dashboard routes
-│   │   ├── calculator/       # Quote calculator
-│   │   ├── api/              # API routes
-│   │   ├── layout.tsx        # Root layout
-│   │   ├── page.tsx          # Homepage
-│   │   └── globals.css       # Global styles
-│   ├── components/           # React components
-│   │   ├── ui/              # Reusable UI components
-│   │   ├── calculator/      # Calculator components
-│   │   └── dashboard/       # Dashboard components
-│   ├── lib/                  # Utility functions
-│   │   ├── prisma.ts        # Prisma client
-│   │   └── auth.ts          # Auth utilities
-│   └── types/                # TypeScript types
-├── .env.local                # Environment variables
-├── package.json
-└── README.md
+```text
+src/app/                     Next.js routes
+src/app/admin/               Private Operations Console
+src/app/api/inquiry/         Public same-origin inquiry proxy
+src/app/api/admin/           Authenticated operations proxy
+src/app/api/payments/        Private payment actions
+src/app/api/portal/          Authenticated client portal proxy
+src/app/portal/              Private client portal routes
+src/app/blog/                Field-notes index, article routes, and RSS
+src/content/field-notes.ts   Typed editorial source of truth
+src/components/site/         Public design system and interactions
+src/components/admin/        Operations workflow components
+src/components/portal/       Client portal workflow components
+platform-api/                Fastify, Prisma, PostgreSQL, payments, email
+deploy/                      Reviewed infrastructure and operating guides
+scripts/                     Browser visual-QA harnesses
+docs/architecture/           Recorded platform architecture decisions
+MILESTONES.md                PRD phase tracker
+design-qa.md                 Screenshot review and evidence
 ```
 
-## 🚀 Getting Started
+## Local Setup
 
-### Prerequisites
-- Node.js 18+ installed
-- MySQL database (local or remote)
-- npm or yarn package manager
+Requirements:
 
-### 1. Clone and Install
+- Node.js 20 or newer
+- npm
+- Access to a development platform API, or the local admin `preview=qa` fixtures for interface QA
 
-```bash
-cd novyrixapp
-npm install
+Install dependencies:
+
+```powershell
+npm ci
+Push-Location platform-api
+npm ci
+Pop-Location
 ```
 
-### 2. Set Up Environment Variables
+Create `.env.local` from `.env.example` and provide only local or approved encrypted values:
 
-Create `.env.local` file with your database credentials:
-
-```env
-# Database
-DATABASE_URL="mysql://mdawidah_novyrix:ZsF40IaVYzIX@localhost:3306/mdawidah_novyrix"
-
-# NextAuth
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="generate-a-secure-secret-key-here"
-
-# App
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-NEXT_PUBLIC_APP_NAME="Novyrix"
+```dotenv
+AUTH_SECRET=<long-random-auth-secret>
+NOVYRIX_ADMIN_EMAIL=spira@novyrix.com
+NOVYRIX_ADMIN_PASSWORD_HASH=<bcrypt-password-hash>
+NOVYRIX_API_URL=<platform-api-url>
+NOVYRIX_API_TOKEN=<platform-api-shared-secret>
 ```
 
-**To generate NEXTAUTH_SECRET:**
-```bash
-openssl rand -base64 32
-```
+When a bcrypt hash is stored in a local dotenv file, escape each dollar sign as `\$` so dotenv expansion preserves the hash. Store the raw hash without backslashes in the Vercel environment-variable interface.
 
-### 3. Set Up Database
+Start the frontend:
 
-```bash
-# Generate Prisma Client
-npm run prisma:generate
-
-# Push schema to database (for development)
-npm run prisma:push
-
-# Or run migrations (for production)
-npm run prisma:migrate
-
-# (Optional) Open Prisma Studio to view database
-npm run prisma:studio
-```
-
-### 4. Run Development Server
-
-```bash
+```powershell
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Start or test the API from `platform-api` using its documented environment and commands. Do not run production migrations from the frontend directory.
 
-## 🎨 Design System
+## Verification
 
-### Color Palette
-- **Primary (Orange)**: `#FF6B35` - Brand color, CTAs, accents
-- **Background (Black)**: `#000000` - Main background
-- **Glass Effects**: Semi-transparent whites with backdrop blur
+Frontend:
 
-### Typography
-- **Headings**: Space Grotesk - Bold, modern display font
-- **Body**: Inter - Clean, readable paragraph font
-- **Code/Numbers**: JetBrains Mono - Monospace for technical content
+```powershell
+npx tsc --noEmit
+npm run build
+npm run start -- --hostname 127.0.0.1 --port 4173
+npm run audit:release
+npm run audit:browser
+$env:NOVYRIX_PORTAL_PREVIEW_ENABLED="true"; npm run audit:portal
+```
 
-### Components
-All components follow Apple's glassmorphism design language:
-- Subtle backdrop blur
-- Semi-transparent backgrounds
-- Smooth hover transitions
-- Orange accent highlights
+The release audits expect the built site at `http://127.0.0.1:4173`. Reports and screenshots are written under `X:\novyrix\_design`.
 
-## 💰 Pricing Model Implementation
+Platform API:
 
-### Website Development Calculator
+```powershell
+Push-Location platform-api
+npx prisma validate
+npm test
+Pop-Location
+```
 
-**Base Price**: KES 30,000
-- Starter site (1-3 pages)
-- Professional design
-- Responsive & mobile-first
-- Admin panel
+The repository contains inherited, redirected UI modules with a known lint backlog. Use focused ESLint checks for changed surfaces until that archive cleanup is completed. A production build and the platform API test suite remain required release gates.
 
-**Add-on Blocks**:
-- Blog/CMS: +KES 15,000
-- Advanced Gallery: +KES 15,000
-- Booking System: +KES 30,000
-- E-commerce: +KES 60,000
-- API Integration: +KES 35,000
+## Operations Sequence
 
-**Hosting & Maintenance**:
-- Basic Hosting: KES 3,900/year
-- Advanced Hosting: KES 5,800/year
-- Care Plan: KES 5,000/month
-- E-commerce Plan: KES 12,000/month
+1. A public inquiry creates an Organization and Lead.
+2. The administrator records fit and discovery outcome.
+3. An accepted scope records its agreement reference before an engagement becomes active.
+4. An itemized invoice inherits the organisation currency.
+5. Invoice delivery stays disabled until Paystack and BTCPay both report ready.
+6. The administrator provisions portal access after an accepted engagement.
+7. Portal milestones, deliverables, invoices, and messages stay tied to the engagement record.
+8. Provider callbacks are verified and settlement is recorded idempotently.
 
-### Software Development
-- Tier 1 (Simple): KES 400,000 - 900,000
-- Tier 2 (Medium): KES 900,000 - 2,500,000
-- Tier 3 (Complex): KES 2,500,000+
-- Discovery Phase: KES 75,000
-- Technical Audit: KES 100,000
+## Release Safety
 
-### Workflow Automation
-Qualification-based - leads to consultation booking
+- Keep `PAYMENTS_LIVE=false` until both real provider test matrices pass.
+- Back up PostgreSQL and validate the backup before applying payment or portal migrations.
+- Keep all secrets in ignored local files or encrypted provider environments.
+- Run the source secret scan, `audit:release`, `audit:browser`, Lighthouse, and the production build.
+- Obtain explicit approval before Vercel deployment, DNS changes, or production migration.
 
-## 🔐 Authentication System
-
-### Client Auth
-- Email/password registration
-- Protected client portal routes
-- Quote management
-- Project tracking
-
-### Admin Auth
-- Elevated permissions
-- Admin dashboard access
-- Client management
-- Pricing configuration
-
-## 📊 Database Schema
-
-### Key Models
-- **User** - Client and admin accounts
-- **Quote** - Calculator quotes with all selections
-- **Project** - Active client projects
-- **Invoice** - Payment tracking
-- **SupportTicket** - Care Plan support requests
-- **Service** - Available services
-- **PricingBlock** - Configurable pricing blocks
-
-See `prisma/schema.prisma` for full schema.
-
-## 🚢 Deployment
-
-### Vercel (Recommended)
-
-1. Push code to GitHub: `https://github.com/novyrix/site`
-
-2. Connect to Vercel:
-   - Import GitHub repository
-   - Configure environment variables
-   - Deploy
-
-3. Set Environment Variables in Vercel:
-   ```
-   DATABASE_URL
-   NEXTAUTH_URL (production URL)
-   NEXTAUTH_SECRET
-   ```
-
-### Database
-Ensure your MySQL database is accessible from Vercel's servers. Use:
-- PlanetScale (serverless MySQL)
-- Railway
-- Your hosting provider's MySQL
-
-## 📦 Key Features to Implement
-
-### Phase 1: Foundation ✅
-- [x] Next.js setup
-- [x] Tailwind configuration
-- [x] Prisma schema
-- [x] Database connection
-- [x] Design system
-
-### Phase 2: Core Components
-- [ ] Navigation component
-- [ ] Button variants
-- [ ] Card components
-- [ ] Preloader animation
-- [ ] Footer component
-
-### Phase 3: Calculator
-- [ ] Website development calculator
-- [ ] Software development calculator
-- [ ] Automation qualification funnel
-- [ ] Quote summary page
-
-### Phase 4: Authentication
-- [ ] NextAuth configuration
-- [ ] Client registration/login
-- [ ] Admin authentication
-- [ ] Protected routes
-
-### Phase 5: Dashboards
-- [ ] Client dashboard
-- [ ] Admin dashboard
-- [ ] Quote management
-- [ ] Project tracking
-
-### Phase 6: Polish
-- [ ] Email notifications
-- [ ] SEO optimization
-- [ ] Performance optimization
-- [ ] Testing & QA
-
-## 🤝 Contributing
-
-This is a private project for Novyrix. If you're part of the team:
-
-1. Create a feature branch
-2. Make your changes
-3. Test thoroughly
-4. Submit for review
-
-## 📄 License
-
-Private - Novyrix © 2025
-
-## 🆘 Support
-
-For technical questions or issues:
-- Check the documentation above
-- Review the pricing model document
-- Contact the development team
-
----
-
-**Built with ❤️ by Novyrix**
+See [DEPLOYMENT.md](DEPLOYMENT.md), [MILESTONES.md](MILESTONES.md), and [design-qa.md](design-qa.md) for the current release state.

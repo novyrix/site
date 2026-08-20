@@ -1,0 +1,11 @@
+[Unit]
+Description=Back up the Novyrix PostgreSQL database
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/srv/novyrix/deploy/novyrix-platform/scripts/backup.sh
+User=novyrix
+Group=novyrix
+SupplementaryGroups=docker
