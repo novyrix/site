@@ -56,6 +56,8 @@ This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A v
 - [x] Create a dedicated tunnel in the DNS-owning Cloudflare account and activate `api.novyrix.com`.
 - [x] Verify public DNS, TLS, tunnel routing, API health, PostgreSQL access, and Resend delivery together.
 - [x] Add an independent public API monitor while retaining the tailnet-only platform monitor.
+- [x] Replace the broad interactive Tailscale SSH `check` path for `linux-vps` with a least-privilege `accept` rule from `novyrix@github` to `tag:novyrix-server` as Unix user `novyrix`; keep root denied and retain interactive checks for other self devices.
+- [x] Validate and retain a pre-change Tailscale policy backup, a mode-600 platform source archive, and a catalog-tested PostgreSQL custom dump before the production schema rollout.
 
 ## Phase 1 Operations Console
 
@@ -69,7 +71,7 @@ This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A v
 - [x] Complete authenticated desktop light/dark and 390px mobile browser QA with no overflow or runtime exceptions.
 - [x] Add production and preview `AUTH_SECRET`, platform API URL, platform API token, and administrator allowlist through Vercel environment variables.
 - [ ] Add the Google OAuth web-client ID and secret through encrypted Vercel environment variables after creating the client in Google Auth Platform.
-- [ ] Apply the discovery and payment migration only after a fresh, validated PostgreSQL backup and explicit approval.
+- [x] Apply and verify the discovery and payment migrations after a fresh, validated PostgreSQL backup and approval.
 - [ ] Deploy the Operations Console only after preview review and explicit approval.
 
 ## Payment Foundation
@@ -85,7 +87,7 @@ This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A v
 - [x] Add offline tests for amount handling, signatures, payment tokens, and provider contracts.
 - [x] Stage production Paystack and BTCPay credentials in ignored local operations secrets with `PAYMENTS_LIVE=false`.
 - [x] Add `pay.novyrix.com` callback and webhook route support for Paystack and BTCPay.
-- [ ] Apply the payment migration after a fresh production database backup.
+- [x] Apply the payment migration after a fresh production database backup and verify existing organisation and lead counts are unchanged.
 - [ ] Connect Paystack credentials and complete real card and M-Pesa verification.
 - [ ] Connect BTCPay credentials and complete real Lightning and on-chain verification.
 - [ ] Enable payments only after both provider readiness checks pass.
@@ -105,7 +107,7 @@ This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A v
 - [x] Rebuild invoice presentation around a structured reference header, amount and due-date summary, line-item ledger, and one shared settlement component.
 - [x] Unify Paystack and BTCPay actions with equal geometry, provider hierarchy, responsive states, and safe local-preview feedback.
 - [x] Pass 10 dedicated portal route, theme, and breakpoint audits across dashboard, project, invoice, message, and dark invoice states with no overflow, clipped amounts, browser errors, or unequal payment actions.
-- [ ] Apply the Phase 2 portal migration only after a fresh production PostgreSQL backup and explicit approval.
+- [x] Apply the Phase 2 portal and Google identity migrations after a fresh production PostgreSQL backup and verify the nullable password column.
 - [ ] Provision the first real client account only after legal review, Vercel preview review, and production environment verification.
 
 ## Phase 3 Authority and Content
@@ -131,5 +133,5 @@ This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A v
 - [x] Pass the local Operations Console, payment, portal, type, production build, release-audit, and browser visual-QA gates.
 - [x] Publish a protected Vercel preview at `novyrix-preview.vercel.app` without changing production aliases or DNS.
 - [x] Upgrade Next.js, React, Auth.js, Resend, and Prisma patch dependencies before preview deployment; remove all critical audit findings and pass a fresh 65-route Vercel build.
-- [ ] Restore VPS SSH access, apply the Google identity migration, and deploy the platform resolver after a fresh PostgreSQL backup.
+- [x] Correct the Tailscale SSH policy, apply the Google identity migration, deploy the platform resolver, and verify local and public API health plus fail-closed identity resolution.
 - [ ] Add Google OAuth credentials, run preview sign-in and production readiness checks, and obtain explicit approval before promoting the preview or changing production DNS.

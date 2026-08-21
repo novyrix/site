@@ -85,7 +85,14 @@ Also complete:
 7. Verify database health, public API health, Uptime Kuma, and inquiry persistence.
 8. Verify the admin readiness endpoint reports both payment providers disabled.
 
-The Google identity migration makes the legacy portal password hash nullable. It has been validated locally but must not be applied without the backup and approval sequence above.
+Production status on 21 August 2026:
+
+- The custom-format backup `/srv/novyrix/backups/postgres/novyrix-20260821T053116Z.dump` passed `pg_restore --list` validation before migration.
+- The payments, admin operations, Phase 2 portal, and Google identity migrations applied successfully. Prisma reports all five migrations up to date.
+- Existing data counts remained at three organisations and three leads. `PortalUser.passwordHash` is nullable as required by Google identity authentication.
+- The reviewed API image is deployed and both loopback and `https://api.novyrix.com/health` return `200`.
+- A synthetic unprovisioned Google identity reaches the new resolver and returns `401`, confirming that the route exists and fails closed.
+- `PAYMENTS_LIVE` remains false. Provider activation is still a separate controlled change.
 
 ## Vercel Release
 
