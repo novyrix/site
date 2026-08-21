@@ -58,6 +58,9 @@ This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A v
 - [x] Add an independent public API monitor while retaining the tailnet-only platform monitor.
 - [x] Replace the broad interactive Tailscale SSH `check` path for `linux-vps` with a least-privilege `accept` rule from `novyrix@github` to `tag:novyrix-server` as Unix user `novyrix`; keep root denied and retain interactive checks for other self devices.
 - [x] Validate and retain a pre-change Tailscale policy backup, a mode-600 platform source archive, and a catalog-tested PostgreSQL custom dump before the production schema rollout.
+- [x] Establish versioned homes for future scheduled jobs, validators, private working files, exports, and uploads on `linux-vps`; standardize systemd timers instead of ad hoc root crontabs.
+- [x] Stage a root-only Restic and Rclone configuration plus a version-controlled validation, retention, and off-site backup service without enabling a failing timer.
+- [ ] Enable R2 for the active Cloudflare account, initialize the private `novyrix-backups` repository, run `restic check`, and only then enable the off-site timer. Cloudflare currently returns API error `10042`: `Please enable R2 through the Cloudflare Dashboard.`
 
 ## Phase 1 Operations Console
 
@@ -70,7 +73,7 @@ This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A v
 - [x] Add dedicated no-index metadata for login and admin surfaces.
 - [x] Complete authenticated desktop light/dark and 390px mobile browser QA with no overflow or runtime exceptions.
 - [x] Add production and preview `AUTH_SECRET`, platform API URL, platform API token, and administrator allowlist through Vercel environment variables.
-- [ ] Add the Google OAuth web-client ID and secret through encrypted Vercel environment variables after creating the client in Google Auth Platform.
+- [x] Add the Google OAuth web-client ID and secret as Vercel Sensitive variables for Preview and Production, rebuild the protected preview, and verify provider discovery, CSRF issuance, Google authorization routing, and the stable callback URI.
 - [x] Apply and verify the discovery and payment migrations after a fresh, validated PostgreSQL backup and approval.
 - [ ] Deploy the Operations Console only after preview review and explicit approval.
 
@@ -134,4 +137,5 @@ This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A v
 - [x] Publish a protected Vercel preview at `novyrix-preview.vercel.app` without changing production aliases or DNS.
 - [x] Upgrade Next.js, React, Auth.js, Resend, and Prisma patch dependencies before preview deployment; remove all critical audit findings and pass a fresh 65-route Vercel build.
 - [x] Correct the Tailscale SSH policy, apply the Google identity migration, deploy the platform resolver, and verify local and public API health plus fail-closed identity resolution.
-- [ ] Add Google OAuth credentials, run preview sign-in and production readiness checks, and obtain explicit approval before promoting the preview or changing production DNS.
+- [x] Add Google OAuth credentials and verify the protected preview reaches Google with the registered stable callback URI.
+- [ ] Complete one browser-interactive sign-in with an allowlisted Google account, finish preview readiness checks, and obtain explicit approval before promoting the preview or changing production DNS.

@@ -10,6 +10,7 @@ Production deployment remains approval-gated. This guide contains placeholders o
 - Resend: inquiry, invoice, receipt, and monitoring notifications.
 - Paystack and BTCPay Server: platform API integrations enabled only after both pass real transaction checks.
 - Uptime Kuma: independent health monitoring for the public and tailnet-only API endpoints.
+- R2: intended off-site target for encrypted Restic database snapshots after the account endpoint is provisioned and verified.
 
 ## Vercel Environment
 
@@ -92,6 +93,7 @@ Production status on 21 August 2026:
 - Existing data counts remained at three organisations and three leads. `PortalUser.passwordHash` is nullable as required by Google identity authentication.
 - The reviewed API image is deployed and both loopback and `https://api.novyrix.com/health` return `200`.
 - A synthetic unprovisioned Google identity reaches the new resolver and returns `401`, confirming that the route exists and fails closed.
+- Google credentials are Vercel Sensitive values for Preview and Production. The fresh protected preview advertises only Google, issues CSRF protection, routes to Google authorization, and uses `https://novyrix-preview.vercel.app/api/auth/callback/google`.
 - `PAYMENTS_LIVE` remains false. Provider activation is still a separate controlled change.
 
 ## Vercel Release
