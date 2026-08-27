@@ -9,6 +9,7 @@ const footerLinks = [
   { href: "/about", label: "About" },
   { href: "/blog", label: "Field notes" },
   { href: "/inquire", label: "Inquiry" },
+  { href: "/login?portal=true", label: "Client workspace" },
 ];
 
 export function SiteFooter() {

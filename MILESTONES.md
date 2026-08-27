@@ -1,6 +1,6 @@
 # Novyrix Platform Milestones
 
-This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A visual or local prototype is not counted as production complete until its data, payment, and release requirements are verified.
+This tracker follows Part I of `Ecosystem PRD extended update.md`, which supersedes `Novyrix-Platform-PRD-v1.1.md` without changing the platform requirements. A visual or local prototype is not counted as production complete until its data, payment, and release requirements are verified.
 
 ## Phase 1 Public Site
 
@@ -23,6 +23,9 @@ This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A v
 - [x] Add unique service metadata, canonical URLs, Service schema, and FAQ schema.
 - [x] Complete desktop and mobile screenshot review after implementation.
 - [x] Resolve any P0, P1, or P2 visual findings before handoff.
+- [x] Replace the gated `4.85M+` task figure with Edmund's confirmed `8M` value through one governed platform metric.
+- [x] Keep the homepage proof context focused on KISIP2 instead of visually combining KISIP2 and Afribit as one credential block.
+- [x] Separate the institutional and Bitcoin records on `/work` with independent copy, sections, and a full context transition.
 
 ## Release Hardening
 
@@ -74,6 +77,7 @@ This tracker follows the Phase 1 sequence in `Novyrix-Platform-PRD-v1.1.md`. A v
 - [x] Complete authenticated desktop light/dark and 390px mobile browser QA with no overflow or runtime exceptions.
 - [x] Add production and preview `AUTH_SECRET`, platform API URL, platform API token, and administrator allowlist through Vercel environment variables.
 - [x] Add the Google OAuth web-client ID and secret as Vercel Sensitive variables for Preview and Production, rebuild the protected preview, and verify provider discovery, CSRF issuance, Google authorization routing, and the stable callback URI.
+- [x] Complete the public auth surface with a discoverable client-workspace link, role-aware redirect copy, unavailable-provider handling, private cache headers, and no-index metadata.
 - [x] Apply and verify the discovery and payment migrations after a fresh, validated PostgreSQL backup and approval.
 - [ ] Deploy the Operations Console only after preview review and explicit approval.
 

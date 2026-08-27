@@ -282,24 +282,31 @@ export const services: Service[] = [
 
 export const liveServices = services.filter((service) => service.status === "live");
 
+export const proofMetrics = {
+  taskResponses: {
+    value: "8M",
+    label: "task responses processed",
+  },
+} as const;
+
 export const proofPoints = [
   {
     name: "KISIP2",
     eyebrow: "Government-adjacent programme infrastructure",
-    stat: "4.85M+",
-    statLabel: "field tasks recorded",
+    stat: proofMetrics.taskResponses.value,
+    statLabel: proofMetrics.taskResponses.label,
     summary:
       "Digital systems supporting complex field operations, programme visibility, and accountable delivery at scale.",
-    href: "https://edmund.novyrix.com/",
+    href: "https://edmund.novyrix.com/work/spatial-collective",
   },
   {
     name: "Afribit",
     eyebrow: "Bitcoin-native infrastructure",
-    stat: "Bitcoin",
-    statLabel: "built for real operations",
+    stat: "6,000+",
+    statLabel: "Bitcoin transactions",
     summary:
       "Payment and platform infrastructure shaped by the realities of building Bitcoin products in Africa.",
-    href: "https://edmund.novyrix.com/",
+    href: "https://edmund.novyrix.com/work/afribit",
   },
 ];
 

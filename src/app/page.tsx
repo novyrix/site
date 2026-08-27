@@ -13,7 +13,7 @@ import Link from "next/link";
 import { ArrowLink } from "@/components/site/arrow-link";
 import { HeroBackground } from "@/components/site/hero-background";
 import { HeroTitle, Reveal } from "@/components/site/reveal";
-import { liveServices, proofPoints } from "@/lib/site-data";
+import { liveServices, proofMetrics, proofPoints } from "@/lib/site-data";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -103,8 +103,8 @@ export default function Home() {
               <div className="hero-proof">
                 <div>
                   <span className="mono">Systems in production</span>
-                  <p className="hero-proof__stat">4.85M+</p>
-                  <p className="hero-proof__label">field tasks recorded</p>
+                  <p className="hero-proof__stat">{proofMetrics.taskResponses.value}</p>
+                  <p className="hero-proof__label">{proofMetrics.taskResponses.label}</p>
                 </div>
                 <div className="hero-proof__platforms">
                   <span className="mono">Platforms</span>
@@ -113,8 +113,8 @@ export default function Home() {
                     <small>Complex programme operations at field scale</small>
                   </div>
                   <div>
-                    <strong>Afribit</strong>
-                    <small>Bitcoin infrastructure shaped in Africa</small>
+                    <strong>Full record</strong>
+                    <small>Architecture, delivery, and operating context</small>
                   </div>
                 </div>
               </div>

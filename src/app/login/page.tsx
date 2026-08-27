@@ -16,8 +16,16 @@ export default async function LoginPage({
 }) {
   const query = await searchParams;
   const configured = Boolean(process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET);
-  const error = query.error ? authErrors[query.error] || "Sign-in could not be completed." : null;
   const portalIntent = query.portal === "true";
+  const error = configured
+    ? query.error
+      ? authErrors[query.error] || "Sign-in could not be completed."
+      : query.unauthorized === "true"
+        ? portalIntent
+          ? "Sign in with the Google account approved for your client workspace."
+          : "Sign in with a Google account approved for Novyrix operations."
+        : null
+    : null;
 
   return (
     <main id="main-content" className="admin-login ledger-login">
