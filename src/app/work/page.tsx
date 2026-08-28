@@ -36,10 +36,10 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="proof-context-switch" aria-label="A separate operating record begins">
+      <section className="proof-context-switch" aria-label="Bitcoin infrastructure proof">
         <div className="site-shell proof-context-switch__inner">
-          <span className="mono">Context switch / 02</span>
-          <p>A separate operating record begins here.</p>
+          <span className="mono">Bitcoin infrastructure / Afribit</span>
+          <p>Payments, merchant tools, and open networks.</p>
         </div>
       </section>
 
